@@ -1,0 +1,20 @@
+#  Dockerfile for Node Express Backend
+
+FROM node:19.9.0-alpine3.16
+
+# Create App Directory
+RUN mkdir -p /usr/src/theroutemaster_app
+WORKDIR /usr/src/theroutemaster_app
+
+# Install Dependencies
+COPY package*.json ./
+
+RUN npm install --silent
+
+# Copy app source code
+COPY . .
+
+# Exports
+EXPOSE 5000
+
+CMD ["npm","start"]
