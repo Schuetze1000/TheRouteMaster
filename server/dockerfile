@@ -1,6 +1,6 @@
 #  Dockerfile for Node Express Backend
 
-FROM node:19.9.0-alpine3.16
+FROM node:20-alpine
 
 # Create App Directory
 RUN mkdir -p /usr/src/theroutemaster_app

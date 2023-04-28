@@ -1,7 +1,7 @@
 # Production Build
 
 # Stage 1: Build react client
-FROM node:19.9.0-alpine3.16 as client
+FROM node:20-alpine as client
 
 # Working directory be app
 WORKDIR /usr/theroutemaster_app/client/
@@ -19,7 +19,7 @@ RUN npm run build
 
 # Stage 2 : Build Server
 
-FROM node:19.9.0-alpine3.16
+FROM node:20-alpine
 
 WORKDIR /usr/theroutemaster_app/
 COPY --from=client /usr/theroutemaster_app/client/build/ ./client/build/
