@@ -1,4 +1,5 @@
 import React from 'react';
+import Login from './pages/login/login';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
         </div>
         <div className="grid grid-cols-1 gap-3 w-1/2 mx-auto h-1/2">
           <div className="text-4xl pt-10">HELLO WORLD</div>
+          <Login/>
           <div className="block">
           <button className="bg-slate-100 shadow-md px-4 py-3"> Get started</button></div>
         </div>
