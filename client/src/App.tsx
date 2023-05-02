@@ -1,6 +1,8 @@
 import React from 'react';
 import Login from './pages/login/login';
 
+import { BrowserRouter as Router, Route } from 'react-router-dom';
+
 function App() {
   return (
     <div className="w-full h-screen flex flex-cols text-center">
@@ -29,6 +31,11 @@ function App() {
           <div className="block">
           <button className="bg-slate-100 shadow-md px-4 py-3"> Get started</button></div>
         </div>
+
+        <Router>
+          <Route path='/login' Component={Login}/>
+        </Router>
+
      </div>
   );  
 }
