@@ -1,20 +1,20 @@
 import React from 'react';
 import Login from './pages/login/login';
-import LinkButton from './components/LinkButton'
+import Landing from './pages/landing/landing';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-function App() {
-  return (
+//function App() {
+  //return (
+  const App = () => (
     <Router>
-      <LinkButton to="/login">Go to Login</LinkButton>
       <Routes>
-        <Route path="/">
-          <Route path="/login" element={<Login />} />
+        <Route path="/" element={<Landing />} >
+          <Route exact path="/login" element={<Login />} />
         </Route>
       </Routes>
     </Router>
   );  
-}
+//}
 
 export default App;
