@@ -37,6 +37,8 @@ function Login() {
                     required
                 />
                 <button type="submit">Login</button>
+                <br></br>
+                <button type="submit">Register</button>
             </div>
         </form>
     );
