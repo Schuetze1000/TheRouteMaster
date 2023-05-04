@@ -18,7 +18,9 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react-jsx"
+    "jsx": "react-jsx",
+    //Fix for Error: "Binding element '{0}' implicitly has an '{1}' type." (finally)
+    "noImplicitAny": false
   },
   "include": [
     "src"
