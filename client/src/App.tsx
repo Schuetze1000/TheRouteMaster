@@ -4,9 +4,8 @@ import Landing from './pages/landing/landing';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
-//function App() {
-  //return (
-  const App = () => (
+function App() {
+  return (
     <Router>
       <Routes>
         <Route path="/" element={<Landing />} />
@@ -14,6 +13,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
       </Routes>
     </Router>
   );  
-//}
+}
 
 export default App;
