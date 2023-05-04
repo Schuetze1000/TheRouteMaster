@@ -9,9 +9,8 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
   const App = () => (
     <Router>
       <Routes>
-        <Route path="/" element={<Landing />} >
-          <Route exact path="/login" element={<Login />} />
-        </Route>
+        <Route path="/" element={<Landing />} />
+        <Route path="/login" element={<Login />} />
       </Routes>
     </Router>
   );  

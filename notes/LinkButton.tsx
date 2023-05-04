@@ -1,4 +1,5 @@
 // Funktioniert nicht wie gewünscht, maybe für später interessant
+/**
 import React from "react";
 import PropTypes from "prop-types";
 import { withRouter } from "react-router";
@@ -31,3 +32,4 @@ LinkButton.propTypes = {
 }
 
 export default withRouter(LinkButton)
+**/

@@ -1,8 +1,8 @@
 import React from "react";
-import { useNavigator } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const LoginButton = () => {
-    const navigate = useNavigator();
+    const navigate = useNavigate();
     const handleClick = () => navigate("/login");
 
     return (
