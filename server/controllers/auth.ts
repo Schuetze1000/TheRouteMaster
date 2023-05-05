@@ -1,6 +1,6 @@
 import { Response, Request } from 'express';
 import {ErrorResponse} from '../utils/errorResponse';
-import User, {IUser} from '../models/User';
+import User, {IUser} from '../models/user';
 import  sendEmail  from '../utils/emailSender';
 import crypto from 'crypto';
 
