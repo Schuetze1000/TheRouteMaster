@@ -20,7 +20,7 @@ const Navbar = () => {
 
 const NavbarIconAccount = ({ icon, text = "Account" }) => {
     const navigate = useNavigate();
-    const handleClickAccount = () => navigate("/login");
+    const handleClickAccount = () => navigate("/account");
 
     return (
         <div className="navbar-icon group" onClick={handleClickAccount}>
@@ -35,7 +35,7 @@ const NavbarIconAccount = ({ icon, text = "Account" }) => {
 
 const NavbarIconBoard = ({ icon, text = "Dashboard" }) => {
     const navigate = useNavigate();
-    const handleClickAccount = () => navigate("/login");
+    const handleClickAccount = () => navigate("/dashboard");
 
     return (
         <div className="navbar-icon group" onClick={handleClickAccount}>
@@ -50,7 +50,7 @@ const NavbarIconBoard = ({ icon, text = "Dashboard" }) => {
 
 const NavbarIconUse = ({ icon, text = "How to use" }) => {
     const navigate = useNavigate();
-    const handleClickAccount = () => navigate("/login");
+    const handleClickAccount = () => navigate("/howtouse");
 
     return (
         <div className="navbar-icon group" onClick={handleClickAccount}>
@@ -65,7 +65,7 @@ const NavbarIconUse = ({ icon, text = "How to use" }) => {
 
 const NavbarIconImprint = ({ icon, text = "Imprint" }) => {
     const navigate = useNavigate();
-    const handleClickAccount = () => navigate("/login");
+    const handleClickAccount = () => navigate("/imprint");
 
     return (
         <div className="navbar-icon group" onClick={handleClickAccount}>
@@ -80,7 +80,7 @@ const NavbarIconImprint = ({ icon, text = "Imprint" }) => {
 
 const NavbarIconDark = ({ icon, text = "Switch Mode" }) => {
     const navigate = useNavigate();
-    const handleClickAccount = () => navigate("/login");
+    const handleClickAccount = () => navigate("/");
 
     return (
         <div className="navbar-icon group" onClick={handleClickAccount}>
@@ -95,7 +95,7 @@ const NavbarIconDark = ({ icon, text = "Switch Mode" }) => {
 
 const NavbarIconSettings = ({ icon, text = "Settings" }) => {
     const navigate = useNavigate();
-    const handleClickAccount = () => navigate("/");
+    const handleClickAccount = () => navigate("/settings");
 
     return (
         <div className="navbar-icon-bottom group" onClick={handleClickAccount}>
