@@ -15,9 +15,13 @@ const Navbar = () => {
 };
 
 
-const NavbarIcon = ({ icon }) => (
-    <div className="sidebar-icon">
+const NavbarIcon = ({ icon, text = "Webseiten Name" }) => (
+    <div className="navbar-icon group">
         {icon}
+
+        <span className="navbar-text group-hover:scale-100">
+            {text}
+        </span>
     </div>
 );
 
