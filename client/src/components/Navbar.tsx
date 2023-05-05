@@ -1,6 +1,5 @@
-import { BsPlus, BsFillLightningFill, BsGearFill } from "react-icons/bs";
-import { FaFire, FaPoo } from "react-icons/fa";
 import { IoMdSettings, IoMdPerson, IoIosToday, IoIosSchool, IoMdContrast, IoMdInformationCircle } from "react-icons/io"
+import { useNavigate } from "react-router-dom";
 
 const Navbar = () => {
     return (
@@ -19,66 +18,95 @@ const Navbar = () => {
     );
 };
 
+const NavbarIconAccount = ({ icon, text = "Account" }) => {
+    const navigate = useNavigate();
+    const handleClickAccount = () => navigate("/login");
 
-const NavbarIconAccount = ({ icon, text = "Account"}) => (
-    <div className="navbar-icon group">
-        {icon}
+    return (
+        <div className="navbar-icon group" onClick={handleClickAccount}>
+            {icon}
 
-        <span className="navbar-text group-hover:scale-100">
-            {text}
-        </span>
-    </div>
-);
+            <span className="navbar-text group-hover:scale-100">
+                {text}
+            </span>
+        </div>
+    );
+};
 
-const NavbarIconBoard = ({ icon, text = "Dashboard"}) => (
-    <div className="navbar-icon group">
-        {icon}
+const NavbarIconBoard = ({ icon, text = "Dashboard" }) => {
+    const navigate = useNavigate();
+    const handleClickAccount = () => navigate("/login");
 
-        <span className="navbar-text group-hover:scale-100">
-            {text}
-        </span>
-    </div>
-);
+    return (
+        <div className="navbar-icon group" onClick={handleClickAccount}>
+            {icon}
 
-const NavbarIconUse = ({ icon, text = "How to use"}) => (
-    <div className="navbar-icon group">
-        {icon}
+            <span className="navbar-text group-hover:scale-100">
+                {text}
+            </span>
+        </div>
+    );
+};
 
-        <span className="navbar-text group-hover:scale-100">
-            {text}
-        </span>
-    </div>
-);
+const NavbarIconUse = ({ icon, text = "How to use" }) => {
+    const navigate = useNavigate();
+    const handleClickAccount = () => navigate("/login");
 
-const NavbarIconImprint = ({ icon, text = "Imprint"}) => (
-    <div className="navbar-icon group">
-        {icon}
+    return (
+        <div className="navbar-icon group" onClick={handleClickAccount}>
+            {icon}
 
-        <span className="navbar-text group-hover:scale-100">
-            {text}
-        </span>
-    </div>
-);
+            <span className="navbar-text group-hover:scale-100">
+                {text}
+            </span>
+        </div>
+    );
+};
 
-const NavbarIconDark = ({ icon, text = "Switch Mode"}) => (
-    <div className="navbar-icon group">
-        {icon}
+const NavbarIconImprint = ({ icon, text = "Imprint" }) => {
+    const navigate = useNavigate();
+    const handleClickAccount = () => navigate("/login");
 
-        <span className="navbar-text group-hover:scale-100">
-            {text}
-        </span>
-    </div>
-);
+    return (
+        <div className="navbar-icon group" onClick={handleClickAccount}>
+            {icon}
 
-const NavbarIconSettings = ({ icon, text = "Settings"}) => (
-    <div className="navbar-icon-bottom group">
-        {icon}
+            <span className="navbar-text group-hover:scale-100">
+                {text}
+            </span>
+        </div>
+    );
+};
 
-        <span className="navbar-text group-hover:scale-100">
-            {text}
-        </span>
-    </div>
-);
+const NavbarIconDark = ({ icon, text = "Switch Mode" }) => {
+    const navigate = useNavigate();
+    const handleClickAccount = () => navigate("/login");
+
+    return (
+        <div className="navbar-icon group" onClick={handleClickAccount}>
+            {icon}
+
+            <span className="navbar-text group-hover:scale-100">
+                {text}
+            </span>
+        </div>
+    );
+};
+
+const NavbarIconSettings = ({ icon, text = "Settings" }) => {
+    const navigate = useNavigate();
+    const handleClickAccount = () => navigate("/");
+
+    return (
+        <div className="navbar-icon-bottom group" onClick={handleClickAccount}>
+            {icon}
+
+            <span className="navbar-text group-hover:scale-100">
+                {text}
+            </span>
+        </div>
+    );
+};
 
 
 const Divider = () => <hr className="navbar-hr" />;

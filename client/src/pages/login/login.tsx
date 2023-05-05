@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useForm } from "../../hooks/useForm";
+import Navbar from "../../components/Navbar";
 
 function Login() {
     const initialState = {
@@ -18,6 +19,7 @@ function Login() {
 
     return (
         <form onSubmit={onSubmit}>
+            <Navbar/>
             <div>
                 <input
                     name="email"
