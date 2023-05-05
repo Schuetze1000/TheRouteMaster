@@ -10,7 +10,8 @@ WORKDIR /usr/src/theroutemaster_app
 COPY package*.json ./
 
 RUN npm install --silent
-RUN npm install --global ts-node
+RUN npm install --global --silent ts-node
+
 # Copy app source code
 COPY . .
 
