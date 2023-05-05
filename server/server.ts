@@ -7,7 +7,7 @@ import  {connectDB} from './config/db';
 
 const app = Express();
 const port = process.env.PORT || 5000;
-const errorhandler = require('./middleware/error');
+//const errorhandler = require('./middleware/error');
 
 connectDB();
 
