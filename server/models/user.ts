@@ -96,5 +96,3 @@ UserSchema.methods.getSignedToken= function (password:string) {
 
 const User = model<IUser>("User", UserSchema);
 export default User
-
-//export const User:Model<IUser> = model("User", UserSchema);

@@ -4,7 +4,7 @@ import { IoMdSettings, IoMdPerson, IoIosToday, IoIosSchool, IoMdContrast, IoMdIn
 
 const Navbar = () => {
     return (
-        <div className="fixed top-0 h-screen w-16 m-0 flex flex-col
+        <div className="fixed top-0 h-full w-16 m-0 flex flex-col
                         bg-gray-900 text-white shadow-lg">
             
             <NavbarIconAccount icon={<IoMdPerson size="28" />} />
