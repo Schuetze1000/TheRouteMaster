@@ -20,8 +20,9 @@ function Login() {
     return (
         <form onSubmit={onSubmit}>
             <Navbar/>
-            <div>
+            <div className="grid gap-4 h-56 grid-cols-2 content-evenly mx-96">
                 <input
+                    className="email-input"
                     name="email"
                     id="email"
                     type="email"
@@ -31,6 +32,7 @@ function Login() {
                 />
 
                 <input
+                    className="password-input"
                     name="password"
                     id="password"
                     type="password"
@@ -38,9 +40,8 @@ function Login() {
                     onChange={onChange}
                     required
                 />
-                <button type="submit">Login</button>
-                <br></br>
-                <button type="submit">Register</button>
+                <button className="login-button" type="submit">Login</button>
+                <button  className="register-button" type="submit">Register</button>
             </div>
         </form>
     );
