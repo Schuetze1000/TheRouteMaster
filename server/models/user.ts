@@ -1,6 +1,6 @@
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import crypto from 'crypto';
+import crypto from 'crypto';;
 import {  Schema, model, Document } from 'mongoose';
 
 const UserSchema: Schema = new Schema({
@@ -82,10 +82,7 @@ UserSchema.methods.matchPassword= async function (password:string) {
 
 UserSchema.methods.getResetPasswordToken= function () {
     const resetToken= crypto.randomBytes(20).toString('hex');
-    this.resetPasswordToken= crypto.
-    createHash('sha256')
-    .update(resetToken)
-    .digest('hex');  
+    this.resetPasswordToken= crypto.createHash('sha256').update(resetToken).digest('hex');  
     this.resetPasswordExpire = Date.now() + 10*(60*1000) 
     return resetToken
 
@@ -98,5 +95,6 @@ UserSchema.methods.getSignedToken= function (password:string) {
 }
 
 const User = model<IUser>("User", UserSchema);
+export default User
 
-export default User;
+//export const User:Model<IUser> = model("User", UserSchema);

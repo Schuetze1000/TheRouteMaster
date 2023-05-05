@@ -12,10 +12,10 @@ const errorhandler = require('./middleware/error');
 connectDB();
 
 app.use(Express.json());
-//app.use("/api/auth", require("./routes/auth"));
+app.use("/api/auth", require("./routes/auth"));
 //app.use("/api/private", require("./routes/private"));
 
-//app.use(errorhandler);
+app.use(errorhandler);
 
 const server = app.listen (
     port,()=>{
