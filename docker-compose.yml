@@ -7,7 +7,7 @@ services:
       dockerfile: Dockerfile
     image: theroutemaster_app-server
     container_name: theroutemaster_app-node-server
-    command: npm run start
+    command: ts-node server.ts
     volumes:
       - ./server/:/usr/src/theroutemaster_app
       - /usr/src/theroutemaster_app/node_modules
