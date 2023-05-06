@@ -5,7 +5,7 @@ import { useDarkMode } from "usehooks-ts";
 const Navbar = () => {
     return (
         <div className="fixed top-0 h-full w-16 m-0 flex flex-col
-                        bg-theme-1-2 text-white shadow-lg">
+                        bg-theme-1-3 text-white shadow-lg">
             
             <NavbarIconAccount icon={<IoMdPerson size="28" />} />
             <Divider/>

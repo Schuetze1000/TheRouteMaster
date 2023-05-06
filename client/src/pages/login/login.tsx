@@ -18,31 +18,35 @@ function Login() {
     }
 
     return (
-        <body className="h-screen bg-theme-1-1">
+        <body className="h-screen bg-theme-1-2">
             <form onSubmit={onSubmit}>
                 <Navbar/>
-                <div className="grid gap-4 h-56 grid-cols-2 content-evenly mx-96">
-                    <input
-                        className="email-input"
-                        name="email"
-                        id="email"
-                        type="email"
-                        placeholder="Email"
-                        onChange={onChange}
-                        required
-                    />
+                <div className="flex justify-center flex-col m-auto h-screen">
+                    <div className="login-box">
+                        <p className="text-center text-white text-3xl">Bitte melde dich an</p>
+                        <input
+                            className="email-input"
+                            name="email"
+                            id="email"
+                            type="email"
+                            placeholder="Email"
+                            onChange={onChange}
+                            required
+                        />
 
-                    <input
-                        className="password-input"
-                        name="password"
-                        id="password"
-                        type="password"
-                        placeholder="Password"
-                        onChange={onChange}
-                        required
-                    />
-                    <button className="login-button" type="submit">Login</button>
-                    <button  className="register-button" type="submit">Register</button>
+                        <input
+                            className="password-input"
+                            name="password"
+                            id="password"
+                            type="password"
+                            placeholder="Password"
+                            onChange={onChange}
+                            required
+                        />
+                        <button className="login-button" type="submit">Login</button>
+                        <p className="text-center text-white">Du hast noch keinen Account?</p>
+                        <button  className="register-button" type="submit">Register</button>
+                    </div>
                 </div>
             </form>
         </body>
