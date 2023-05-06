@@ -1,0 +1,13 @@
+<mxfile host="65bd71144e">
+    <diagram id="AHQmz1cm1CBAY708ywJZ" name="Page-1">
+        <mxGraphModel dx="1130" dy="784" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="2" value="Nginx Reverse Proxy" style="shape=image;editableCssRules=.*;image=data:image/svg+xml,PHN2ZyB2aWV3Qm94PSIwIDAgMjQgMjQiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHN0eWxlPip7ZmlsbDojMDA5NjM5fTwvc3R5bGU+PHBhdGggZD0iTTEyIDBMMS42MDUgNnYxMkwxMiAyNGwxMC4zOTUtNlY2TDEyIDB6bTYgMTYuNTljMCAuNzA1LS42NDYgMS4yOS0xLjUyOSAxLjI5LS42MzEgMC0xLjM1MS0uMjU1LTEuODAxLS44MWwtNi03LjE0MXY2LjY2YzAgLjcyMS0uNTcgMS4yOS0xLjI3NCAxLjI5SDcuMzJjLS43MjEgMC0xLjI5LS42LTEuMjktMS4yOVY3LjQxYzAtLjcwNS42My0xLjI5IDEuNS0xLjI5LjY0NiAwIDEuMzguMjU1IDEuODMuODFsNS45NyA3LjE0MVY3LjQxYzAtLjcyMS42LTEuMjkgMS4yOS0xLjI5aC4wNzVjLjcyIDAgMS4yOS42IDEuMjkgMS4yOXY5LjE4SDE4eiIvPjwvc3ZnPg==;fontSize=16;spacingTop=160;" vertex="1" parent="1">
+                    <mxGeometry x="390" y="70" width="160" height="140" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
