@@ -1,5 +1,6 @@
 import { IoMdSettings, IoMdPerson, IoIosToday, IoIosSchool, IoMdContrast, IoMdInformationCircle } from "react-icons/io"
 import { useNavigate } from "react-router-dom";
+import { useDarkMode } from "usehooks-ts";
 
 const Navbar = () => {
     return (
@@ -82,8 +83,10 @@ const NavbarIconDark = ({ icon, text = "Switch Mode" }) => {
     const navigate = useNavigate();
     const handleClickAccount = () => navigate("/");
 
+    const { isDarkMode, toggle, enable, disable } = useDarkMode()
+
     return (
-        <div className="navbar-icon group" onClick={handleClickAccount}>
+        <div className="navbar-icon group" onClick={toggle}>
             {icon}
 
             <span className="navbar-text group-hover:scale-100">
