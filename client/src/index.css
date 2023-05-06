@@ -6,13 +6,13 @@
 
   .navbar-icon {
     @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
-            bg-gray-800 text-green-500 hover:bg-green-600 hover:text-white
+            bg-gray-800 text-theme-1-4 hover:bg-theme-1-5 hover:text-white
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
   }
 
   .navbar-icon-bottom {
     @apply absolute bottom-0 left-2 flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
-            bg-gray-800 text-red-500 hover:bg-red-600 hover:text-white
+            bg-gray-800 text-theme-1-4 hover:bg-theme-1-5 hover:text-white
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
   }
 
@@ -22,7 +22,7 @@
   }
 
   .navbar-hr {
-    @apply bg-gray-200 dark:bg-gray-800 border border-gray-200 dark:border-gray-800 rounded-full mx-2;
+    @apply border border-gray-200 dark:border-gray-800 rounded-full mx-2;
   }
 
   .email-input {
@@ -34,11 +34,13 @@
   }
 
   .login-button {
-    @apply relative;
+    @apply relative bg-theme-1-5 hover:bg-theme-1-4 flex items-center justify-center
+            rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
   }
 
   .register-button {
-    @apply relative;
+    @apply relative bg-theme-1-5 hover:bg-theme-1-4 flex items-center justify-center
+            rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
   }
 }
 

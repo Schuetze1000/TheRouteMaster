@@ -18,32 +18,34 @@ function Login() {
     }
 
     return (
-        <form onSubmit={onSubmit}>
-            <Navbar/>
-            <div className="grid gap-4 h-56 grid-cols-2 content-evenly mx-96">
-                <input
-                    className="email-input"
-                    name="email"
-                    id="email"
-                    type="email"
-                    placeholder="Email"
-                    onChange={onChange}
-                    required
-                />
+        <body className="h-screen bg-theme-1-1">
+            <form onSubmit={onSubmit}>
+                <Navbar/>
+                <div className="grid gap-4 h-56 grid-cols-2 content-evenly mx-96">
+                    <input
+                        className="email-input"
+                        name="email"
+                        id="email"
+                        type="email"
+                        placeholder="Email"
+                        onChange={onChange}
+                        required
+                    />
 
-                <input
-                    className="password-input"
-                    name="password"
-                    id="password"
-                    type="password"
-                    placeholder="Password"
-                    onChange={onChange}
-                    required
-                />
-                <button className="login-button" type="submit">Login</button>
-                <button  className="register-button" type="submit">Register</button>
-            </div>
-        </form>
+                    <input
+                        className="password-input"
+                        name="password"
+                        id="password"
+                        type="password"
+                        placeholder="Password"
+                        onChange={onChange}
+                        required
+                    />
+                    <button className="login-button" type="submit">Login</button>
+                    <button  className="register-button" type="submit">Register</button>
+                </div>
+            </form>
+        </body>
     );
 }
 
