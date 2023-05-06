@@ -80,14 +80,12 @@ const NavbarIconImprint = ({ icon, text = "Imprint" }) => {
 };
 
 const NavbarIconDark = ({ icon, text = "Switch Mode" }) => {
-    const navigate = useNavigate();
-    const handleClickAccount = () => navigate("/");
-
     const { isDarkMode, toggle, enable, disable } = useDarkMode()
 
     return (
         <div className="navbar-icon group" onClick={toggle}>
             {icon}
+            <p>Current theme: {isDarkMode ? 'dark' : 'light'}</p>
 
             <span className="navbar-text group-hover:scale-100">
                 {text}

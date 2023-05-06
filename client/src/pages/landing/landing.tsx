@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import LoginButton from '../../components/LoginButton'
 import Navbar from "../../components/Navbar";
 
-import { useDarkMode } from "usehooks-ts";
-
 function Landing() {
     return (
         <div className="flex bg-gray-400 dark:bg-gray-800">
