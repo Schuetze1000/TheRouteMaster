@@ -1,7 +1,7 @@
 import { Response, Request } from 'express';
 import {ErrorResponse} from '../utils/errorResponse';
 import User, {IUser} from '../models/user';
-import  sendEmail  from '../utils/emailSender';
+import sendEmail from '../utils/emailSender';
 import crypto from 'crypto';
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
@@ -21,7 +21,7 @@ exports.login = async(req:Request,res:Response,next:any)=>{
             return next(new ErrorResponse("Invalid Credentials",401))
         }
 
-        //res.send(user,200,res)
+        res.send('Token');
     } catch (error:any) {
         return next(new ErrorResponse(error.message,500))
     }

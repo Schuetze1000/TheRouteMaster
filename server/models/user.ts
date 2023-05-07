@@ -39,7 +39,10 @@ const UserSchema: Schema = new Schema({
     },
     resetPasswordToken: String,
     resetPasswordExpire: String,
-    active: {type: Boolean, default: true}
+    active: {
+        type: Boolean, 
+        default: true
+    }
 });
 
 export interface IUser extends Document {
