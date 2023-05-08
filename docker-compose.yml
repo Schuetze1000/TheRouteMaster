@@ -22,6 +22,9 @@ services:
       - theroutemaster-network
   mongo:
     image: mongo:latest
+    environment:
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=rootPassXXX
     volumes:
       - data-volume:/data/db
     ports:
