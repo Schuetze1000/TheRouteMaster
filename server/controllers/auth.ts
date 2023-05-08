@@ -3,6 +3,7 @@ import {ErrorResponse} from '../utils/errorResponse';
 import User, {IUser} from '../models/user';
 import sendEmail from '../utils/emailSender';
 import crypto from 'crypto';
+import {sendToken} from '../utils/basicalgorithms'
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
@@ -21,7 +22,7 @@ exports.login = async(req:Request,res:Response,next:any)=>{
             return next(new ErrorResponse("Invalid Credentials",401))
         }
 
-        res.send('Token');
+        //sendToken(user,201,res)
     } catch (error:any) {
         return next(new ErrorResponse(error.message,500))
     }
