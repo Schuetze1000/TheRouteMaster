@@ -18,7 +18,7 @@ function Login() {
     }
 
     return (
-        <body className="h-screen bg-theme-1-2">
+        <body className="h-screen bg-gray-600">
             <form onSubmit={onSubmit}>
                 <Navbar/>
                 <div className="flex justify-center flex-col m-auto h-screen">

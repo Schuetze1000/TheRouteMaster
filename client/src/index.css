@@ -6,13 +6,13 @@
 
   .navbar-icon {
     @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
-            bg-gray-800 text-theme-1-4 hover:bg-theme-1-5 hover:text-white
+            bg-theme-1-1 text-theme-1-2 hover:bg-theme-1-1 hover:text-black
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
   }
 
   .navbar-icon-bottom {
     @apply absolute bottom-0 left-2 flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
-            bg-gray-800 text-theme-1-4 hover:bg-theme-1-5 hover:text-white
+            bg-theme-1-2 text-theme-1-2 hover:bg-theme-1-1 hover:text-black
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
   }
 
@@ -44,7 +44,7 @@
   }
 
   .login-box {
-    @apply bg-theme-1-1 w-[70%] md:w-1/3 mr-auto ml-24 md:mx-auto p-10 md:p-12 my-10 rounded-lg shadow-2xl grid space-y-5;
+    @apply bg-theme-1-2 w-[70%] md:w-1/3 mr-auto ml-24 md:mx-auto p-10 md:p-12 my-10 rounded-lg shadow-2xl grid space-y-5;
   }
 }
 
