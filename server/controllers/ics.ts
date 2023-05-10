@@ -9,8 +9,8 @@ import jwt from "jsonwebtoken";
 
 exports.getICS =  async(req:Request,res:Response,next:any)=>{
     const {email} = req.body;
-    const {jwt_token} = req.cookies.token;
-    var token_payload
+    const jwt_token = req.cookies.token;
+    var token_payload;
     try {
         if (!jwt_token) {
             return next(new ErrorResponse("Please provide a valid Token", 400));
@@ -26,14 +26,14 @@ exports.getICS =  async(req:Request,res:Response,next:any)=>{
 			return next(new ErrorResponse("Invalid Credentials", 401));
 		}
 
-        const ics_uid = user.ics_uid
-        if (!ics_uid) {
+        const uid = parseInt(user.ics_uid)
+        if (!uid) {
 			return next(new ErrorResponse("No ics_uid specified", 401));
 		}
 
-        const ics: IICS_Data | null = await User.findOne({ ics_uid })
-
-        res.status(200).send(ics.data)
+        const ics: IICS_Data | null = await ICS.findOne({ uid })
+    
+        res.status(200).send(JSON.stringify({data : ics.data}))
         res.end()
 	} catch (error) {
 		if (error instanceof jwt.JsonWebTokenError) {

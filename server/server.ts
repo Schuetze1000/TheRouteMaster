@@ -1,15 +1,20 @@
 import Express from 'express';
 import Morgan from 'morgan';
 import Mongoose from 'mongoose';
-import CookieParser from 'cookie-parser';
+import cookieParser  from 'cookie-parser';
 import {json} from 'body-parser';
 import  {connectDB} from './config/db';
+import {UpdateICS} from './utils/ics_crawler_v2'
 
 const app = Express();
 const port = process.env.PORT || 5000;
 //const errorhandler = require('./middleware/error');
+app.use(cookieParser());
 
 connectDB();
+
+UpdateICS();
+
 
 app.use(Express.json());
 app.use("/api/auth", require("./routes/auth"));
