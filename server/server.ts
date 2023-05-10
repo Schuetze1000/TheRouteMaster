@@ -13,7 +13,7 @@ connectDB();
 
 app.use(Express.json());
 app.use("/api/auth", require("./routes/auth"));
-//app.use("/api/private", require("./routes/private"));
+app.use("/api/ics", require("./routes/ics"));
 
 //app.use(errorhandler);
 

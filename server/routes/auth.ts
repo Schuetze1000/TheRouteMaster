@@ -1,6 +1,5 @@
 import express from 'express';
 const router= express.Router();
-//import controllers
 const {register,login,forgotPassword,resetPassword}=require('../controllers/auth');
 
 //routes
