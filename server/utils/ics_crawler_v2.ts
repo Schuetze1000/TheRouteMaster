@@ -28,7 +28,7 @@ export async function getUIDS(): Promise<[string[],string[]]> {
 export async function getICS(name_list: string[] = [], uid_list: string[] = []): Promise<string[]>{
   const hash_list: string[] = [];
   for (let x = 0; x < name_list.length; x++) {
-    const path = `./ics/${uid_list[x]}.ics`;
+    const path = `../data/ics/${uid_list[x]}.ics`;
     if (!fs.existsSync(path)) {
       const response2 = await axios.get(`http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=${uid_list[x]}`);
       fs.writeFile(path, response2.data, (err) => {

@@ -1,6 +1,6 @@
 import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
-import crypto from 'crypto';;
+import crypto from 'crypto';
 import {  Schema, model, Document } from 'mongoose';
 
 const UserSchema: Schema = new Schema({
