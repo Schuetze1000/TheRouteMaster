@@ -1,7 +1,7 @@
 import * as cheerio from "cheerio";
 import axios from "axios";
-import * as fs from "fs";
-import crypto from "crypto";
+import * as cliProgress from 'cli-progress';
+
 
 export async function getUIDS(): Promise<[string[],string[]]> {
   try {
@@ -25,32 +25,27 @@ export async function getUIDS(): Promise<[string[],string[]]> {
   }
 }
 
-export async function getICS(name_list: string[] = [], uid_list: string[] = []): Promise<string[]>{
-  const hash_list: string[] = [];
+export async function getICS_Data(name_list: string[] = [], uid_list: string[] = []): Promise<string[]>{
+  const ics_list: string[] = [];
+  const bar1 = new cliProgress.SingleBar({}, cliProgress.Presets.shades_classic);
+  bar1.start(name_list.length, 0);
+
   for (let x = 0; x < name_list.length; x++) {
     const path = `../data/ics/${uid_list[x]}.ics`;
-    if (!fs.existsSync(path)) {
-      const response2 = await axios.get(`http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=${uid_list[x]}`);
-      fs.writeFile(path, response2.data, (err) => {
-        if (err) {
-          console.error(err);
-        } else {
-          console.log(`Downloaded ICS Name= ${name_list[x]}; UID= ${uid_list[x]}`);
-        }
-        hash_list.push(`UID= ${uid_list[x]}; Hash:` + crypto.createHash("sha1").update(response2.data).digest("base64"));
-      });
-    } else {
-      console.log(`ICS-File Name= ${name_list[x]}; UID= ${uid_list[x]} exists!`);
-    }
-  }
-  console.log(hash_list);
-  return hash_list;
+    const response2 = await axios.get(`http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=${uid_list[x]}`);
+    ics_list.push(response2.data);
+    bar1.update(x);
+  } 
+  bar1.stop();
+  return ics_list;
 }
 
-/** 
+
 getUIDS().then((value) => {
-  for (let x = 0; x < value[0].length; x++) {
+  getICS_Data(value[0], value[1]).then((value) => {
+    
+  });
+  /**for (let x = 0; x < value[0].length; x++) {
     console.log(`Name= ${value[0][x]}; UID= ${value[1][x]}`);
-  }
+  }*/
 });
-*/
