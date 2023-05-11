@@ -13,7 +13,11 @@ app.use(cookieParser());
 app.use(Express.json());
 
 connectDB();
-UpdateICS();
+
+setTimeout(() => {
+	UpdateICS();
+}, 1000);
+
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/ics", require("./routes/ics"));

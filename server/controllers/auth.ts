@@ -3,7 +3,7 @@ import { ErrorResponse } from "../utils/errorResponse";
 import User, { IUser } from "../models/user";
 import sendEmail from "../utils/emailSender";
 import crypto from "crypto";
-import { sendToken } from "../utils/basicalgorithms";
+import { sendToken } from "../middleware/auth";
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
@@ -25,7 +25,7 @@ exports.login = async (req: Request, res: Response, next: any) => {
         sendToken(user, 201, res);
 
 	} catch (error: any) {
-		return next(new ErrorResponse(error.message, 500));
+		return next(new ErrorResponse(error.message, 400));
 	}
 };
 
