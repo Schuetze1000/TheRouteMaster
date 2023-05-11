@@ -18,6 +18,8 @@ function createBar(max_count:number, name: string, color = colors.white){
 	return bar;
 }
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
 export async function getUIDS(): Promise<[string[], string[]]> {
 	try {
 		const name_list: string[] = [];
@@ -29,8 +31,11 @@ export async function getUIDS(): Promise<[string[], string[]]> {
 		const elements = data_html('select[name="Kurse"] option');
 
 		for (let y = 1; y < elements.length; y++) {
-			name_list.push(elements.get(y).attributes[0].value);
-			uid_list.push(elements.get(y).attributes[1].value);
+			const str_exists = name_list.indexOf(elements.get(y).attributes[0].value);
+			if (str_exists == -1){
+				name_list.push(elements.get(y).attributes[0].value);
+				uid_list.push(elements.get(y).attributes[1].value);
+			}
 		}
 		return [name_list, uid_list];
 	} catch (error) {
@@ -39,48 +44,63 @@ export async function getUIDS(): Promise<[string[], string[]]> {
 	}
 }
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
 export async function getICS_Data(name_list: string[] = [], uid_list: string[] = []): Promise<string[]> {
 	const ics_list: string[] = [];
+
+	// Create progressbar
 	const bar1 = createBar(name_list.length, "Downloading ICS Files	  ", colors.yellow);
 
+	// Download all requied ics files
 	for (let x = 0; x < name_list.length; x++) {
 		const response2 = await axios.get(`http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=${uid_list[x]}`);
 		ics_list.push(response2.data);
 		bar1.increment();
 	}
+
 	bar1.stop();
 	return ics_list;
 }
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
 export async function UpdateICS() {
 	var name_list: string[] = [];
 	var uid_list: string[] = [];
-	var ics_list: string[] = [];
-	
 
 	try {
 		[name_list, uid_list] = await getUIDS();
-		const bar1 = createBar(uid_list.length, "Search for ICS to Update  ", colors.red);
 
-		for (let x = 0; x < uid_list.length; x++) {
-			const uid = parseInt(uid_list[x]);
-			
-			const ics: IICS_Data | null = await ICS.findOne({ "uid" : uid });
+		// Get all Documents their uid and active value
+		const ics_data: IICS_Data[] | null = await ICS.find({},{"uid" : 1, "active" : 1, "_id" : 0});
 
-			if (ics && ics.active == false) {
-				name_list.splice(x, 1);
-				uid_list.splice(x, 1);
-				x -= 1
+		// Create progressbar
+		const bar1 = createBar(ics_data.length, "Search for ICS to Update  ", colors.red);
+		
+		// Remove all name and uid with active = false
+		for (let x = 0; x < ics_data.length; x++) {
+			if (ics_data[x].active == false) {
+				const index_remove = uid_list.indexOf(ics_data[x].uid.toString())
+				name_list.splice(index_remove, 1);
+				uid_list.splice(index_remove, 1);
 			}
 			bar1.increment();
 		}
 		
 		bar1.stop();
 
+		// ------------------------- Processing Update ------------------------- //
 		if (name_list.length != 0) {
-			ics_list = await getICS_Data(name_list, uid_list);
+
+			// Download all requied ics files
+			const ics_list: string[] = await getICS_Data(name_list, uid_list);
+
+			// Create progressbar
 			const bar2 =  createBar(name_list.length, "Update ICS Data           ", colors.green);
 
+
+			// ------------- Create new Document or Update if it exists ------------ //
 			for (let x = 0; x < name_list.length; x++) {
 				bar2.increment();
 				const name = name_list[x];
@@ -99,8 +119,12 @@ export async function UpdateICS() {
 					ics.UpdateIcsData(data);
 				}
 			}
+			bar2.stop()
 		}
 	} catch (error: any) {
 		console.error(error);
 	}
 }
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
