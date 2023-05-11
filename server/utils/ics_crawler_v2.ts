@@ -1,25 +1,9 @@
 import * as cheerio from "cheerio";
 import axios from "axios";
-import * as cliProgress from "cli-progress";
 import ICS, { IICS_Data } from "../models/ics";
 import * as colors from "ansi-colors";
 import User, { IUser } from "../models/user";
-
-function createBar(max_count: number, name: string, color = colors.white, subname2 = "Files") {
-	console.log(name + ":");
-	const bar = new cliProgress.SingleBar(
-		{
-			format: color("{bar}") + "| {percentage}% || {value}/{total} " + subname2 + " || Speed: {eta}/s",
-			barCompleteChar: "\u2588",
-			barIncompleteChar: "\u2591",
-			hideCursor: true,
-		},
-		cliProgress.Presets.shades_classic
-	);
-	bar.start(max_count, 0);
-
-	return bar;
-}
+import { createBar } from "./progressbar";
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
@@ -53,7 +37,7 @@ export async function getICS_Data(name_list: string[] = [], uid_list: string[] =
 	const ics_list: string[] = [];
 
 	// Create progressbar
-	const bar1 = createBar(name_list.length, "Downloading ICS Files", colors.yellow);
+	const bar1 = createBar(name_list.length, "Downloading ICS Files", "Files");
 
 	// Download all requied ics files
 	for (let x = 0; x < name_list.length; x++) {
@@ -79,7 +63,7 @@ export async function UpdateICS() {
 		const ics_data: IICS_Data[] | null = await ICS.find({}, { uid: 1, active: 1, _id: 0 });
 
 		// Create progressbar
-		const bar1 = createBar(ics_data.length, "Search for ICS to Update", colors.red);
+		const bar1 = createBar(ics_data.length, "Search for ICS to Update", "Files");
 
 		// Remove all name and uid with active = false
 		for (let x = 0; x < ics_data.length; x++) {
@@ -99,7 +83,7 @@ export async function UpdateICS() {
 			const ics_list: string[] = await getICS_Data(name_list, uid_list);
 
 			// Create progressbar
-			const bar2 = createBar(name_list.length, "Update ICS Data", colors.green);
+			const bar2 = createBar(name_list.length, "Update ICS Data", "Files");
 
 			// ------------- Create new Document or Update if it exists ------------ //
 			for (let x = 0; x < name_list.length; x++) {
@@ -133,7 +117,7 @@ export async function UpdateActiveICS() {
 	const user: IUser[] | null = await User.find({}, { ics_uid: 1 });
 	const active_uid_list: string[] = [];
 
-	const bar1 = createBar(user.length, "Get all uid of all active ICS", colors.red, "Entries");
+	const bar1 = createBar(user.length, "Get all uid of all active ICS", "Entries");
 
 	for (let x = 0; x < user.length; x++) {
 		const str_exists = active_uid_list.indexOf(user[x].ics_uid);
@@ -146,7 +130,7 @@ export async function UpdateActiveICS() {
 	bar1.stop();
 
 	const all_ics: IICS_Data[] | null = await User.find({ uid: true });
-	const bar2 = createBar(all_ics.length, "Update de-active ICS", colors.green, "Entries");
+	const bar2 = createBar(all_ics.length, "Update de-active ICS", "Entries");
 
 	for (let x = 0; x < all_ics.length; x++) {
 		const str_exists = active_uid_list.indexOf(all_ics[x].uid.toString());
@@ -160,7 +144,7 @@ export async function UpdateActiveICS() {
 	}
 
 	bar2.stop();
-	const bar3 = createBar(active_uid_list.length, "Update active ICS", colors.green, "Entries");
+	const bar3 = createBar(active_uid_list.length, "Update active ICS", "Entries");
 
 	for (let x = 0; x < active_uid_list.length; x++) {
 		const ics: IICS_Data | null = await ICS.findOne({ uid: active_uid_list[x] });
@@ -177,8 +161,8 @@ export async function ICSUpdateAll() {
 	console.log(
 		colors.red(
 			"\n#####################################################################" +
-			"\n################### Updating All ICS Configs/Data ###################" +
-			"\n#####################################################################\n"
+				"\n################### Updating All ICS Configs/Data ###################" +
+				"\n#####################################################################\n"
 		)
 	);
 	await UpdateICS();
