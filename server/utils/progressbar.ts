@@ -19,6 +19,8 @@ function formatter(options: cliProgress.Options, params: cliProgress.Params, pay
 	}
 }
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
 export function createBar(max_count: number, name: string, type_name:string, color_progress = colors.yellow, color_finish = colors.green) {
 	console.log(name + ":");
 	const bar = new cliProgress.SingleBar({

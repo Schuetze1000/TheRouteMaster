@@ -4,7 +4,7 @@ import Mongoose from "mongoose";
 import cookieParser from "cookie-parser";
 import { json } from "body-parser";
 import { connectDB } from "./config/db";
-import { ICSUpdateAll } from "./utils/ics_crawler_v2";
+import { ICSUpdateAll } from "./middleware/ics";
 
 const app = Express();
 const port = process.env.PORT || 5000;
