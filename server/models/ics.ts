@@ -32,7 +32,7 @@ export interface IICS_Data extends Document {
 	name: string;
 	hash: string | undefined;
 	data: string | undefined;
-    active: false;
+    active: boolean;
 }
 
 ICS_DataSchema.pre<IICS_Data>("save", async function (next: any) {
