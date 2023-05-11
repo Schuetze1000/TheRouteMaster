@@ -34,7 +34,7 @@ export async function getICS_Data(name_list: string[] = [], uid_list: string[] =
 	const ics_list: string[] = [];
 
 	// Create progressbar
-	const bar1 = createBar(name_list.length, "Downloading ICS Files", "Files");
+	const bar1 = await createBar(name_list.length, "Downloading ICS Files", "Files");
 
 	// Download all requied ics files
 	for (let x = 0; x < name_list.length; x++) {
