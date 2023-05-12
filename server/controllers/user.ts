@@ -3,6 +3,7 @@ import { ErrorResponse } from "../utils/errorResponse";
 import User, { IUser } from "../models/user";
 import { verifyToken } from "../middleware/auth";
 import { Profile } from "../models/api";
+import { getICSfromUser } from '../middleware/ics';
 
 exports.updateProfile = async (req: Request, res: Response, next: any) => {
 	const profile: Profile = req.body;
@@ -29,10 +30,10 @@ exports.updateProfile = async (req: Request, res: Response, next: any) => {
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
-exports.getProfile = async (req: Request, res: Response, next: any) => {
+exports.getUser = async (req: Request, res: Response, next: any) => {
 	try {
 		const user: IUser | null = await verifyToken(req, res);
-		res.status(200).json(JSON.stringify(user.profile)).end();
+		res.status(200).json(JSON.stringify(user)).end();
 	} catch (error) {
 		if (error instanceof ErrorResponse) {
 			return next(new ErrorResponse(error.message, error.statusCode));
@@ -40,6 +41,10 @@ exports.getProfile = async (req: Request, res: Response, next: any) => {
 		return next(new ErrorResponse(error.message, 400));
 	}
 };
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
+
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 

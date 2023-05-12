@@ -1,11 +1,11 @@
 import express from "express";
 const router = express.Router();
-const { updateProfile, getProfile, deactivateAccount, deleteAccount } = require("../controllers/user");
+const { updateProfile, getUser, deactivateAccount, deleteAccount } = require("../controllers/user");
 
 //routes
 router.route("/updateprofile").put(updateProfile);
-router.route("/getprofile").get(getProfile);
+router.route("/getuser").get(getUser);
 router.route("/deactivateaccount").put(deactivateAccount);
-router.route("/deleteaccount").put(deleteAccount);
+router.route("/deleteaccount").delete(deleteAccount);
 
 module.exports = router;
