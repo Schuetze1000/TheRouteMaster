@@ -9,7 +9,7 @@ function formatter(options: cliProgress.Options, params: cliProgress.Params, pay
 	var percentage = Math.round((params.value / params.total) * 100).toString();
 
 	if (percentage == "NaN") {
-		percentage = "100"
+		percentage = "100";
 	}
 
 	if (params.value >= params.total) {
@@ -21,7 +21,7 @@ function formatter(options: cliProgress.Options, params: cliProgress.Params, pay
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
-export function createBar(max_count: number, name: string, type_name:string, color_progress = colors.yellow, color_finish = colors.green) {
+export function createBar(max_count: number, name: string, type_name: string, color_progress = colors.yellow, color_finish = colors.green) {
 	console.log(name + ":");
 	const bar = new cliProgress.SingleBar({
 		format: formatter,
@@ -30,9 +30,9 @@ export function createBar(max_count: number, name: string, type_name:string, col
 		hideCursor: true,
 	});
 	bar.start(max_count, 0, {
-		type:type_name,
-		colorProgress:color_progress,
-		colorFinish:color_finish
+		type: type_name,
+		colorProgress: color_progress,
+		colorFinish: color_finish,
 	});
 
 	return bar;

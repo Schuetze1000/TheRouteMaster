@@ -1,27 +1,26 @@
-
 import { Response, Request } from "express";
 import { ErrorResponse } from "../utils/errorResponse";
 import ICS, { IICS_Data } from "../models/ics";
 import User, { IUser } from "../models/user";
 import { createBar } from "../utils/progressbar";
 import { getUIDS, getICS_Data } from "../utils/ics_crawler_v2";
-import * as colors from 'ansi-colors';
+import * as colors from "ansi-colors";
 
 export const getICSfromUser = async (user: IUser) => {
-	// ----------------- Get ICS-Model from specified user ----------------- //	
+	// ----------------- Get ICS-Model from specified user ----------------- //
 	const uid = parseInt(user.ics_uid);
-		if (!uid) {
-			throw new ErrorResponse("No ics_uid specified", 401);
-		}
+	if (!uid) {
+		throw new ErrorResponse("No ics_uid specified", 401);
+	}
 
-		const ics: IICS_Data | null = await ICS.findOne({ uid });
+	const ics: IICS_Data | null = await ICS.findOne({ uid });
 
-		if (!ics) {
-			user.ics_uid = ""
-            throw new ErrorResponse("ICS not found", 418);
-		}
-        return ics;
-}
+	if (!ics) {
+		user.ics_uid = "";
+		throw new ErrorResponse("ICS not found", 418);
+	}
+	return ics;
+};
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
@@ -92,7 +91,7 @@ export async function UpdateActiveICS() {
 	const active_uid_list: string[] = [];
 
 	const bar1 = await createBar(user.length, "Get all uid of all active ICS", "Entries");
-	
+
 	for (let x = 0; x < user.length; x++) {
 		const str_exists = active_uid_list.indexOf(user[x].ics_uid);
 		if (str_exists == -1) {

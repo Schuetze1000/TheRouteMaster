@@ -9,7 +9,7 @@ export async function getUIDS(): Promise<[string[], string[]]> {
 		const name_list: string[] = [];
 		const uid_list: string[] = [];
 
-		// Fetch dhbw-ical-download-website  
+		// Fetch dhbw-ical-download-website
 		const response = await axios.get("https://vorlesungsplan.dhbw-mannheim.de/ical.php");
 
 		// Read all available courses

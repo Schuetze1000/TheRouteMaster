@@ -21,9 +21,9 @@ export const verifyToken = async (req: Request, res: Response, getUser = true) =
 		let current_timestamp = Date.now();
 
 		if (exp - 300000 < current_timestamp) {
-            const user: IUser | null = await User.findById(id);
-            sendToken(user, 200, res);
-        }
+			const user: IUser | null = await User.findById(id);
+			sendToken(user, 200, res);
+		}
 
 		if (getUser) {
 			const user: IUser | null = await User.findById(id);
