@@ -26,7 +26,7 @@
   }
 
   .email-input {
-    @apply relative;
+    @apply relative border-gray-200;
   }
 
   .password-input {
