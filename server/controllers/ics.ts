@@ -11,7 +11,7 @@ exports.getICS = async (req: Request, res: Response, next: any) => {
 	try {
 		const user: IUser | null = await verifyToken(req, res);
 		const ics: IICS_Data | null = await getICSfromUser(user);
-		res.status(200).send(JSON.stringify({ data: ics.data, hash: ics.hash }));
+		res.status(200).send(JSON.stringify({ name: ics.name, data: ics.data, hash: ics.hash }));
 		res.end();
 	} catch (error) {
 		if (error instanceof ErrorResponse) {

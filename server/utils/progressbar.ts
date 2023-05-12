@@ -8,7 +8,7 @@ function formatter(options: cliProgress.Options, params: cliProgress.Params, pay
 
 	var percentage = Math.round((params.value / params.total) * 100).toString();
 
-	if (percentage == "NaN"){
+	if (percentage == "NaN") {
 		percentage = "100"
 	}
 
