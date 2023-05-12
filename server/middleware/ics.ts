@@ -8,7 +8,8 @@ import { getUIDS, getICS_Data } from "../utils/ics_crawler_v2";
 import * as colors from 'ansi-colors';
 
 export const getICSfromUser = async (user: IUser) => {
-		const uid = parseInt(user.ics_uid);
+	// ----------------- Get ICS-Model from specified user ----------------- //	
+	const uid = parseInt(user.ics_uid);
 		if (!uid) {
 			throw new ErrorResponse("No ics_uid specified", 401);
 		}
@@ -86,11 +87,12 @@ export async function UpdateICS() {
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 export async function UpdateActiveICS() {
+	// ------------- Get all ics-uids from the user collection ------------- //
 	const user: IUser[] | null = await User.find({}, { ics_uid: 1 });
 	const active_uid_list: string[] = [];
 
 	const bar1 = await createBar(user.length, "Get all uid of all active ICS", "Entries");
-
+	
 	for (let x = 0; x < user.length; x++) {
 		const str_exists = active_uid_list.indexOf(user[x].ics_uid);
 		if (str_exists == -1) {
@@ -101,6 +103,7 @@ export async function UpdateActiveICS() {
 
 	bar1.stop();
 
+	// ---------------- Deactivate all now unused ICS-Files ---------------- //
 	const all_ics: IICS_Data[] | null = await User.find({ uid: true });
 	const bar2 = await createBar(all_ics.length, "Update de-active ICS", "Entries");
 
@@ -116,6 +119,8 @@ export async function UpdateActiveICS() {
 	}
 
 	bar2.stop();
+
+	// ------------------ Activate all now used ICS-Files ------------------ //
 	const bar3 = await createBar(active_uid_list.length, "Update active ICS", "Entries");
 
 	for (let x = 0; x < active_uid_list.length; x++) {

@@ -9,8 +9,10 @@ export async function getUIDS(): Promise<[string[], string[]]> {
 		const name_list: string[] = [];
 		const uid_list: string[] = [];
 
+		// Fetch dhbw-ical-download-website  
 		const response = await axios.get("https://vorlesungsplan.dhbw-mannheim.de/ical.php");
 
+		// Read all available courses
 		const data_html = cheerio.load(response.data);
 		const elements = data_html('select[name="Kurse"] option');
 
@@ -36,7 +38,7 @@ export async function getICS_Data(name_list: string[] = [], uid_list: string[] =
 	// Create progressbar
 	const bar1 = await createBar(name_list.length, "Downloading ICS Files", "Files");
 
-	// Download all requied ics files
+	// Fetsch all requied ics files
 	for (let x = 0; x < name_list.length; x++) {
 		const response2 = await axios.get(`http://vorlesungsplan.dhbw-mannheim.de/ical.php?uid=${uid_list[x]}`);
 		ics_list.push(response2.data);

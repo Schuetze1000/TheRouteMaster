@@ -21,6 +21,7 @@ setTimeout(() => {
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/ics", require("./routes/ics"));
+app.use("/api/user", require("./routes/user"));
 
 //app.use(errorhandler);
 

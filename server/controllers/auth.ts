@@ -23,6 +23,7 @@ exports.login = async (req: Request, res: Response, next: any) => {
 		}
 		
         sendToken(user, 201, res);
+		res.end();
 
 	} catch (error: any) {
 		return next(new ErrorResponse(error.message, 400));

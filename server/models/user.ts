@@ -26,7 +26,7 @@ const UserSchema: Schema = new Schema({
 	},
 	profile: {
 		firstname: String,
-		lastname: String,
+		surname: String,
 		avatar: String,
 		homeaddress: {
 			number: String,
@@ -57,7 +57,7 @@ export interface IUser extends Document {
 	email: string;
 	profile: {
 		firstname: String;
-		lastname: String;
+		surname: String;
 		avatar: String;
 		homeaddress: {
 			number: String;
