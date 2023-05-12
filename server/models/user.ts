@@ -69,7 +69,7 @@ export interface IUser extends Document {
 		};
 	};
 	ics_uid: string,
-	active: true;
+	active: boolean;
 }
 
 UserSchema.pre<IUser>("save", async function (next: any) {
