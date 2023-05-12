@@ -2,11 +2,11 @@ import { Response, Request } from "express";
 import { ErrorResponse } from "../utils/errorResponse";
 import User, { IUser } from "../models/user";
 import { verifyToken } from "../middleware/auth";
-import { Profile } from "../models/api";
+import { ProfileStructure, UserStructure } from "../models/api";
 import { getICSfromUser } from '../middleware/ics';
 
 exports.updateProfile = async (req: Request, res: Response, next: any) => {
-	const profile: Profile = req.body;
+	const profile: ProfileStructure  = req.body;
 	try {
 		const user: IUser | null = await verifyToken(req, res);
 		user.profile.firstname = profile.firstname;
@@ -33,7 +33,8 @@ exports.updateProfile = async (req: Request, res: Response, next: any) => {
 exports.getUser = async (req: Request, res: Response, next: any) => {
 	try {
 		const user: IUser | null = await verifyToken(req, res);
-		res.status(200).json(JSON.stringify(user)).end();
+		const userstructure: UserStructure = user.mapToUserStructure();
+		res.status(200).json(userstructure).end();
 	} catch (error) {
 		if (error instanceof ErrorResponse) {
 			return next(new ErrorResponse(error.message, error.statusCode));
@@ -41,10 +42,6 @@ exports.getUser = async (req: Request, res: Response, next: any) => {
 		return next(new ErrorResponse(error.message, 400));
 	}
 };
-
-// ------------------------------------------------------------------------------------------------------------------------------------------------ //
-
-
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
@@ -74,3 +71,6 @@ exports.deleteAccount = async (req: Request, res: Response, next: any) => {
 		return next(new ErrorResponse(error.message, 400));
 	}
 };
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+

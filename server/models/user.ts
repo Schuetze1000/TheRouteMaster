@@ -2,6 +2,7 @@ import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { Schema, model, Document } from "mongoose";
+import { UserStructure } from './api';
 
 const UserSchema: Schema = new Schema({
 	username: {
@@ -50,6 +51,7 @@ export interface IUser extends Document {
 	getResetPasswordToken(): string;
 	getSignedToken(): string;
 	matchPassword(password: string): boolean | PromiseLike<boolean>;
+	mapToUserStructure(): UserStructure;
 	resetPasswordToken: string | undefined;
 	resetPasswordExpire: string | undefined;
 	username: string;
@@ -92,10 +94,19 @@ UserSchema.methods.getResetPasswordToken = function () {
 	return resetToken;
 };
 
-UserSchema.methods.getSignedToken = function (password: string) {
+UserSchema.methods.getSignedToken = function () {
 	return jwt.sign({ id: this._id }, process.env.JWT_SECRET!, {
 		expiresIn: process.env.JWT_EXPIRE,
 	});
+};
+
+UserSchema.methods.mapToUserStructure = function() {
+	const userstructure : UserStructure = {
+		username: this.username,
+		email: this.email,
+		profile: this.profile
+	};
+	return userstructure;
 };
 
 const User = model<IUser>("User", UserSchema);
