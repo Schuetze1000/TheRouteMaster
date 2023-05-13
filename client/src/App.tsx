@@ -7,6 +7,7 @@ import HowToUse from './pages/howToUse/howToUse';
 import Imprint from './pages/imprint/imprint';
 import Settings from './pages/settings/settings';
 import Account from './pages/account/account';
+import Registration from './pages/registration/registration';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Landing />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/registration" element={<Registration />} />
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/howtouse" element={<HowToUse />} />
         <Route path="/imprint" element={<Imprint />} />

@@ -35,6 +35,9 @@ module.exports = {
         "theme-1-5": "#379683",
       },
     },
+    fontFamily: {
+      sans: ['Roboto']
+    },
   },
   plugins: [],
 }
