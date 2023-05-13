@@ -24,7 +24,7 @@ setTimeout(() => {
 
 const swagger = fs.readFileSync('./swagger.json');
 const swagger_json = JSON.parse(swagger.toString());
-app.use('/swagger', swaggerUi.serve, swaggerUi.setup(swagger_json));
+app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swagger_json));
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/ics", require("./routes/ics"));

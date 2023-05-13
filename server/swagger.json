@@ -9,7 +9,7 @@
       "name": "GPL-3.0",
       "url": "https://www.gnu.org/licenses/gpl-3.0.en.html"
     },
-    "version": "1.0.0"
+    "version": "1.0.1"
   },
   "externalDocs": {
     "description": "Github Repository",
@@ -23,7 +23,7 @@
   "tags": [
     {
       "name": "user",
-      "description": "Everything about your Pets",
+      "description": "Main User calls",
       "externalDocs": {
         "description": "Find out more",
         "url": "https://github.com/Schuetze1000/TheRouteMaster/blob/main/server/controllers/user.ts"
@@ -31,7 +31,7 @@
     },
     {
       "name": "ics",
-      "description": "Access to Petstore orders",
+      "description": "API for the integration of the course calendar",
       "externalDocs": {
         "description": "Find out more",
         "url": "https://github.com/Schuetze1000/TheRouteMaster/blob/main/server/controllers/ics.ts"
@@ -39,7 +39,7 @@
     },
     {
       "name": "auth",
-      "description": "Operations about user",
+      "description": "All operations for authentication",
       "externalDocs": {
         "description": "Find out more",
         "url": "https://github.com/Schuetze1000/TheRouteMaster/blob/main/server/controllers/auth.ts"
@@ -249,7 +249,7 @@
           "content": {
             "application/json": {
               "schema": {
-                "$ref": "#/components/schemas/AuthProfile"
+                "$ref": "#/components/schemas/Auth_Profile"
               }
             }
           }
@@ -273,33 +273,23 @@
       }
     },
     "/auth/login": {
-      "get": {
+      "post": {
         "tags": [
           "auth"
         ],
         "summary": "Logs user into the system",
         "description": "",
         "operationId": "Auth_LoginUser",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "description": "The user-email for login",
-            "required": false,
-            "schema": {
-              "type": "string"
-            }
-          },
-          {
-            "name": "password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": false,
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "description": "User login",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth_Login"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "201": {
             "description": "successful operation",
@@ -319,24 +309,23 @@
       }
     },
     "/auth/forgotpassword": {
-      "get": {
+      "post": {
         "tags": [
           "auth"
         ],
         "summary": "Logs user into the system",
         "description": "",
         "operationId": "Auth_ForgotPassword",
-        "parameters": [
-          {
-            "name": "email",
-            "in": "query",
-            "description": "The user-email for login",
-            "required": false,
-            "schema": {
-              "type": "string"
+        "requestBody": {
+          "description": "User login",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth_ForgotPassword"
+              }
             }
           }
-        ],
+        },
         "responses": {
           "200": {
             "description": "successful operation"
@@ -499,7 +488,7 @@
           }
         }
       },
-      "AuthProfile": {
+      "Auth_Profile": {
         "type": "object",
         "properties": {
           "username": {
@@ -515,10 +504,32 @@
             "example": "changeme"
           }
         }
+      },
+      "Auth_Login": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "changeme"
+          }
+        }
+      },
+      "Auth_ForgotPassword": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          }
+        }
       }
     },
     "requestBodies": {
-      "UserProfile": {
+      "Auth_eLogin": {
         "description": "UserProfile object",
         "content": {
           "application/json": {
@@ -529,19 +540,6 @@
           "application/xml": {
             "schema": {
               "$ref": "#/components/schemas/UserProfile"
-            }
-          }
-        }
-      },
-      "UserArray": {
-        "description": "List of user object",
-        "content": {
-          "application/json": {
-            "schema": {
-              "type": "array",
-              "items": {
-                "$ref": "#/components/schemas/User"
-              }
             }
           }
         }
