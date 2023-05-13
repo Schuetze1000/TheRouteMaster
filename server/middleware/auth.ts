@@ -18,16 +18,19 @@ export const verifyToken = async (req: Request, res: Response, getUser = true) =
 
 		jwt.verify(jwt_token, process.env.JWT_SECRET!);
 		const { id, exp } = jwt.decode(jwt_token, { json: true });
-		let current_timestamp = Date.now();
+		const user: IUser | undefined = await User.findById(id);
 
-		if (exp - 300000 < current_timestamp) {
-			const user: IUser | null = await User.findById(id);
+		if (!user || !user.active) {
+			throw new ErrorResponse("Please provide a valid Token", 400);
+		}
+
+		let current_timestamp = Math.round(Date.now()/1000);
+
+		if (exp - 300 < current_timestamp) {
 			sendToken(user, 200, res);
 		}
 
 		if (getUser) {
-			const user: IUser | null = await User.findById(id);
-
 			if (!user) {
 				throw new ErrorResponse("Invalid Credentials", 401);
 			} else {

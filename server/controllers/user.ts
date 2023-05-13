@@ -50,6 +50,7 @@ exports.deactivateAccount = async (req: Request, res: Response, next: any) => {
 		const user: IUser | null = await verifyToken(req, res);
 		user.active = false;
 		await user.save();
+		res.status(200).send(`Deactivated User:${user.email}`).end();
 	} catch (error) {
 		if (error instanceof ErrorResponse) {
 			return next(new ErrorResponse(error.message, error.statusCode));
@@ -63,7 +64,9 @@ exports.deactivateAccount = async (req: Request, res: Response, next: any) => {
 exports.deleteAccount = async (req: Request, res: Response, next: any) => {
 	try {
 		const user: IUser | null = await verifyToken(req, res);
+		const usermail = user.email;
 		await user.deleteOne();
+		res.status(200).send(`Deleted User:${usermail}`).end();
 	} catch (error) {
 		if (error instanceof ErrorResponse) {
 			return next(new ErrorResponse(error.message, error.statusCode));
