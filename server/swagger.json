@@ -1,0 +1,563 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Documentation TheRouteMaster",
+    "contact": {
+      "email": "service@schuetz-andreas.dev"
+    },
+    "license": {
+      "name": "GPL-3.0",
+      "url": "https://www.gnu.org/licenses/gpl-3.0.en.html"
+    },
+    "version": "1.0.0"
+  },
+  "externalDocs": {
+    "description": "Github Repository",
+    "url": "https://github.com/Schuetze1000/TheRouteMaster"
+  },
+  "servers": [
+    {
+      "url": "https://the-routemaster.schuetz-andreas.dev/api"
+    }
+  ],
+  "tags": [
+    {
+      "name": "user",
+      "description": "Everything about your Pets",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://github.com/Schuetze1000/TheRouteMaster/blob/main/server/controllers/user.ts"
+      }
+    },
+    {
+      "name": "ics",
+      "description": "Access to Petstore orders",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://github.com/Schuetze1000/TheRouteMaster/blob/main/server/controllers/ics.ts"
+      }
+    },
+    {
+      "name": "auth",
+      "description": "Operations about user",
+      "externalDocs": {
+        "description": "Find out more",
+        "url": "https://github.com/Schuetze1000/TheRouteMaster/blob/main/server/controllers/auth.ts"
+      }
+    }
+  ],
+  "paths": {
+    "/user/updateprofile": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update User-Profile",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "User_UpdateProfile",
+        "requestBody": {
+          "description": "Updated user profile",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid Token / Error occurred"
+          },
+          "401": {
+            "description": "Invalid Credentials"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/user/getuser": {
+      "get": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Get User-Information",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "User_GetInf",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token / Error occurred"
+          },
+          "401": {
+            "description": "Invalid Credentials"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/user/deactivateaccount": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Deactivate User-Account",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "User_Deactivate",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid Token / Error occurred"
+          },
+          "401": {
+            "description": "Invalid Credentials"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/user/deleteaccount": {
+      "delete": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Delete User-Account",
+        "operationId": "User_Delete",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid Token / Error occurred"
+          },
+          "401": {
+            "description": "Invalid Credentials"
+          }
+        }
+      }
+    },
+    "/ics/getics": {
+      "get": {
+        "tags": [
+          "ics"
+        ],
+        "summary": "Get ICS-File and Hash-Value",
+        "operationId": "ICS_getICS",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ICS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token / Error occurred"
+          },
+          "401": {
+            "description": "Invalid Credentials"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/ics/gethash": {
+      "get": {
+        "tags": [
+          "ics"
+        ],
+        "summary": "Get Hash-Value of ICS-File",
+        "operationId": "ICS_getHash",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "cookie",
+            "description": "Valid JsonWebToken from /auth/login",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ICS_Hash"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token"
+          },
+          "401": {
+            "description": "Invalid Credentials"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
+    "/auth/register": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Create User-Profile",
+        "operationId": "Auth_CreateProfile",
+        "requestBody": {
+          "description": "Created user object",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AuthProfile"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Contains the session cookie named `token`. Pass this cookie back in subsequent requests.\n",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Error occurred"
+          }
+        }
+      }
+    },
+    "/auth/login": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "Auth_LoginUser",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The user-email for login",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "headers": {
+              "Set-Cookie": {
+                "description": "Contains the session cookie named `token`. Pass this cookie back in subsequent requests.\n",
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid email/password supplied"
+          }
+        }
+      }
+    },
+    "/auth/forgotpassword": {
+      "get": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "Auth_ForgotPassword",
+        "parameters": [
+          {
+            "name": "email",
+            "in": "query",
+            "description": "The user-email for login",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Invalid email supplied"
+          }
+        }
+      }
+    },
+    "/auth/resetpassword/:resetToken": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Logs user into the system",
+        "description": "",
+        "operationId": "Auth_ResetPassword",
+        "parameters": [
+          {
+            "name": "password",
+            "in": "query",
+            "description": "The password for login in clear text",
+            "required": false,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful operation"
+          },
+          "400": {
+            "description": "Error occurred"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "UserProfile": {
+        "type": "object",
+        "properties": {
+          "firstname": {
+            "type": "string",
+            "example": "John"
+          },
+          "surname": {
+            "type": "string",
+            "example": "James"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "homeaddress": {
+            "type": "object",
+            "properties": {
+              "number": {
+                "type": "string",
+                "example": "7-9"
+              },
+              "street": {
+                "type": "string",
+                "example": "Coblitzallee"
+              },
+              "zip": {
+                "type": "string",
+                "example": 68163
+              },
+              "city": {
+                "type": "string",
+                "example": "Mannheim"
+              },
+              "state": {
+                "type": "string",
+                "example": "Baden-Württemberg"
+              },
+              "country": {
+                "type": "string",
+                "example": "Germany"
+              }
+            }
+          }
+        }
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "firstname": {
+            "type": "string",
+            "example": "John"
+          },
+          "surname": {
+            "type": "string",
+            "example": "James"
+          },
+          "avatar": {
+            "type": "string"
+          },
+          "homeaddress": {
+            "type": "object",
+            "properties": {
+              "number": {
+                "type": "string",
+                "example": "7-9"
+              },
+              "street": {
+                "type": "string",
+                "example": "Coblitzallee"
+              },
+              "zip": {
+                "type": "string",
+                "example": 68163
+              },
+              "city": {
+                "type": "string",
+                "example": "Mannheim"
+              },
+              "state": {
+                "type": "string",
+                "example": "Baden-Württemberg"
+              },
+              "country": {
+                "type": "string",
+                "example": "Germany"
+              }
+            }
+          }
+        }
+      },
+      "ICS": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "data": {
+            "type": "string"
+          },
+          "hash": {
+            "type": "string"
+          }
+        }
+      },
+      "ICS_Hash": {
+        "type": "object",
+        "properties": {
+          "hash": {
+            "type": "string"
+          }
+        }
+      },
+      "AuthProfile": {
+        "type": "object",
+        "properties": {
+          "username": {
+            "type": "string",
+            "example": "theUser"
+          },
+          "email": {
+            "type": "string",
+            "example": "john@email.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "changeme"
+          }
+        }
+      }
+    },
+    "requestBodies": {
+      "UserProfile": {
+        "description": "UserProfile object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "$ref": "#/components/schemas/UserProfile"
+            }
+          },
+          "application/xml": {
+            "schema": {
+              "$ref": "#/components/schemas/UserProfile"
+            }
+          }
+        }
+      },
+      "UserArray": {
+        "description": "List of user object",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          }
+        }
+      }
+    },
+    "securitySchemes": {
+      "cookieAuth": {
+        "type": "apiKey",
+        "in": "cookie",
+        "name": "Token"
+      }
+    }
+  },
+  "security": [
+    {
+      "cookieAuth": []
+    }
+  ]
+}
