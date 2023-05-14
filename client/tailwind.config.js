@@ -13,6 +13,9 @@ module.exports = {
   darkMode: 'class',
   theme: {
     extend: {
+      backgroundImage:{
+        'landing': "url('../public/landing.jpg')"
+      },
       colors: {
         primary: "#202225",
         secondary: "#5865f2",
