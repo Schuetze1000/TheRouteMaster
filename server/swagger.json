@@ -336,7 +336,7 @@
         }
       }
     },
-    "/auth/resetpassword/:resetToken": {
+    "/auth/resetpassword/{resetToken}": {
       "post": {
         "tags": [
           "auth"
@@ -346,15 +346,25 @@
         "operationId": "Auth_ResetPassword",
         "parameters": [
           {
-            "name": "password",
-            "in": "query",
-            "description": "The password for login in clear text",
-            "required": false,
+            "name": "resetToken",
+            "in": "path",
+            "description": "The restentoken get from email by /auth/forgotpassword",
+            "required": true,
             "schema": {
               "type": "string"
             }
           }
         ],
+        "requestBody": {
+          "description": "User login",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth_ResetPassword"
+              }
+            }
+          }
+        },
         "responses": {
           "200": {
             "description": "successful operation"
@@ -524,6 +534,15 @@
           "email": {
             "type": "string",
             "example": "john@email.com"
+          }
+        }
+      },
+      "Auth_ResetPassword": {
+        "type": "object",
+        "properties": {
+          "password": {
+            "type": "string",
+            "example": "changeme"
           }
         }
       }

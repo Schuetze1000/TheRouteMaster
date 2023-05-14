@@ -32,7 +32,7 @@ export async function UpdateICS() {
 		[name_list, uid_list] = await getUIDS();
 
 		// Get all Documents their uid and active value
-		const ics_data: IICS_Data[] | null = await ICS.find({}, { uid: 1, active: 1, _id: 0 });
+		const ics_data: IICS_Data[] | null = await ICS.find({}, "uid active -_id");
 
 		// Create progressbar
 		const bar1 = await createBar(ics_data.length, "Search for ICS to Update", "Files");

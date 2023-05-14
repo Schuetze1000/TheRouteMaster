@@ -23,7 +23,7 @@ services:
   mongo:
     image: mongo:latest
     environment:
-      - MONGO_INITDB_DATABASE: TheRouteMaster
+      - MONGO_INITDB_DATABASE=TheRouteMaster
     volumes:
       - data-volume:/data/db
     ports:

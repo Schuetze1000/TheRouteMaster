@@ -4,6 +4,7 @@ import ICS, { IICS_Data } from "../models/ics";
 import User, { IUser } from "../models/user";
 import { verifyToken } from "../middleware/auth";
 import { getICSfromUser } from "../middleware/ics";
+import ICS_Data from "../models/ics";
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
@@ -40,3 +41,16 @@ exports.getHash = async (req: Request, res: Response, next: any) => {
 };
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
+exports.getAvailableICS = async (req: Request, res: Response, next: any) => {
+	try {
+		verifyToken(req,res, false);
+		const data:IICS_Data[] = await ICS_Data.find({}).select("name uid -_id");
+		res.status(200).json(data).end();
+	} catch (error) {
+		if (error instanceof ErrorResponse) {
+			return next(new ErrorResponse(error.message, error.statusCode));
+		}
+		return next(new ErrorResponse(error.message, 400));
+	}
+};
