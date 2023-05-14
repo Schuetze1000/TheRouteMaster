@@ -1,8 +1,10 @@
+import { IUser } from './user';
+
 export interface ProfileStructure {
 	firstname: string;
 	surname: string;
 	avatar: string;
-	homeaddress: HomeaddressStructure ;
+	homeaddress: HomeaddressStructure;
 }
 
 export interface HomeaddressStructure {

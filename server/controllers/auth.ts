@@ -28,7 +28,6 @@ exports.login = async (req: Request, res: Response, next: any) => {
 		
         sendToken(user, 201, res);
 		res.end();
-
 	} catch (error: any) {
 		return next(new ErrorResponse(error.message, 400));
 	}
@@ -45,7 +44,8 @@ exports.register = async (req: Request, res: Response, next: any) => {
 			password,
 		});
 		
-        sendToken(user,201,res)
+        sendToken(user,201,res);
+		res.end();
 	} catch (error: any) {
 		next(error);
 	}
@@ -79,7 +79,7 @@ exports.forgotPassword = async (req: Request, res: Response, next: any) => {
 			res.status(200).json({
 				success: true,
 				data: "Email Sent",
-			});
+			}).end();
 		} catch (error) {
 			user.resetPasswordToken = undefined;
 			user.resetPasswordExpire = undefined;
@@ -113,7 +113,7 @@ exports.resetPassword = async (req: Request, res: Response, next: any) => {
 		res.status(201).json({
 			success: true,
 			data: "Password Reset successful",
-		});
+		}).end();
 	} catch (error) {
 		next(error);
 	}

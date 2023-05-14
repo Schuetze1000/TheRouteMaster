@@ -1,36 +1,30 @@
 import Express from "express";
-import Morgan from "morgan";
-import Mongoose from "mongoose";
 import cookieParser from "cookie-parser";
-import { json } from "body-parser";
 import { connectDB } from "./config/db";
 import { ICSUpdateAll } from "./middleware/ics";
 import swaggerUi from 'swagger-ui-express';
-import  fs from  'fs';
+import fs from  'fs';
+import dotenv from 'dotenv';
+import * as path from "path";
 
-
+dotenv.config({path: path.resolve( __dirname,".env")});
 
 const app = Express();
 const port = process.env.PORT || 5000;
-//const errorhandler = require('./middleware/error');
 app.use(cookieParser());
 app.use(Express.json());
 
-connectDB();
-
-setTimeout(() => {
+connectDB().then(() => {
 	ICSUpdateAll();
-}, 1000);
+});
 
-const swagger = fs.readFileSync('./swagger.json');
+const swagger = fs.readFileSync('./data/swagger.json');
 const swagger_json = JSON.parse(swagger.toString());
 app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swagger_json));
 
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/ics", require("./routes/ics"));
 app.use("/api/user", require("./routes/user"));
-
-//app.use(errorhandler);
 
 const server = app.listen(port, () => {
 	console.log(`Server listen on ${port}`);

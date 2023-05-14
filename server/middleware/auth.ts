@@ -37,8 +37,7 @@ export const verifyToken = async (req: Request, res: Response, getUser = true) =
 				return user;
 			}
 		}
-
-		return undefined;
+		return id;
 	} catch (error) {
 		if (error instanceof jwt.JsonWebTokenError) {
 			throw new ErrorResponse(error.message, 401);

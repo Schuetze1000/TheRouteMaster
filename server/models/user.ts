@@ -2,7 +2,7 @@ import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { Schema, model, Document } from "mongoose";
-import { UserStructure } from './api';
+import { UserStructure, ProfileStructure } from './api';
 
 const UserSchema: Schema = new Schema({
 	username: {
@@ -51,7 +51,8 @@ export interface IUser extends Document {
 	getResetPasswordToken(): string;
 	getSignedToken(): string;
 	matchPassword(password: string): boolean | PromiseLike<boolean>;
-	mapToUserStructure(): UserStructure;
+	mapUserStructure(): UserStructure;
+	updateProfile(profile:ProfileStructure):boolean;
 	resetPasswordToken: string | undefined;
 	resetPasswordExpire: string | undefined;
 	username: string;
@@ -100,7 +101,7 @@ UserSchema.methods.getSignedToken = function () {
 	});
 };
 
-UserSchema.methods.mapToUserStructure = function() {
+UserSchema.methods.mapUserStructure = function() {
 	const userstructure : UserStructure = {
 		username: this.username,
 		email: this.email,
@@ -108,6 +109,22 @@ UserSchema.methods.mapToUserStructure = function() {
 	};
 	return userstructure;
 };
+
+UserSchema.methods.updateProfile = function(profile: ProfileStructure) {
+	this.profile = {
+		firstname: profile.firstname,
+		surname: profile.surname,
+		avatar: profile.avatar,
+		homeaddress: {
+			number: profile.homeaddress.number,
+			street: profile.homeaddress.street,
+			zip: profile.homeaddress.zip,
+			city: profile.homeaddress.city,
+			state: profile.homeaddress.state,
+			country: profile.homeaddress.country
+		}	
+	};
+}
 
 const User = model<IUser>("User", UserSchema);
 export default User;
