@@ -237,6 +237,38 @@
         ]
       }
     },
+    "/ics/getavailableics": {
+      "get": {
+        "tags": [
+          "ics"
+        ],
+        "summary": "Get ICS-File and Hash-Value",
+        "operationId": "ICS_getAvailableICS",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AICS"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token / Error occurred"
+          },
+          "401": {
+            "description": "Invalid Credentials"
+          }
+        },
+        "security": [
+          {
+            "cookieAuth": []
+          }
+        ]
+      }
+    },
     "/auth/register": {
       "post": {
         "tags": [
@@ -480,7 +512,8 @@
         "type": "object",
         "properties": {
           "name": {
-            "type": "string"
+            "type": "string",
+            "example": "WIMBIT19 A"
           },
           "data": {
             "type": "string"
@@ -495,6 +528,19 @@
         "properties": {
           "hash": {
             "type": "string"
+          }
+        }
+      },
+      "AICS": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "WIMBIT19 A"
+          },
+          "uid": {
+            "type": "string",
+            "example": "7738001"
           }
         }
       },
