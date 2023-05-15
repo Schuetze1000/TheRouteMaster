@@ -15,10 +15,10 @@ exports.login = async (req: Request, res: Response, next: any) => {
 	try {
 		const user: IUser | null = await User.findOne({ email }).select("+password");
 		if (!user) {
-			return next(new ErrorResponse("Account deactivated", 403));
+			return next(new ErrorResponse("Invalid Credentials", 403));
 		}
 		if(!user.active) {
-			return next(new ErrorResponse("Invalid Credentials", 401));
+			return next(new ErrorResponse("Account deactivated", 401));
 		}
 
 		const isMatch: boolean = await user.matchPassword(password);

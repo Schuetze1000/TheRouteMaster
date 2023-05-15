@@ -20,6 +20,7 @@ services:
       - NODE_ENV=development
     networks:
       - theroutemaster-network
+    restart: always
   mongo:
     image: mongo:latest
     environment:
@@ -30,6 +31,7 @@ services:
       - "27017:27017"
     networks:
       - theroutemaster-network
+    restart: always
   client:
     build:
       context: ./client
@@ -46,6 +48,7 @@ services:
       - "3000:3000"
     networks:
       - theroutemaster-network
+    restart: always
 
 networks:
     theroutemaster-network:
