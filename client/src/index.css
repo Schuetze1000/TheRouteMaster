@@ -54,7 +54,7 @@
             text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent 
             focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none 
             peer-focus:text-primary dark:border-neutral-600 dark:text-neutral-200 dark:focus:border-primary dark:peer-focus:text-primary 
-            [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem] font-sans;
+            [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem] font-sans hover:border-neutral-400;
   }
 
   .button {
