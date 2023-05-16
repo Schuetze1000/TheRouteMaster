@@ -4,27 +4,33 @@ import User, { IUser } from "../models/user";
 import sendEmail from "../utils/emailSender";
 import crypto from "crypto";
 import { sendToken } from "../middleware/auth";
+import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 exports.login = async (req: Request, res: Response, next: any) => {
-	const { identifier, password } = req.body;
-	if (!identifier || !password) {
-		return next(new ErrorResponse("Please provide a valid email and password", 400));
-	}
+	const { identifier, password, retoken } = req.body;
 	try {
+		if (!identifier || !password) {
+			return next(new ErrorResponse("Please provide a valid email and password", 400));
+		}
+
+		const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${retoken}`);
+		if (!response.data.success) {
+			next(new ErrorResponse("Invalid Credentials", 403))
+		}
+
 		var user: IUser | null;
 		if (identifier.includes("@")) {
-			user = await User.findOne({ email:identifier }).select("+password");
+			user = await User.findOne({ email: identifier }).select("+password");
+		} else {
+			user = await User.findOne({ username: identifier }).select("+password");
 		}
-		else {
-			user = await User.findOne({ username:identifier }).select("+password");
-		}
-		
+
 		if (!user) {
 			return next(new ErrorResponse("Invalid Credentials", 403));
 		}
-		if(!user.active) {
+		if (!user.active) {
 			return next(new ErrorResponse("Account deactivated", 401));
 		}
 
@@ -32,8 +38,8 @@ exports.login = async (req: Request, res: Response, next: any) => {
 		if (!isMatch) {
 			return next(new ErrorResponse("Invalid Credentials", 401));
 		}
-		
-        sendToken(user, 201, res);
+
+		sendToken(user, 201, res);
 		res.end();
 	} catch (error: any) {
 		return next(new ErrorResponse(error.message, 400));
@@ -50,8 +56,8 @@ exports.register = async (req: Request, res: Response, next: any) => {
 			email,
 			password,
 		});
-		
-        sendToken(user,201,res);
+
+		sendToken(user, 201, res);
 		res.end();
 	} catch (error: any) {
 		next(error);
@@ -83,10 +89,13 @@ exports.forgotPassword = async (req: Request, res: Response, next: any) => {
 				text: message,
 				subject: message,
 			});
-			res.status(200).json({
-				success: true,
-				data: "Email Sent",
-			}).end();
+			res
+				.status(200)
+				.json({
+					success: true,
+					data: "Email Sent",
+				})
+				.end();
 		} catch (error) {
 			user.resetPasswordToken = undefined;
 			user.resetPasswordExpire = undefined;
@@ -117,10 +126,13 @@ exports.resetPassword = async (req: Request, res: Response, next: any) => {
 		user.resetPasswordToken = undefined;
 		user.resetPasswordExpire = undefined;
 		await user.save();
-		res.status(201).json({
-			success: true,
-			data: "Password Reset successful",
-		}).end();
+		res
+			.status(201)
+			.json({
+				success: true,
+				data: "Password Reset successful",
+			})
+			.end();
 	} catch (error) {
 		next(error);
 	}
