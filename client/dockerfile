@@ -12,7 +12,6 @@ COPY package*.json ./
 
 RUN npm install --silent
 RUN npm install --global --silent serve
-RUN npm run build
 
 # copy local files to app folder
 COPY . .
