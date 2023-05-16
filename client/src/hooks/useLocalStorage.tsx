@@ -27,7 +27,6 @@ const useLocalStorage = (key: string, initialValue: string) => {
       // Save state
       window.localStorage.setItem(key, JSON.stringify(valueToStore));
     } catch (error) {
-      // A more advanced implementation would handle the error case
       console.log(error);
     }
   }, [key, storedValue]);

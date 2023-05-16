@@ -45,3 +45,29 @@ export const verifyToken = async (req: Request, res: Response, getUser = true) =
 		throw new ErrorResponse(error.message, 400);
 	}
 };
+
+export const verifyAndMatch = async (req: Request, res: Response, password:string, securepw = true) => {
+	try {
+		const user_id = await verifyToken(req, res, false);
+		const user: IUser | null = await User.findOne({ _id:user_id }).select("+password");
+		const isMatch: boolean = await user.matchPassword(password);
+
+		if (!isMatch) {
+			throw new ErrorResponse("Invalid Credentials", 401);
+		}
+		
+		if (securepw) {
+			const outUser: IUser | null = await User.findOne({ _id:user_id });
+			return outUser;
+		}
+		else {
+			return user;
+		}
+	} catch (error) {
+		if (error instanceof ErrorResponse) {
+			throw new ErrorResponse(error.message, error.statusCode);
+		}
+		throw new ErrorResponse(error.message, 400);
+	}
+
+}

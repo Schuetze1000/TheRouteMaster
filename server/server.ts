@@ -6,13 +6,21 @@ import swaggerUi from 'swagger-ui-express';
 import fs from  'fs';
 import dotenv from 'dotenv';
 import * as path from "path";
+import cors from 'cors';
 
 dotenv.config({path: path.resolve( __dirname,".env")});
+
+const allowedOrigins = ['http://localhost:3000'];
+
+const options: cors.CorsOptions = {
+  origin: allowedOrigins
+};
 
 const app = Express();
 const port = process.env.PORT || 5000;
 app.use(cookieParser());
 app.use(Express.json());
+app.use(cors(options));
 
 connectDB().then(() => {
 	ICSUpdateAll();

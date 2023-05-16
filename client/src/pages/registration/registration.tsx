@@ -1,6 +1,7 @@
 import { useForm } from "../../hooks/useForm";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import Back_landing from "../../components/Back_landing";
 
 function Registration() {
     const initialState = {
@@ -35,6 +36,7 @@ function Registration() {
         <body className="h-screen">
             <div
                 className="relative overflow-hidden bg-cover bg-no-repeat h-full w-full text-center bg-landing m-auto object-none object-center">
+            <Back_landing />
             <div
                 className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed"
                 style={{backgroundColor: "rgba(0, 0, 0, 0.8)"}}>
