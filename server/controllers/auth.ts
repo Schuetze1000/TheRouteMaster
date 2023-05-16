@@ -17,7 +17,7 @@ exports.login = async (req: Request, res: Response, next: any) => {
 
 		const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${retoken}`);
 		if (!response.data.success) {
-			next(new ErrorResponse("Invalid Credentials", 403))
+			next(new ErrorResponse("Invalid reCaptcha", 403))
 		}
 
 		var user: IUser | null;
@@ -49,8 +49,13 @@ exports.login = async (req: Request, res: Response, next: any) => {
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 exports.register = async (req: Request, res: Response, next: any) => {
-	const { username, email, password } = req.body;
+	const { username, email, password, retoken } = req.body;
 	try {
+		const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${retoken}`);
+		if (!response.data.success) {
+			next(new ErrorResponse("Invalid reCaptcha", 403))
+		}
+
 		const user: IUser = await User.create({
 			username,
 			email,
