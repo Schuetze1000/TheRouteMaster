@@ -2,6 +2,7 @@ import { useForm } from "../../hooks/useForm";
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import Back_landing from "../../components/Back_landing";
+import axios from "axios";
 
 function Registration() {
     const initialState = {
@@ -10,12 +11,32 @@ function Registration() {
     };
 
     const { onChange, onSubmit, values } = useForm(
-        loginUserCallback,
+        registerUserCallback,
         initialState,
     );
-
-    async function loginUserCallback() {
-        // sendet "values" zur Datenbank
+    
+    async function registerUserCallback() {
+        const username_input = (document.getElementById('username') as HTMLInputElement | null)?.value;
+        const email_input = (document.getElementById('email') as HTMLInputElement | null)?.value;
+        const password_input = (document.getElementById('password') as HTMLInputElement | null)?.value;
+        const repeat_password_input = (document.getElementById('repeat_password') as HTMLInputElement | null)?.value;
+        if (repeat_password_input == password_input) {
+            let options = {
+                method: 'POST',
+                url: "/auth/register",
+                data: {
+                    username : username_input,
+                    email: email_input,
+                    password: password_input
+                },
+                withCredentials: true
+            };
+    
+            await axios(options);
+        }
+        else {
+            // Password are not the same error
+        }
     };
 
     const LoginButton = () => {

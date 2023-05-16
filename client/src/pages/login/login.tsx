@@ -19,14 +19,9 @@ function Login() {
     async function loginUserCallback() {
         const email_input = (document.getElementById('email') as HTMLInputElement | null)?.value;
         const password_input = (document.getElementById('password') as HTMLInputElement | null)?.value;
-
         let options = {
             method: 'POST',
-            url: "https://the-routemaster.schuetz-andreas.dev/api/auth/login",
-            headers: {
-                'Accept': '*/*',
-                'Content-Type': 'application/json;charset=UTF-8',
-            },
+            url: "/auth/login",
             data: {
                 email: email_input,
                 password: password_input

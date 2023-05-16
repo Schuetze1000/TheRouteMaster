@@ -93,9 +93,11 @@ export async function UpdateActiveICS() {
 	const bar1 = await createBar(user.length, "Get all uid of all active ICS", "Entries");
 
 	for (let x = 0; x < user.length; x++) {
-		const str_exists = active_uid_list.indexOf(user[x].ics_uid);
-		if (str_exists == -1) {
-			active_uid_list.push(user[x].ics_uid);
+		if (user[x].ics_uid) {
+			const str_exists = active_uid_list.indexOf(user[x].ics_uid);
+			if (str_exists == -1) {
+				active_uid_list.push(user[x].ics_uid);
+			}
 		}
 		bar1.increment();
 	}
