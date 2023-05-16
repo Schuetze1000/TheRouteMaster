@@ -8,12 +8,19 @@ import { sendToken } from "../middleware/auth";
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 exports.login = async (req: Request, res: Response, next: any) => {
-	const { email, password } = req.body;
-	if (!email || !password) {
+	const { identifier, password } = req.body;
+	if (!identifier || !password) {
 		return next(new ErrorResponse("Please provide a valid email and password", 400));
 	}
 	try {
-		const user: IUser | null = await User.findOne({ email }).select("+password");
+		var user: IUser | null;
+		if (identifier.includes("@")) {
+			user = await User.findOne({ email:identifier }).select("+password");
+		}
+		else {
+			user = await User.findOne({ username:identifier }).select("+password");
+		}
+		
 		if (!user) {
 			return next(new ErrorResponse("Invalid Credentials", 403));
 		}
