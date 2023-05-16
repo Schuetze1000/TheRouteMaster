@@ -3,6 +3,7 @@ import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
 import Back_landing from "../../components/Back_landing";
 import axios from "axios";
+import Navbar_credentials from "../../components/Navbar_credentials";
 
 function Registration() {
     const initialState = {
@@ -55,6 +56,7 @@ function Registration() {
 
     return (
         <body className="h-screen">
+            <Navbar_credentials />
             <div
                 className="relative overflow-hidden bg-cover bg-no-repeat h-full w-full text-center bg-landing m-auto object-none object-center">
             <Back_landing />

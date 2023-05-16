@@ -1,4 +1,4 @@
-import Navbar from "../../components/Navbar";
+import Navbar_landing from "../../components/Navbar_landing";
 import { useNavigate } from "react-router-dom";
 import DarkMode_switch from "../../components/DarkMode_switch";
 
@@ -33,6 +33,7 @@ function Landing() {
 
     return (
         <body className="h-screen">
+            <Navbar_landing />
             <div className="absolute top-0 left-2 z-50">
                 <DarkMode_switch />
             </div>
