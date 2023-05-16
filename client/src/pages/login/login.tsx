@@ -30,7 +30,8 @@ function Login() {
             data: {
                 email: email_input,
                 password: password_input
-            }
+            },
+            withCredentials: true
         };
 
         await axios(options);

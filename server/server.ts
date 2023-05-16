@@ -13,7 +13,9 @@ dotenv.config({path: path.resolve( __dirname,".env")});
 const allowedOrigins = ['http://localhost:3000'];
 
 const options: cors.CorsOptions = {
-  origin: allowedOrigins
+  origin: allowedOrigins,
+  methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
+  credentials: true
 };
 
 const app = Express();
