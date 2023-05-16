@@ -38,7 +38,7 @@ services:
       dockerfile: Dockerfile
     image: theroutemaster_app-client
     container_name: theroutemaster_app-react-client
-    command: npm run start
+    command: serve -s build
     volumes:
       - ./client/:/usr/theroutemaster_app
       - /usr/theroutemaster_app/node_modules
