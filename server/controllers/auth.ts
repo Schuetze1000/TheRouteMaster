@@ -9,13 +9,13 @@ import axios from "axios";
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 exports.login = async (req: Request, res: Response, next: any) => {
-	const { identifier, password, retoken } = req.body;
+	const { identifier, password, reToken } = req.body;
 	try {
-		if (!identifier || !password) {
-			return next(new ErrorResponse("Please provide a valid email and password", 400));
+		if (!identifier || !password || !reToken) {
+			return next(new ErrorResponse("Please provide a valid email, password and reToken", 400));
 		}
 
-		const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${retoken}`);
+		const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${reToken}`);
 		if (!response.data.success) {
 			next(new ErrorResponse("Invalid reCaptcha", 403))
 		}
@@ -49,9 +49,12 @@ exports.login = async (req: Request, res: Response, next: any) => {
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 exports.register = async (req: Request, res: Response, next: any) => {
-	const { username, email, password, retoken } = req.body;
+	const { username, email, password, reToken } = req.body;
 	try {
-		const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${retoken}`);
+		if (!username || !email || !password || !reToken) {
+			next(new ErrorResponse("Please provide a valid username, email, password and reToken", 400));
+		}
+		const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${reToken}`);
 		if (!response.data.success) {
 			next(new ErrorResponse("Invalid reCaptcha", 403))
 		}
