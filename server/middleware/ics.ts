@@ -105,7 +105,7 @@ export async function UpdateActiveICS() {
 	bar1.stop();
 
 	// ---------------- Deactivate all now unused ICS-Files ---------------- //
-	const all_ics: IICS_Data[] | null = await User.find({ uid: true });
+	const all_ics: IICS_Data[] | null = await ICS.find({ active: true });
 	const bar2 = await createBar(all_ics.length, "Update de-active ICS", "Entries");
 
 	for (let x = 0; x < all_ics.length; x++) {

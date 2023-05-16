@@ -28,6 +28,10 @@ connectDB().then(() => {
 	ICSUpdateAll();
 });
 
+setInterval(() => {
+	ICSUpdateAll();
+  }, 900000);
+
 const swagger = fs.readFileSync('./data/swagger.json');
 const swagger_json = JSON.parse(swagger.toString());
 app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swagger_json));
