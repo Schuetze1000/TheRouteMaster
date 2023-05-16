@@ -10,10 +10,10 @@ import cors from 'cors';
 
 dotenv.config({path: path.resolve( __dirname,".env")});
 
-const allowedOrigins = ['http://localhost:3000'];
+const allowedOrigins = ['http://localhost:3000', 'https://the-routemaster.schuetz-andreas.dev'];
 
 const options: cors.CorsOptions = {
-  origin: "*",
+  origin: allowedOrigins,
   methods: ['POST', 'PUT', 'GET', 'OPTIONS', 'HEAD'],
   credentials: true
 };
