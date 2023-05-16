@@ -1,10 +1,10 @@
 import { IoMdSettings, IoMdPerson, IoIosToday, IoIosSchool, IoMdContrast, IoMdInformationCircle } from "react-icons/io"
 import { useNavigate } from "react-router-dom";
-import { useDarkMode } from "usehooks-ts";
+import useColorMode from "../hooks/useColorMode";
 
 const Navbar = () => {
     return (
-        <div className="fixed top-0 h-full w-16 m-0 flex flex-col bg-theme-1-3 text-white shadow-lg z-50">
+        <div className="fixed top-0 h-full w-16 m-0 flex flex-col bg-theme-1-3 dark:bg-red-500 text-white shadow-lg z-50">
             
             <NavbarIconAccount icon={<IoMdPerson size="28" />} />
             <Divider/>
@@ -79,12 +79,12 @@ const NavbarIconImprint = ({ icon, text = "Imprint" }) => {
 };
 
 const NavbarIconDark = ({ icon, text = "Switch Mode" }) => {
-    const { isDarkMode, toggle, enable, disable } = useDarkMode()
+    const [colorMode, setColorMode] = useColorMode();
 
     return (
-        <div className="navbar-icon group" onClick={toggle}>
+        <div className="navbar-icon group" onClick={() => setColorMode(colorMode === "light" ? "dark" : "light")}>
             {icon}
-            <p>Current theme: {isDarkMode ? 'dark' : 'light'}</p>
+            <p>Current theme: </p>
 
             <span className="navbar-text group-hover:scale-100">
                 {text}

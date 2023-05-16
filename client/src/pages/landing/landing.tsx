@@ -1,5 +1,6 @@
 import Navbar from "../../components/Navbar";
 import { useNavigate } from "react-router-dom";
+import DarkMode_switch from "../../components/DarkMode_switch";
 
 function Landing() {
     const LoginButton = () => {
@@ -32,8 +33,11 @@ function Landing() {
 
     return (
         <body className="h-screen">
+            <div className="absolute top-0 left-2 z-50">
+                <DarkMode_switch />
+            </div>
             <div className="absolute top-0 left-3/4 z-50">
-                <p className="text-white">Hier kommt das aktulle Mannheim Wetter hin:</p>
+                <p className="text-white dark:text-red-500">Hier kommt das aktulle Mannheim Wetter hin:</p>
             </div>
             <div
                 className="relative overflow-hidden bg-cover bg-no-repeat h-full w-full text-center bg-landing m-auto object-none object-center">
