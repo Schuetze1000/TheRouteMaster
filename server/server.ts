@@ -4,9 +4,9 @@ import { connectDB } from "./config/db";
 import { ICSUpdateAll } from "./middleware/ics";
 import swaggerUi from 'swagger-ui-express';
 import fs from  'fs';
-import dotenv from 'dotenv';
 import * as path from "path";
 import cors from 'cors';
+import dotenv from 'dotenv';
 
 dotenv.config({path: path.resolve( __dirname,".env")});
 
