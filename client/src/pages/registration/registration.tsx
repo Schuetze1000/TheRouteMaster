@@ -1,6 +1,5 @@
 import { useForm } from "../../hooks/useForm";
 import Navbar from "../../components/Navbar";
-import { useNavigate } from "react-router-dom";
 import Back_landing from "../../components/Back_landing";
 import axios from "axios";
 import Navbar_credentials from "../../components/Navbar_credentials";
@@ -46,8 +45,6 @@ function Registration() {
     };
 
     const LoginButton = () => {
-        const navigate = useNavigate();
-        const handleClick = () => navigate("/login");
         const Click = () => {
             window.location.href = "/login";
         }

@@ -1,11 +1,9 @@
 import { useForm } from "../../hooks/useForm";
 import Navbar from "../../components/Navbar";
-import { useNavigate } from "react-router-dom";
 import Back_landing from "../../components/Back_landing";
 import axios from "axios";
 import Navbar_credentials from "../../components/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
-import { render } from '@testing-library/react';
 
 
 let captchaRef;
@@ -43,8 +41,6 @@ function Login() {
     };
 
     const RegistrationButton = () => {
-        const navigate = useNavigate();
-        const handleClick = () => navigate("/registration");
         const Click = () => {
             window.location.href = "/registration";
         }

@@ -1,11 +1,8 @@
 import Navbar_landing from "../../components/Navbar_landing";
-import { useNavigate } from "react-router-dom";
 import DarkMode_switch from "../../components/DarkMode_switch";
 
 function Landing() {
     const LoginButton = () => {
-        const navigate = useNavigate();
-        const handleClick = () => navigate("/login");
         const Click = () => {
             window.location.href = "/login";
         }
@@ -21,8 +18,6 @@ function Landing() {
     };
 
     const RegistrationButton = () => {
-        const navigate = useNavigate();
-        const handleClick = () => navigate("/registration");
         const Click = () => {
             window.location.href = "/registration";
         }
