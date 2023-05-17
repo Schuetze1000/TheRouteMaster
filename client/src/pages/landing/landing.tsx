@@ -6,11 +6,14 @@ function Landing() {
     const LoginButton = () => {
         const navigate = useNavigate();
         const handleClick = () => navigate("/login");
+        const Click = () => {
+            window.location.href = "/login";
+        }
     
         return (
             <button
                 type="button"
-                onClick={handleClick}
+                onClick={Click}
                 className="rounded-3xl hover:rounded-xl hover:border-neutral-400 hover:bg-neutral-600 hover:bg-opacity-70 active:border-neutral-600 active:bg-neutral-800 active:duration-100 transition-all duration-300 ease-linear cursor-pointer border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50  dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 shadow-lg">
                 Anmelden
             </button>
@@ -20,11 +23,14 @@ function Landing() {
     const RegistrationButton = () => {
         const navigate = useNavigate();
         const handleClick = () => navigate("/registration");
+        const Click = () => {
+            window.location.href = "/registration";
+        }
     
         return (
             <button
                 type="button"
-                onClick={handleClick}
+                onClick={Click}
                 className="rounded-3xl hover:rounded-xl hover:border-neutral-400 hover:bg-neutral-600 hover:bg-opacity-70 active:border-neutral-600 active:bg-neutral-800 active:duration-100 transition-all duration-300 ease-linear cursor-pointer border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50  dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 shadow-lg">
                 Registrieren
             </button>
