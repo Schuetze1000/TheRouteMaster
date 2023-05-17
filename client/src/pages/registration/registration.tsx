@@ -33,7 +33,8 @@ function Registration() {
                 data: {
                     username : username_input,
                     email: email_input,
-                    password: password_input
+                    password: password_input,
+                    retoken: token
                 },
                 withCredentials: true
             };
