@@ -33,7 +33,7 @@ function Registration() {
                     username : username_input,
                     email: email_input,
                     password: password_input,
-                    retoken: token
+                    reToken: token
                 },
                 withCredentials: true
             };
@@ -41,7 +41,7 @@ function Registration() {
             await axios(options);
         }
         else {
-            // Password are not the same error
+            //! Password are not the same error
         }
     };
 
