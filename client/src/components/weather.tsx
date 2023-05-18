@@ -158,7 +158,7 @@ function Weather() {
 				<p className="font-bold text-6xl w-auto tracking-tighter">{temperature}°C</p>
 				<div className="w-full p-5">
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Details</span>
+						<span className="text-left text-s font-bold">Details</span>
 					</div>
 					<div className="flex justify-between">
 						<span className="text-left font-normal text-xs">Gefühlt</span>
