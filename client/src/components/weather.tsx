@@ -7,11 +7,12 @@ function Weather() {
 	const [windspeed, setWindspeed] = useState(String);
 	const [weatherimg, setWeatherimg] = useState(String);
 	const [weatherstate, setWeatherstate] = useState(String);
-    const [humidity, setHumidity] = useState(String);
-    const [pressure, setPressure] = useState(String);
-    const [apparentTemperature, setApparentTemperature] = useState(String);
+	const [humidity, setHumidity] = useState(String);
+	const [pressure, setPressure] = useState(String);
+	const [apparentTemperature, setApparentTemperature] = useState(String);
+	const [winddirection, setWindDirection] = useState(String);
 	const [isLoading, setLoading] = useState(true);
-    
+
 	const weatherCodesToStr = {
 		0: "Klarer Himmel",
 		1: "Überwiegend klar",
@@ -74,6 +75,45 @@ function Weather() {
 		99: "11", //? Better Design
 	};
 
+	function windDirectionToStr(direction: number) {
+		switch (true) {
+			case 348.75 <= direction || direction < 11.25:
+				return "N";
+			case 11.25 <= direction || direction < 33.75:
+				return "NNO";
+			case 33.75 <= direction || direction < 56.25:
+				return "NO";
+			case 56.25 <= direction || direction < 78.75:
+				return "ONO";
+			case 78.75 <= direction || direction < 101.25:
+				return "O";
+			case 101.25 <= direction || direction < 123.75:
+				return "OSO";
+			case 123.75 <= direction || direction < 146.25:
+				return "SO";
+			case 146.25 <= direction || direction < 168.75:
+				return "SSO";
+			case 168.75 <= direction || direction < 191.25:
+				return "O";
+			case 191.25 <= direction || direction < 213.75:
+				return "SSW";
+			case 213.75 <= direction || direction < 236.25:
+				return "SW";
+			case 236.25 <= direction || direction < 258.75:
+				return "WSW";
+			case 258.75 <= direction || direction < 281.25:
+				return "W";
+			case 281.25 <= direction || direction < 303.75:
+				return "WNW";
+			case 303.75 <= direction || direction < 326.25:
+				return "NW";
+			case 326.25 <= direction || direction < 348.75:
+				return "NNW";
+			default:
+				return "n/a";
+		}
+	}
+
 	useEffect(() => {
 		if (navigator.geolocation) {
 			navigator.geolocation.getCurrentPosition((position) => {
@@ -84,7 +124,7 @@ function Weather() {
 						latitude: position.coords.latitude,
 						longitude: position.coords.longitude,
 						current_weather: true,
-                        hourly: "relativehumidity_2m,surface_pressure,apparent_temperature",
+						hourly: "relativehumidity_2m,surface_pressure,apparent_temperature",
 					},
 				};
 				axios(optionsWeatherAPI).then((resWeatherAPI) => {
@@ -98,10 +138,8 @@ function Weather() {
 						},
 					};
 					axios(optionsCity).then((resCity) => {
-						
-                        
-                        const dataWeatherAPI = resWeatherAPI.data;
-                        setCity(resCity.data.city);
+						const dataWeatherAPI = resWeatherAPI.data;
+						setCity(resCity.data.city);
 
 						const weathercode = dataWeatherAPI.current_weather.weathercode;
 						var pathWeatherimg = "/weather_icons/";
@@ -110,7 +148,6 @@ function Weather() {
 							setWeatherstate("Unknown");
 							pathWeatherimg += "unkown.png";
 							setWeatherimg(pathWeatherimg);
-
 						} else {
 							setWeatherstate(weatherCodesToStr[weathercode]);
 
@@ -123,14 +160,14 @@ function Weather() {
 						}
 
 						setTemperature(dataWeatherAPI.current_weather.temperature);
-
 						setWindspeed(dataWeatherAPI.current_weather.windspeed);
+						setWindDirection(windDirectionToStr(dataWeatherAPI.current_weather.winddirection));
 
-                        const currenttime = dataWeatherAPI.current_weather.time;
-                        const timeindex = dataWeatherAPI.hourly.time.indexOf(currenttime);
-                        setHumidity(dataWeatherAPI.hourly.relativehumidity_2m[timeindex]);
-                        setPressure(dataWeatherAPI.hourly.surface_pressure[timeindex]);
-                        setApparentTemperature(dataWeatherAPI.hourly.apparent_temperature[timeindex]);
+						const currenttime = dataWeatherAPI.current_weather.time;
+						const timeindex = dataWeatherAPI.hourly.time.indexOf(currenttime);
+						setHumidity(dataWeatherAPI.hourly.relativehumidity_2m[timeindex]);
+						setPressure(dataWeatherAPI.hourly.surface_pressure[timeindex]);
+						setApparentTemperature(dataWeatherAPI.hourly.apparent_temperature[timeindex]);
 
 						setLoading(false);
 					});
@@ -140,9 +177,7 @@ function Weather() {
 	}, []);
 
 	if (isLoading) {
-		return (
-            <WeatherLoading/>
-		);
+		return <WeatherLoading />;
 	}
 
 	return (
@@ -169,6 +204,10 @@ function Weather() {
 						<span className="text-right font-semibold text-xs">{windspeed} km/h</span>
 					</div>
 					<div className="flex justify-between">
+						<span className="text-left font-normal text-xs">Windrichtung</span>
+						<span className="text-right font-semibold text-xs">{winddirection}</span>
+					</div>
+					<div className="flex justify-between">
 						<span className="text-left font-normal text-xs">Luftfeuchtigkeit</span>
 						<span className="text-right font-semibold text-xs">{humidity}%</span>
 					</div>
@@ -183,7 +222,7 @@ function Weather() {
 }
 
 const WeatherLoading = () => {
-    return (
+	return (
 		<div className="w-96 rounded-xl shadow-xl shadow-gray-50/5 bg-gray-800 bg-opacity-25 text-white mt-20 mr-auto ml-auto mb-0 pt-0 pl-5 pr-5 pb-5">
 			<div className="flex justify-between items-center">
 				<div>
@@ -207,6 +246,10 @@ const WeatherLoading = () => {
 						<span className="text-right font-semibold text-xs">n/a km/h</span>
 					</div>
 					<div className="flex justify-between">
+						<span className="text-left font-normal text-xs">Windrichtung</span>
+						<span className="text-right font-semibold text-xs">n/a</span>
+					</div>
+					<div className="flex justify-between">
 						<span className="text-left font-normal text-xs">Luftfeuchtigkeit</span>
 						<span className="text-right font-semibold text-xs">n/a%</span>
 					</div>
@@ -218,6 +261,6 @@ const WeatherLoading = () => {
 			</div>
 		</div>
 	);
-}
+};
 
 export default Weather;
