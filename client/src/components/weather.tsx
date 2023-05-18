@@ -114,7 +114,7 @@ function Weather() {
 						} else {
 							setWeatherstate(weatherCodesToStr[weathercode]);
 
-							if (dataWeatherAPI.current_weather.isday == 1) {
+							if (dataWeatherAPI.current_weather.is_day == 1) {
 								pathWeatherimg += weatherCodesToIMG[weathercode] + "d.png";
 							} else {
 								pathWeatherimg += weatherCodesToIMG[weathercode] + "n.png";
