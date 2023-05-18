@@ -6,7 +6,7 @@ import Imprint from './pages/imprint/imprint';
 import Settings from './pages/settings/settings';
 import Account from './pages/account/account';
 import Registration from './pages/registration/registration';
-import Weather from './components/weather';
+import Weather from './components/Weather';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 

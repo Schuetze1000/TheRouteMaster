@@ -1,5 +1,5 @@
-import DarkMode_switch from "./DarkMode_switch";
-import Back_landing from "./Back_landing";
+import DarkMode_switch from "../buttons/DarkMode_switch";
+import Back_landing from "../buttons/Back_landing";
 import { useNavigate } from "react-router-dom";
 
 const Navbar_credentials = () => {

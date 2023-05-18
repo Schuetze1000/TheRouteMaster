@@ -1,8 +1,7 @@
 import { useForm } from "../../hooks/useForm";
-import Navbar from "../../components/Navbar";
-import Back_landing from "../../components/Back_landing";
+import Back_landing from "../../components/buttons/Back_landing";
 import axios from "axios";
-import Navbar_credentials from "../../components/Navbar_credentials";
+import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
 
 

@@ -1,6 +1,6 @@
-import Navbar_landing from "../../components/Navbar_landing";
-import DarkMode_switch from "../../components/DarkMode_switch";
-import Weather from '../../components/weather';
+import Navbar_landing from "../../components/navbars/Navbar_landing";
+import DarkMode_switch from "../../components/buttons/DarkMode_switch";
+import Weather from "../../components/Weather";
 
 function Landing() {
     const LoginButton = () => {
@@ -40,7 +40,7 @@ function Landing() {
                 <DarkMode_switch />
             </div>
             <div className="absolute -top-14 right-6 z-50">
-                <Weather/>
+                <Weather />
             </div>
             <div
                 className="relative overflow-hidden bg-cover bg-no-repeat h-full w-full text-center bg-landing m-auto object-none object-center">

@@ -14,8 +14,8 @@
 
   .navbar-icon-bottom {
     @apply absolute bottom-0 left-2 flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
-            bg-theme-1-2 text-theme-1-2 hover:bg-theme-1-1 hover:text-black
-            rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
+            rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer
+            bg-black dark:bg-neutral-400 text-white dark:text-black hover:bg-neutral-400 dark:hover:bg-black hover:text-black dark:hover:text-white;
   }
 
   .navbar-text {
@@ -24,7 +24,7 @@
   }
 
   .navbar-hr {
-    @apply border border-gray-200 dark:border-gray-800 rounded-full mx-2;
+    @apply border border-white dark:border-gray-600 rounded-full mx-2;
   }
 
   .email-input {

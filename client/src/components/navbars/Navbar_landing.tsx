@@ -1,4 +1,4 @@
-import DarkMode_switch from "./DarkMode_switch";
+import DarkMode_switch from "../buttons/DarkMode_switch";
 import { useNavigate } from "react-router-dom";
 
 const Navbar_landing = () => {
