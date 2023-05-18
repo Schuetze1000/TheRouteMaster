@@ -12,6 +12,7 @@ function Weather() {
 	const [apparentTemperature, setApparentTemperature] = useState(String);
 	const [winddirection, setWindDirection] = useState(String);
 	const [isLoading, setLoading] = useState(true);
+	const [isDisabled, setDisable] = useState(false);
 
 	const weatherCodesToStr = {
 		0: "Klarer Himmel",
@@ -115,69 +116,80 @@ function Weather() {
 	}
 
 	useEffect(() => {
-		if (navigator.geolocation) {
-			navigator.geolocation.getCurrentPosition((position) => {
-				const optionsWeatherAPI = {
-					method: "GET",
-					baseURL: "https://api.open-meteo.com/v1/forecast",
-					params: {
-						latitude: position.coords.latitude,
-						longitude: position.coords.longitude,
-						current_weather: true,
-						hourly: "relativehumidity_2m,surface_pressure,apparent_temperature",
-					},
-				};
-				axios(optionsWeatherAPI).then((resWeatherAPI) => {
-					const optionsCity = {
+		navigator.permissions.query({ name: 'geolocation' }).then((PermissionStatus) => {
+			console.log(PermissionStatus.state);
+			if (String(PermissionStatus.state) == "granted") {
+				navigator.geolocation.getCurrentPosition((position) => {
+					const optionsWeatherAPI = {
 						method: "GET",
-						baseURL: "https://api.bigdatacloud.net/data/reverse-geocode-client",
+						baseURL: "https://api.open-meteo.com/v1/forecast",
 						params: {
 							latitude: position.coords.latitude,
 							longitude: position.coords.longitude,
-							localityLanguage: "de",
+							current_weather: true,
+							hourly: "relativehumidity_2m,surface_pressure,apparent_temperature",
 						},
 					};
-					axios(optionsCity).then((resCity) => {
-						const dataWeatherAPI = resWeatherAPI.data;
-						setCity(resCity.data.city);
-
-						const weathercode = dataWeatherAPI.current_weather.weathercode;
-						var pathWeatherimg = "/weather_icons/";
-
-						if (!weatherCodesToStr[weathercode]) {
-							setWeatherstate("Unknown");
-							pathWeatherimg += "unkown.png";
-							setWeatherimg(pathWeatherimg);
-						} else {
-							setWeatherstate(weatherCodesToStr[weathercode]);
-
-							if (dataWeatherAPI.current_weather.is_day == 1) {
-								pathWeatherimg += weatherCodesToIMG[weathercode] + "d.png";
+					axios(optionsWeatherAPI).then((resWeatherAPI) => {
+						const optionsCity = {
+							method: "GET",
+							baseURL: "https://api.bigdatacloud.net/data/reverse-geocode-client",
+							params: {
+								latitude: position.coords.latitude,
+								longitude: position.coords.longitude,
+								localityLanguage: "de",
+							},
+						};
+						axios(optionsCity).then((resCity) => {
+							const dataWeatherAPI = resWeatherAPI.data;
+							setCity(resCity.data.city);
+	
+							const weathercode = dataWeatherAPI.current_weather.weathercode;
+							var pathWeatherimg = "/weather_icons/";
+	
+							if (!weatherCodesToStr[weathercode]) {
+								setWeatherstate("Unknown");
+								pathWeatherimg += "unkown.png";
+								setWeatherimg(pathWeatherimg);
 							} else {
-								pathWeatherimg += weatherCodesToIMG[weathercode] + "n.png";
+								setWeatherstate(weatherCodesToStr[weathercode]);
+	
+								if (dataWeatherAPI.current_weather.is_day == 1) {
+									pathWeatherimg += weatherCodesToIMG[weathercode] + "d.png";
+								} else {
+									pathWeatherimg += weatherCodesToIMG[weathercode] + "n.png";
+								}
+								setWeatherimg(pathWeatherimg);
 							}
-							setWeatherimg(pathWeatherimg);
-						}
-
-						setTemperature(dataWeatherAPI.current_weather.temperature);
-						setWindspeed(dataWeatherAPI.current_weather.windspeed);
-						setWindDirection(windDirectionToStr(dataWeatherAPI.current_weather.winddirection));
-
-						const currenttime = dataWeatherAPI.current_weather.time;
-						const timeindex = dataWeatherAPI.hourly.time.indexOf(currenttime);
-						setHumidity(dataWeatherAPI.hourly.relativehumidity_2m[timeindex]);
-						setPressure(dataWeatherAPI.hourly.surface_pressure[timeindex]);
-						setApparentTemperature(dataWeatherAPI.hourly.apparent_temperature[timeindex]);
-
-						setLoading(false);
+	
+							setTemperature(dataWeatherAPI.current_weather.temperature);
+							setWindspeed(dataWeatherAPI.current_weather.windspeed);
+							setWindDirection(windDirectionToStr(dataWeatherAPI.current_weather.winddirection));
+	
+							const currenttime = dataWeatherAPI.current_weather.time;
+							const timeindex = dataWeatherAPI.hourly.time.indexOf(currenttime);
+							setHumidity(dataWeatherAPI.hourly.relativehumidity_2m[timeindex]);
+							setPressure(dataWeatherAPI.hourly.surface_pressure[timeindex]);
+							setApparentTemperature(dataWeatherAPI.hourly.apparent_temperature[timeindex]);
+	
+							setLoading(false);
+						});
 					});
 				});
-			});
-		}
+			}
+			else {
+				setLoading(false);
+				setDisable(true);
+			}
+		});
 	}, []);
 
 	if (isLoading) {
 		return <WeatherLoading />;
+	}
+
+	if (isDisabled) {
+		return <div/>;
 	}
 
 	return (
