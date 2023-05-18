@@ -9,8 +9,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 let captchaRef;
 let captchaReset = false;
 function Login() {
-  
-
+    
     const initialState = {
         email: "",
         password: "",
@@ -20,7 +19,6 @@ function Login() {
         loginUserCallback,
         initialState,
     );
-
 
     async function loginUserCallback() {
         const token = await captchaRef.executeAsync();
