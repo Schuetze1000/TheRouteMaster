@@ -1,7 +1,6 @@
 import useColorMode from "../../hooks/useColorMode";
 
 const DarkMode_switch = () => {
-    const [colorMode, setColorMode] = useColorMode();
 
     return (
         <div>

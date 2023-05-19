@@ -117,7 +117,6 @@ function Weather() {
 		};
 
 		navigator.permissions.query({ name: "geolocation" }).then((PermissionStatus) => {
-			console.log(PermissionStatus.state);
 			if (String(PermissionStatus.state) === "granted") {
 				navigator.geolocation.getCurrentPosition((position) => {
 					const optionsWeatherAPI = {
@@ -192,39 +191,39 @@ function Weather() {
 	}
 
 	return (
-		<div className="w-96 rounded-xl shadow-xl shadow-gray-50/5 bg-gray-800 bg-opacity-25 text-white mt-20 mr-auto ml-auto mb-0 pt-0 pl-5 pr-5 pb-5">
+		<div className="w-56 sm:w-96 rounded-xl shadow-xl shadow-gray-50/5 bg-gray-800 bg-opacity-25 text-white mt-20 mr-auto ml-auto mb-0 pt-0 pl-5 pr-5 pb-0">
 			<div className="flex justify-between items-center">
 				<div>
-					<p className="font-bold text-xl m-0 tracking-normal">{city}</p>
-					<p className="font-normal text-sm m-0">{weatherstate}</p>
+					<p className="font-bold text-base sm:text-xl m-0 tracking-normal">{city}</p>
+					<p className="font-normal text-xs sm:text-sm m-0">{weatherstate}</p>
 				</div>
-				<img alt="weather" className="w-28" src={weatherimg} />
+				<img alt="weather" className="w-16 sm:w-28" src={weatherimg} />
 			</div>
 			<div className="flex justify-between items-center">
-				<p className="font-bold text-6xl w-auto tracking-tighter">{temperature}°C</p>
+				<p className="font-bold text-2xl sm:text-6xl w-auto tracking-tighter">{temperature}°C</p>
 				<div className="w-full p-5">
 					<div className="flex justify-between">
-						<span className="text-left text-s font-bold">Details</span>
+						<span className="text-left font-bold  text-2xs sm:text-xs">Details</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Gefühlt</span>
-						<span className="text-right font-semibold text-xs">{apparentTemperature}°C</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Gefühlt</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">{apparentTemperature}°C</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Wind</span>
-						<span className="text-right font-semibold text-xs">{windspeed} km/h</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Wind</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">{windspeed} km/h</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Windrichtung</span>
-						<span className="text-right font-semibold text-xs">{winddirection}</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Windrichtung</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">{winddirection}</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Luftfeuchtigkeit</span>
-						<span className="text-right font-semibold text-xs">{humidity}%</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Luftfeuchtigkeit</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">{humidity}%</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Druck</span>
-						<span className="text-right font-semibold text-xs">{pressure} hPa</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Druck</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">{pressure} hPa</span>
 					</div>
 				</div>
 			</div>
@@ -234,39 +233,39 @@ function Weather() {
 
 const WeatherLoading = () => {
 	return (
-		<div className="w-96 rounded-xl shadow-xl shadow-gray-50/5 bg-gray-800 bg-opacity-25 text-white mt-20 mr-auto ml-auto mb-0 pt-0 pl-5 pr-5 pb-5">
+		<div className="w-56 sm:w-96 rounded-xl shadow-xl shadow-gray-50/5 bg-gray-800 bg-opacity-25 text-white mt-20 mr-auto ml-auto mb-0 pt-0 pl-5 pr-5 pb-0">
 			<div className="flex justify-between items-center">
 				<div>
-					<p className="font-bold text-xl m-0 tracking-normal">Unknown</p>
-					<p className="font-normal text-sm m-0">Unknown</p>
+					<p className="font-bold text-base sm:text-xl m-0 tracking-normal">Unknown</p>
+					<p className="font-normal text-xs sm:text-sm m-0">Unknown</p>
 				</div>
-				<img alt="weather" className="w-28" src="/weather_icons/unknown.png" />
+				<img alt="weather" className="w-16 sm:w-28" src="/weather_icons/unknown.png" />
 			</div>
 			<div className="flex justify-between items-center">
-				<p className="font-bold text-6xl w-auto tracking-tighter">n/a°C</p>
-				<div className="w-full p-5">
+				<p className="font-bold text-2xl sm:text-6xl w-auto tracking-tighter">n/a°C</p>
+				<div className="w-full p-2">
 					<div className="flex justify-between">
-						<span className="text-left font-bold text-xs">Details</span>
+						<span className="text-left font-bold  text-2xs sm:text-xs">Details</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Gefühlt</span>
-						<span className="text-right font-semibold text-xs">n/a°C</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Gefühlt</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">n/a°C</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Wind</span>
-						<span className="text-right font-semibold text-xs">n/a km/h</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Wind</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">n/a km/h</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Windrichtung</span>
-						<span className="text-right font-semibold text-xs">n/a</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Windrichtung</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">n/a</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Luftfeuchtigkeit</span>
-						<span className="text-right font-semibold text-xs">n/a%</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Luftfeuchtigkeit</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">n/a%</span>
 					</div>
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Druck</span>
-						<span className="text-right font-semibold text-xs">n/a hPa</span>
+						<span className="text-left font-normal text-2xs sm:text-xs">Druck</span>
+						<span className="text-right font-semibold text-2xs sm:text-xs">n/a hPa</span>
 					</div>
 				</div>
 			</div>

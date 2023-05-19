@@ -39,7 +39,7 @@ function Landing() {
             <div className="absolute top-0 left-2 z-50">
                 <DarkMode_switch />
             </div>
-            <div className="absolute -top-14 right-6 z-50">
+            <div className="absolute -top-[4.5em] sm:-top-14 right-2 sm:right-6 z-50">
                 <Weather />
             </div>
             <div

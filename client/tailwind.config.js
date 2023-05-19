@@ -25,6 +25,9 @@ module.exports = {
         "theme-1-4": "#907163",
         "theme-1-5": "#379683",
       },
+      fontSize: {
+        "2xs": '0.6rem',
+      }
     },
     /*fontFamily: {
       sans: ['Roboto']
