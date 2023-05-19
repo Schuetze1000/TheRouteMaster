@@ -246,7 +246,7 @@ const WeatherLoading = () => {
 				<p className="font-bold text-6xl w-auto tracking-tighter">n/a°C</p>
 				<div className="w-full p-5">
 					<div className="flex justify-between">
-						<span className="text-left font-normal text-xs">Details</span>
+						<span className="text-left font-bold text-xs">Details</span>
 					</div>
 					<div className="flex justify-between">
 						<span className="text-left font-normal text-xs">Gefühlt</span>

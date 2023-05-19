@@ -3,11 +3,14 @@ import Back_landing from "../../components/buttons/Back_landing";
 import axios from "axios";
 import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useState } from "react";
 
 
 let captchaRef;
 let captchaReset = false;
 function Login() {
+
+    const [passwordShown, setPasswordShown] = useState(false);
     
     const initialState = {
         email: "",
@@ -52,6 +55,10 @@ function Login() {
         );
     };
 
+    const togglePassword = () => {
+        setPasswordShown(!passwordShown);
+    };
+
     return (
         <body className="h-screen">
             <Navbar_credentials />
@@ -87,7 +94,7 @@ function Login() {
                                 className="peer input"
                                 name="password"
                                 id="password"
-                                type="password"
+                                type={passwordShown ? "text" : "password"}
                                 placeholder="Passwort"
                                 onChange={onChange}
                                 required
