@@ -9,6 +9,7 @@ module.exports = {
     './src/pages/**/*.{js,jsx,ts,tsx}',
     './node_modules/usehooks-ts/*.{js,jsx,ts,tsx}',
     './public/index.html',
+    "./node_modules/react-tailwindcss-select/dist/index.esm.js",
   ],
   darkMode: 'class',
   theme: {

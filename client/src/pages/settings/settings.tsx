@@ -5,39 +5,126 @@ import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import useColorMode from "../../hooks/useColorMode";
+import Select from "react-tailwindcss-select";
+import Input_Settings from "../../components/inputs/Settings";
+
+interface HomeaddressStructure {
+	number: string;
+	street: string;
+	zip: string;
+	city: string;
+	state: string;
+	country: string;
+}
+
+interface UserStructure {
+	username: string;
+	email: string;
+	ics_uid: string;
+	firstname: string;
+	surname: string;
+	avatar: string;
+	homeaddress: HomeaddressStructure;
+}
 
 function Settings() {
 	const navigate = useNavigate();
 	const handleClick = () => navigate("/");
-    const [colorMode, setColorMode] = useColorMode();
-    const [icsnamelist, setICSNameList] = useState<string[][]>([]);
+	const [colorMode, setColorMode] = useColorMode();
+	const [icsNameList, setICSNameList] = useState<[{ value: string; label: string }]>([{ value: "", label: "" }]);
+	const [uniNameList, setUniNameList] = useState<[{ value: string; label: string }]>([{ value: "", label: "" }]);
+	const [isLoading, setLoading] = useState(true);
+	const [selectedICS, setSelectedICS] = useState(null);
+	const [selectedUni, setSelectedUni] = useState(null);
+	const [userInf, setUserInf] = useState<UserStructure>({
+		username: "",
+		email: "",
+		ics_uid: "",
+		firstname: "",
+		surname: "",
+		avatar: "",
+		homeaddress: {
+			number: "",
+			street: "",
+			zip: "",
+			city: "",
+			state: "",
+			country: "",
+		},
+	});
 
-    useEffect(() => {
-        try {
-            const optionsGetICS = {
-                method: "GET",
-                url: "/ics/getavailableics",
-            };
-            var tmpArray:string[][] = [[""][""]];
-            tmpArray[1].push("25");
-            console.log(tmpArray);
-            /*axios(optionsGetICS).then((resAvailableIcs) => {
-                var tmpArray:string[][];
-                for (let index = 0; index < resAvailableIcs.data.length; index++) {
-                const setICSNameList[0]. = resAvailableIcs.data[index];
-                
-                }
-                
-            });*/
-        } catch (error) {
-            console.log(error);
-        }
-        
-    }, []);
+	useEffect(() => {
+		setUniNameList([{ value: "01", label: "DHBW Mannheim" }]);
+
+		const optionsUser = {
+			method: "GET",
+			url: "/user/getuser",
+			withCredentials: true,
+		};
+		axios(optionsUser)
+			.then((resUserInf) => {
+				const dataUserInf = resUserInf.data;
+				let tmpuserinf: UserStructure = {
+					username: dataUserInf.username,
+					email: dataUserInf.email,
+					ics_uid: dataUserInf.ics_uid,
+					firstname: dataUserInf?.profile.firstname || "",
+					surname: dataUserInf?.profile.surname || "",
+					avatar: dataUserInf?.profile.avatar || "",
+					homeaddress: {
+						number: dataUserInf?.profile.homeaddress.number || "",
+						street: dataUserInf?.profile.homeaddress.street || "",
+						zip: dataUserInf?.profile.homeaddress.zip || "",
+						city: dataUserInf?.profile.homeaddress.city || "",
+						state: dataUserInf?.profile.homeaddress.state || "",
+						country: dataUserInf?.profile.homeaddress.country || "",
+					},
+				};
+
+				setUserInf(tmpuserinf);
+				setLoading(false);
+			})
+			.catch((error) => {
+				if (error.response.status >= 400 && error.response.status < 500) {
+					window.location.href = "/login";
+				}
+			});
+
+		const optionsGetICS = {
+			method: "GET",
+			url: "/ics/getavailableics",
+			withCredentials: true,
+		};
+		axios(optionsGetICS)
+			.then((resAvailableIcs) => {
+				var icsArray: [{ value: string; label: string }] = [{ label: resAvailableIcs.data[0].name, value: resAvailableIcs.data[0].uid }];
+				for (let index = 1; index < resAvailableIcs.data.length; index++) {
+					icsArray.push({ label: resAvailableIcs.data[index].name, value: resAvailableIcs.data[index].uid });
+				}
+				setICSNameList(icsArray);
+			})
+			.catch((error) => {
+				if (error.response.status >= 400 && error.response.status < 500) {
+					window.location.href = "/login";
+				}
+			});
+	}, []);
+
+	const handleChangeUni = (value) => {
+		setSelectedUni(value);
+	};
+
+	const handleChangeICS = (value) => {
+		setSelectedICS(value);
+	};
+
+	if (isLoading) {
+		return <div></div>;
+	}
 
 	return (
 		<body className="h-screen">
-            <Navbar_settings />
+			<Navbar_settings />
 			<div className="relative overflow-auto bg-cover bg-no-repeat h-full w-full text-center bg-landing m-auto object-none object-center">
 				<div
 					className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-auto bg-fixed"
@@ -50,146 +137,72 @@ function Settings() {
 						<div className="settings-box">
 							<h1 className="font-bold text-xl">Account bearbeiten</h1>
 							<h2>Benutzernamen ändern:</h2>
-							<div className="relative">
-								<input className="peer input mb-2 md:mb-10" name="username" id="username" type="username" placeholder="Passwort" />
-								<label
-									htmlFor="username"
-									className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 \
-                                    transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] \
-                                    peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 \
-                                    peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none \
-                                    dark:text-neutral-200 dark:peer-focus:text-primary"
-								>
-									Benutzername
-								</label>
-								<h2>Email Adresse ändern:</h2>
-								<div className="relative">
-									<input className="peer input mb-2 md:mb-10" name="identifier" id="identifier" type="identifier" placeholder="Email" />
-									<label
-										htmlFor="identifier"
-										className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 \
-                            transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] \
-                            peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 \
-                            peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none \
-                            dark:text-neutral-200 dark:peer-focus:text-primary"
-									>
-										Email Adresse
-									</label>
-								</div>
-								<h2>Passwort ändern:</h2>
-								<div className="relative mb-3">
-									<input className="peer input" name="password" id="password" type="password" placeholder="Altes Passwort" />
-									<label
-										htmlFor="identifier"
-										className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 \
-                            transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] \
-                            peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 \
-                            peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none \
-                            dark:text-neutral-200 dark:peer-focus:text-primary"
-									>
-										Altes Passwort
-									</label>
-								</div>
-								<div className="relative mb-3">
-									<input className="peer input" name="password" id="password" type="password" placeholder="Neues Passwort" />
-									<label
-										htmlFor="identifier"
-										className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 \
-                            transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] \
-                            peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 \
-                            peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none \
-                            dark:text-neutral-200 dark:peer-focus:text-primary"
-									>
-										Neues Passwort
-									</label>
-								</div>
-								<div className="relative mb-3">
-									<input className="peer input" name="password" id="password" type="password" placeholder="Neues Passwort wiederholen" />
-									<label
-										htmlFor="identifier"
-										className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 \
-                            transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] \
-                            peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 \
-                            peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none \
-                            dark:text-neutral-200 dark:peer-focus:text-primary"
-									>
-										Neues Passwort wiederholen
-									</label>
-								</div>
-								<h1 className="font-bold text-xl">Standardeinstellungen</h1>
-								<h2>Stadt ändern:</h2>
-								<div className="relative mb-3">
-									<input className="peer input" name="city" id="city" type="text" placeholder="Stadt" />
-									<label
-										htmlFor="identifier"
-										className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 \
-                            transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] \
-                            peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 \
-                            peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none \
-                            dark:text-neutral-200 dark:peer-focus:text-primary"
-									>
-										Stadt
-									</label>
-								</div>
-                                <div className="relative mb-2 md:mb-10 mt-10">
-                                    <h2>Universität ändern:</h2>
-                                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Wähle dein Universität aus</option>
-                                        <option value="DHBW_Mannheim">DHBW Mannheim</option>
-                                    </select>
-                                </div>
-								<div className="relative mb-2 md:mb-10 mt-10">
-                                    <h2>Kurs ändern:</h2>
-                                    <select className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                        <option selected>Wähle deinen Kurs aus</option>
-                                        // Hier die ICS Namen einfügen
-                                        <option value="DHBW_Mannheim">DHBW Mannheim</option>
-                                    </select>
-                                </div>
-								<h1 className="font-bold text-xl">Gespeicherte Adressen</h1>
-								<h2>Adressen ändern:</h2>
-								<div className="relative mb-3">
-									<input className="peer input" name="address" id="address" type="text" placeholder="Adresse" />
-									<label
-										htmlFor="identifier"
-										className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 \
-                            transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] \
-                            peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 \
-                            peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none \
-                            dark:text-neutral-200 dark:peer-focus:text-primary"
-									>
-										Adresse
-									</label>
-								</div>
+							<Input_Settings name="username" id="username" type="username" placeholder="Username"/>
+							<h2>Email Adresse ändern:</h2>
+							<Input_Settings name="identifier" id="identifier" type="identifier" placeholder="Email"/>
+
+							<h2>Passwort ändern:</h2>
+							<Input_Settings  name="password" id="old_password" type="password" placeholder="Altes Passwort"/>
+							<Input_Settings  name="password" id="new_password" type="password" placeholder="Neues Passwort"/>
+							<Input_Settings  name="password" id="repeat_new_password" type="password" placeholder="Neues Passwort wiederholen"/>
+							
+							<h1 className="font-bold text-xl">Standardeinstellungen</h1>
+							<h2>Stadt ändern:</h2>
+							<Input_Settings  name="city" id="city" type="text" placeholder="Stadt"/>
+
+							<div className="relative mb-2 md:mb-10">
+								<h2>Universität ändern:</h2>
+								<Select
+									primaryColor={"blue"} // Not Working
+									placeholder="DHBW Mannheim"
+									value={selectedUni}
+									onChange={handleChangeUni}
+									options={uniNameList}
+									classNames={{
+										menuButton: () =>
+											"flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 \
+												dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 \
+												dark:focus:border-blue-500",
+										menu: "absolute z-10 w-full bg-gray-50 shadow-lg border rounded-lg border-gray-300 text-gray-900 focus:ring-blue-500 \
+												focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 \
+												dark:focus:border-blue-500",
+									}}
+								/>
 							</div>
+							<div className="relative mb-2 md:mb-10">
+								<h2>Kurs ändern:</h2>
+								<Select
+									primaryColor={"blue"} // Not Working
+									placeholder={icsNameList.find((o) => o.value == userInf.ics_uid)?.label}
+									isSearchable={true}
+									value={selectedICS}
+									onChange={handleChangeICS}
+									options={icsNameList}
+									loading={isLoading}
+									classNames={{
+										menuButton: () =>
+											"flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 \
+												dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 \
+												dark:focus:border-blue-500",
+										menu: "absolute z-10 w-full bg-gray-50 shadow-lg border rounded-lg border-gray-300 text-gray-900 focus:ring-blue-500 \
+												focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 \
+												dark:focus:border-blue-500",
+										searchBox:
+											"pl-8 bg-gray-50 w-full border border-gray-300 text-gray-900 rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600 \
+												dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+									}}
+								/>
+							</div>
+							<h1 className="font-bold text-xl">Gespeicherte Adressen</h1>
+							<h2>Adressen ändern:</h2>
+							<Input_Settings  name="address" id="address" type="text" placeholder="Adresse" in_cn="peer input mt-2 md:mt-5 dark:border-gray-500"/>
 						</div>
 					</div>
-					<div className="flex justify-center space-x-10 pb-8">
-						<button
-							type="submit"
-							className="inline-block z-50 rounded-3xl hover:rounded-xl active:bg-green-700 active:text-white transition-all duration-300 cursor-pointer \
-                        bg-green-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#14a44d] ease-in-out \
-                        hover:bg-green-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 \
-                        focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 \
-                        active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] \
-                        dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] \
-                        +dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] \
-                        dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]"
-						>
+					<div className="flex justify-center space-x-10 pb-4 md:pb-8">
+						<button type="submit" className="button">
 							Speichern
 						</button>
-						<button
-							onClick={handleClick}
-							type="submit"
-							className="inline-block z-50 rounded-3xl hover:rounded-xl active:bg-green-700 active:text-white transition-all duration-300 cursor-pointer \
-                        bg-green-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#14a44d] ease-in-out \
-                        hover:bg-green-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 \
-                        focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 \
-                        active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] \
-                        dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] \
-                        +dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] \
-                        dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]"
-						>
+						<button onClick={handleClick} type="submit" className="button">
 							Zurück
 						</button>
 					</div>

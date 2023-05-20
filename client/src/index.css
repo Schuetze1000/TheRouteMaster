@@ -2,67 +2,66 @@
 @tailwind components;
 @tailwind utilities;
 /*Custom Font*/
-@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap");
 
 @layer components {
-
-  .navbar-icon {
-    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
+	.navbar-icon {
+		@apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
             bg-theme-1-1 text-theme-1-2 hover:bg-theme-1-1 hover:text-black
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
-  }
+	}
 
-  .navbar-icon-bottom {
-    @apply absolute bottom-0 left-2 flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
+	.navbar-icon-bottom {
+		@apply absolute bottom-0 left-2 flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer
             bg-black dark:bg-neutral-400 text-white dark:text-black hover:bg-neutral-400 dark:hover:bg-black hover:text-black dark:hover:text-white;
-  }
+	}
 
-  .navbar-text {
-    @apply absolute w-auto p-2 m-2 min-w-max left-14 rounded-md shadow-md text-white
+	.navbar-text {
+		@apply absolute w-auto p-2 m-2 min-w-max left-14 rounded-md shadow-md text-white
             bg-gray-900 text-xs font-bold transition-all duration-100 scale-0 origin-left;
-  }
+	}
 
-  .navbar-hr {
-    @apply border border-white dark:border-gray-600 rounded-full mx-2;
-  }
+	.navbar-hr {
+		@apply border border-white dark:border-gray-600 rounded-full mx-2;
+	}
 
-  .email-input {
-    @apply relative border-gray-200;
-  }
+	.email-input {
+		@apply relative border-gray-200;
+	}
 
-  .password-input {
-    @apply relative;
-  }
+	.password-input {
+		@apply relative;
+	}
 
-  .login-button {
-    @apply relative bg-theme-1-5 hover:bg-theme-1-4 flex items-center justify-center
+	.login-button {
+		@apply relative bg-theme-1-5 hover:bg-theme-1-4 flex items-center justify-center
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
-  }
+	}
 
-  .register-button {
-    @apply relative bg-theme-1-5 hover:bg-theme-1-4 flex items-center justify-center 
+	.register-button {
+		@apply relative bg-theme-1-5 hover:bg-theme-1-4 flex items-center justify-center 
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
-  }
+	}
 
-  .login-box {
-    @apply relative bg-white dark:bg-neutral-600 bg-opacity-100 w-[70%] md:w-1/3 mx-auto p-10 md:p-12 my-10 rounded-lg shadow-2xl grid space-y-5;
-  }
+	.login-box {
+		@apply relative bg-white dark:bg-neutral-600 bg-opacity-100 w-[70%] md:w-1/3 mx-auto p-10 md:p-12 my-10 rounded-lg shadow-2xl grid space-y-5;
+	}
 
-  .settings-box {
-    @apply relative bg-white dark:bg-neutral-600 bg-opacity-100 rounded-lg w-[90%] h-full mx-auto p-10 my-10 shadow-2xl grid top-[8%] items-center;
-  }
+	.settings-box {
+		@apply relative bg-white dark:bg-neutral-600 bg-opacity-100 rounded-lg w-[90%] h-full mx-auto p-10 my-10 shadow-2xl grid top-[8%] items-center;
+	}
 
-  .input {
-    @apply m-0 block h-[58px] w-full rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-4 
+	.input {
+		@apply m-0 block h-[58px] w-full rounded border border-solid border-neutral-300 bg-transparent bg-clip-padding px-3 py-4 
             text-base font-normal leading-tight text-neutral-700 transition duration-200 ease-linear placeholder:text-transparent 
             focus:border-primary focus:pb-[0.625rem] focus:pt-[1.625rem] focus:text-neutral-700 focus:outline-none 
             peer-focus:text-primary dark:border-neutral-600 dark:text-neutral-200 dark:focus:border-primary dark:peer-focus:text-primary 
             [&:not(:placeholder-shown)]:pb-[0.625rem] [&:not(:placeholder-shown)]:pt-[1.625rem] hover:border-neutral-400;
-  }
+	}
 
-  .button {
-    @apply inline-block rounded-3xl hover:rounded-xl active:bg-green-700 active:text-white transition-all duration-300 cursor-pointer 
+	.button {
+		@apply inline-block rounded-3xl hover:rounded-xl active:bg-green-700 active:text-white transition-all duration-300 cursor-pointer 
             bg-green-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#14a44d] 
             ease-in-out hover:bg-green-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] 
             focus:bg-green-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none 
@@ -71,31 +70,37 @@
             dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] 
             dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] 
             dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)];
-  }
+	}
 
-  .landing-icon {
-    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
+	.landing-icon {
+		@apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 mx-auto shadow-lg
             bg-black dark:bg-neutral-400 text-white dark:text-black hover:bg-neutral-400 dark:hover:bg-black hover:text-black dark:hover:text-white
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
-  }
+	}
 
-  .landing-button {
-    @apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 left-2 shadow-lg
+	.landing-button {
+		@apply relative flex items-center justify-center h-12 w-12 mt-2 mb-2 left-2 shadow-lg
             bg-black dark:bg-neutral-400 text-white dark:text-black hover:bg-neutral-400 dark:hover:bg-black hover:text-black dark:hover:text-white
             rounded-3xl hover:rounded-xl transition-all duration-300 ease-linear cursor-pointer;
-  }
+	}
+
+	.settings-input {
+		@apply pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 
+            transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] 
+            peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 
+            peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none 
+            dark:text-neutral-200 dark:peer-focus:text-primary;
+	}
 }
 
 body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+		sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
 }
 
 code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+	font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
 }

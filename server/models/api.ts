@@ -19,5 +19,6 @@ export interface HomeaddressStructure {
 export interface UserStructure {
 	username: string;
 	email: string;
+	ics_uid:string;
 	profile: ProfileStructure;
 }

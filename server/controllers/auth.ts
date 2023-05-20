@@ -14,10 +14,16 @@ exports.login = async (req: Request, res: Response, next: any) => {
 		if (!identifier || !password || !reToken) {
 			return next(new ErrorResponse("Please provide a valid email, password and reToken", 400));
 		}
+		let options = {
+            method: 'POST',
+            url: `https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${reToken}`,
+        };
 
-		const response = await axios.post(`https://www.google.com/recaptcha/api/siteverify?secret=${process.env.SECRET_KEY}&response=${reToken}`);
+		const response = await axios(options);
+
 		if (!response.data.success) {
-			next(new ErrorResponse("Invalid reCaptcha", 403))
+			console.log(response);
+			next(new ErrorResponse("Invalid reCaptcha", 403));
 		}
 
 		var user: IUser | null;

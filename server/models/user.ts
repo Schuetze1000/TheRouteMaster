@@ -106,6 +106,7 @@ UserSchema.methods.mapUserStructure = function() {
 	const userstructure : UserStructure = {
 		username: this.username,
 		email: this.email,
+		ics_uid: this.ics_uid,
 		profile: this.profile
 	};
 	return userstructure;

@@ -3,15 +3,16 @@ import Back_landing from "../../components/buttons/Back_landing";
 import axios from "axios";
 import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Navigate } from "react-router";
+import { useNavigate } from 'react-router-dom';
 
-
-let captchaRef;
-let captchaReset = false;
 function Login() {
 
     const [passwordShown, setPasswordShown] = useState(false);
-    
+    const navigate = useNavigate();
+    let captchaRef;
+
     const initialState = {
         email: "",
         password: "",
@@ -22,8 +23,21 @@ function Login() {
         initialState,
     );
 
+    useEffect(() => {
+        if (document.cookie.match("token")) {
+            navigate("/settings");
+        };
+    }, []);
+    
     async function loginUserCallback() {
-        const token = await captchaRef.executeAsync();
+        var token = ""
+        if (!captchaRef.getValue()) {
+            token = await captchaRef.executeAsync();
+        }
+        else {
+            await captchaRef.reset();
+            token = await captchaRef.executeAsync();
+        }
         const identifier_input = (document.getElementById('identifier') as HTMLInputElement | null)?.value;
         const password_input = (document.getElementById('password') as HTMLInputElement | null)?.value;
         let options = {
@@ -32,12 +46,18 @@ function Login() {
             data: {
                 identifier: identifier_input,
                 password: password_input,
-                reToken: token
+                reToken: String(token)
             },
             withCredentials: true
         };
 
-        await axios(options);
+        await axios(options).then(() => {
+            window.location.href = "/settings";
+        }).catch((error) => {
+            if (error.response.status >= 400 && error.response.status < 500) {
+                console.log(error);
+            }
+        });
     };
 
     const RegistrationButton = () => {

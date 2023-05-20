@@ -44,7 +44,7 @@ exports.getHash = async (req: Request, res: Response, next: any) => {
 
 exports.getAvailableICS = async (req: Request, res: Response, next: any) => {
 	try {
-		verifyToken(req,res, false);
+		await verifyToken(req,res, false);
 		const data:IICS_Data[] = await ICS_Data.find({}).select("name uid -_id");
 		res.status(200).json(data).end();
 	} catch (error) {
