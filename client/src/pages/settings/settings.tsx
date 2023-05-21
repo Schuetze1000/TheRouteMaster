@@ -119,7 +119,7 @@ function Settings() {
 	};
 
 	if (isLoading) {
-		return <div></div>;
+		return <div>Loading...</div>;
 	}
 
 	return (
@@ -144,6 +144,7 @@ function Settings() {
 							<Input_Settings  name="password" id="old_password" type="password" placeholder="Altes Passwort"/>
 							<Input_Settings  name="password" id="new_password" type="password" placeholder="Neues Passwort"/>
 							<Input_Settings  name="password" id="repeat_new_password" type="password" placeholder="Neues Passwort wiederholen"/>
+							<a href="/forgot-password" className="underline">Passwort vergessen</a>
 							
 							<h1 className="font-bold text-xl">Standardeinstellungen</h1>
 							<h2>Stadt ändern:</h2>

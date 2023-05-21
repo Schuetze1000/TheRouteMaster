@@ -1,7 +1,7 @@
 import { useForm } from "../../hooks/useForm";
 import Back_landing from "../../components/buttons/Back_landing";
 import axios from "axios";
-import Navbar from "../../components/navbars/Navbar";
+import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useEffect } from "react";
 import { Navigate } from "react-router";
@@ -48,7 +48,7 @@ function Forgot_password() {
 
     return (
         <body className="h-screen">
-            <Navbar />
+            <Navbar_credentials />
             <div
                 className="relative overflow-hidden bg-cover bg-no-repeat h-full w-full text-center bg-landing m-auto object-none object-center">
             <Back_landing />

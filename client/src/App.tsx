@@ -7,6 +7,7 @@ import Settings from './pages/settings/settings';
 import Account from './pages/account/account';
 import Registration from './pages/registration/registration';
 import Calendar from './components/calendar';
+import Forgot_password from './pages/forgot_password/forgot_password';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
@@ -24,6 +25,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/account" element={<Account />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/forgot-password" element={<Forgot_password />}/>
       </Routes>
     </Router>
   );  
