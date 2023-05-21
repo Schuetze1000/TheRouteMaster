@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import useColorMode from "../../hooks/useColorMode";
 import Select from "react-tailwindcss-select";
-import Input_Settings from "../../components/inputs/Settings";
+import Input_Settings from "../../components/inputs/settings";
 
 interface HomeaddressStructure {
 	number: string;
