@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import useColorMode from "../../hooks/useColorMode";
 import Select from "react-tailwindcss-select";
-import Input_Settings from "../../components/inputs/Settings";
+import Input_Settings from "../../components/inputs/settings";
 
 interface HomeaddressStructure {
 	number: string;
@@ -136,10 +136,9 @@ function Settings() {
 					<div className="flex w-full h-auto items-center justify-center">
 						<div className="settings-box">
 							<h1 className="font-bold text-xl">Account bearbeiten</h1>
-							<h2>Benutzernamen ändern:</h2>
-							<Input_Settings name="username" id="username" type="username" placeholder="Username"/>
-							<h2>Email Adresse ändern:</h2>
-							<Input_Settings name="identifier" id="identifier" type="identifier" placeholder="Email"/>
+							
+							<Input_Settings name="username" id="username" type="username" placeholder="Username" value={userInf.username}/>
+							<Input_Settings name="identifier" id="identifier" type="identifier" placeholder="Email" value={userInf.email}/>
 
 							<h2>Passwort ändern:</h2>
 							<Input_Settings  name="password" id="old_password" type="password" placeholder="Altes Passwort"/>
@@ -148,7 +147,7 @@ function Settings() {
 							
 							<h1 className="font-bold text-xl">Standardeinstellungen</h1>
 							<h2>Stadt ändern:</h2>
-							<Input_Settings  name="city" id="city" type="text" placeholder="Stadt"/>
+							<Input_Settings  name="city" id="city" type="text" placeholder="Stadt" value={userInf.homeaddress.city}/>
 
 							<div className="relative mb-2 md:mb-10">
 								<h2>Universität ändern:</h2>
