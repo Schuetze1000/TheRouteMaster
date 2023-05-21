@@ -1,6 +1,3 @@
-import { IoMdSettings, IoMdPerson, IoIosToday, IoIosSchool, IoMdContrast, IoMdInformationCircle } from "react-icons/io"
-import { useNavigate } from "react-router-dom";
-import useColorMode from "../../hooks/useColorMode";
 import DarkMode_switch from "../buttons/DarkMode_switch";
 import HowToUse from "../buttons/HowToUse";
 import Dashboard from "../buttons/Dashboard";

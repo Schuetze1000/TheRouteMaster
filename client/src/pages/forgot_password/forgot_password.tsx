@@ -1,16 +1,9 @@
 import { useForm } from "../../hooks/useForm";
 import Back_landing from "../../components/buttons/Back_landing";
-import axios from "axios";
 import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
-import { useState, useEffect } from "react";
-import { Navigate } from "react-router";
-import { useNavigate } from 'react-router-dom';
 
 function Forgot_password() {
-
-    const [passwordShown, setPasswordShown] = useState(false);
-    const navigate = useNavigate();
     let captchaRef;
 
     const initialState = {

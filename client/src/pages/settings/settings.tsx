@@ -1,6 +1,4 @@
-import { useForm } from "../../hooks/useForm";
 import Navbar_settings from "../../components/navbars/Navbar_settings";
-import Back_landing from "../../components/buttons/Back_landing";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";

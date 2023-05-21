@@ -1,100 +1,33 @@
-import { useForm } from "../../hooks/useForm";
-import Back_landing from "../../components/buttons/Back_landing";
-import axios from "axios";
-import Navbar from "../../components/navbars/Navbar";
-import ReCAPTCHA from "react-google-recaptcha";
-import { useState, useEffect } from "react";
-import { Navigate } from "react-router";
-import { useNavigate } from 'react-router-dom';
+import Navbar_imprint from "../../components/navbars/Navbar_imprint";
 
-function Forgot_password() {
-
-    const [passwordShown, setPasswordShown] = useState(false);
-    const navigate = useNavigate();
-    let captchaRef;
-
-    const initialState = {
-        email: "",
-        password: "",
-    };
-
-    const { onChange, onSubmit, values } = useForm(
-        loginUserCallback,
-        initialState,
-    );
-    
-    async function loginUserCallback() {
-        var token = ""
-        if (!captchaRef.getValue()) {
-            token = await captchaRef.executeAsync();
-        }
-        else {
-            await captchaRef.reset();
-            token = await captchaRef.executeAsync();
-        }
-        const identifier_input = (document.getElementById('identifier') as HTMLInputElement | null)?.value;
-        const password_input = (document.getElementById('password') as HTMLInputElement | null)?.value;
-        let options = {
-            method: 'POST',
-            url: "/auth/login",
-            data: {
-                identifier: identifier_input,
-                password: password_input,
-                reToken: String(token)
-            },
-            withCredentials: true
-        };
-    };
-
-    return (
-        <body className="h-screen">
-            <Navbar />
-            <div
-                className="relative overflow-hidden bg-cover bg-no-repeat h-full w-full text-center bg-landing m-auto object-none object-center">
-            <Back_landing />
-            <div
-                className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed"
-                style={{backgroundColor: "rgba(0, 0, 0, 0.8)"}}>
-            <form onSubmit={onSubmit}>
-
-                <div className="flex justify-center flex-col m-auto h-screen">
-                    <div className="login-box">
-                        <p className="text-center text-black text-3xl">Gib deine Email Adresse ein um dein Passwort zurück zu setzen</p>
-                        <div className="relative mb-3">
-                            <input
-                                className="peer input"
-                                name="identifier"
-                                id="identifier"
-                                type="identifier"
-                                placeholder="Email"
-                                onChange={onChange}
-                                required
-                            />
-                            <label
-                                htmlFor="identifier"
-                                className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">Email Adresse
-                            </label>
-                        </div>
-                        <ReCAPTCHA 
-                            sitekey={process.env.REACT_APP_SITE_KEY} 
-                            ref={e => captchaRef = e} 
-                            size="invisible"
-                            render="explicit"
-                            id="captchaID"
-                        />
-
-                        <button
-                            type="submit"
-                            className="inline-block rounded-3xl hover:rounded-xl active:bg-green-700 active:text-white transition-all duration-300 cursor-pointer bg-green-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal text-black shadow-[0_4px_9px_-4px_#14a44d] ease-in-out hover:bg-green-600 hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:bg-success-600 focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] focus:outline-none focus:ring-0 active:bg-success-700 active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.3),0_4px_18px_0_rgba(20,164,77,0.2)] dark:shadow-[0_4px_9px_-4px_rgba(20,164,77,0.5)] dark:hover:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:focus:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)] dark:active:shadow-[0_8px_9px_-4px_rgba(20,164,77,0.2),0_4px_18px_0_rgba(20,164,77,0.1)]">
-                            Absenden
-                        </button>
-                    </div>
-                </div>
-            </form>
-            </div>
-            </div>
-        </body>
-    );
+function Imprint() {
+	return (
+		<body className="h-screen">
+			<Navbar_imprint />
+			<div className="relative overflow-auto bg-cover bg-no-repeat h-full w-full text-center bg-landing m-auto object-none object-center">
+				<div
+					className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-auto bg-fixed"
+					style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
+				>
+					<div className="relative top-[2%]">
+						<h1 className="text-white font-bold text-7xl tracking-wider">Impressum</h1>
+					</div>
+					<div className="flex w-full h-auto items-center justify-center">
+						<div className="settings-box">
+							<div className="relative mb-2 md:mb-10">
+                                <h1 className="font-bold text-3xl">Wer wir sind</h1>
+                                <p>Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.</p>
+                            </div>
+                            <div className="relative mb-2 md:mb-10">
+                                <h1 className="font-bold text-3xl">Wichtige Informationen</h1>
+                                <p>Hier sollten wir zum Beispiel die Quellen zu den Bildern und den Icons angeben.</p>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</body>
+	);
 }
 
-export default Forgot_password;
+export default Imprint;

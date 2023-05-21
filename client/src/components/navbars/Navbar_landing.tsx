@@ -1,5 +1,4 @@
 import DarkMode_switch from "../buttons/DarkMode_switch";
-import { useNavigate } from "react-router-dom";
 import Imprint from "../buttons/Imprint";
 
 const Navbar_landing = () => {

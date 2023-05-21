@@ -1,9 +1,6 @@
 import { useNavigate } from "react-router-dom";
 
 const Back_landing = () => {
-    const navigate = useNavigate();
-    const handleClick = () => navigate("/");
-
     return (
         <div>
             <Back />

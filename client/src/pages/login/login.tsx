@@ -4,7 +4,6 @@ import axios from "axios";
 import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useEffect } from "react";
-import { Navigate } from "react-router";
 import { useNavigate } from 'react-router-dom';
 
 function Login() {
