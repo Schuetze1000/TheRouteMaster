@@ -34,6 +34,7 @@ function Settings() {
 	const [isLoading, setLoading] = useState(true);
 	const [selectedICS, setSelectedICS] = useState(null);
 	const [selectedUni, setSelectedUni] = useState(null);
+	const [test2, setTest] = useState(true);
 	const [userInf, setUserInf] = useState<UserStructure>({
 		username: "",
 		email: "",
@@ -84,7 +85,7 @@ function Settings() {
 			})
 			.catch((error) => {
 				if (error.response.status >= 400 && error.response.status < 500) {
-					window.location.href = "/login";
+					//window.location.href = "/login";
 				}
 			});
 
@@ -103,7 +104,7 @@ function Settings() {
 			})
 			.catch((error) => {
 				if (error.response.status >= 400 && error.response.status < 500) {
-					window.location.href = "/login";
+					//window.location.href = "/login";
 				}
 			});
 	}, []);
@@ -118,6 +119,10 @@ function Settings() {
 
 	if (isLoading) {
 		return <div>Loading...</div>;
+	}
+
+	const test = () => {
+		setTest(false);
 	}
 
 	return (
@@ -135,14 +140,13 @@ function Settings() {
 						<div className="settings-box">
 							<h1 className="font-bold text-xl">Account bearbeiten</h1>
 							
-							<Input_Settings name="username" id="username" type="username" placeholder="Username" value={userInf.username}/>
+							<Input_Settings name="username" id="username" type="username" placeholder="Username" value={userInf.username} isDisabled={test2} Click={test}/>
 							<Input_Settings name="identifier" id="identifier" type="identifier" placeholder="Email" value={userInf.email}/>
 
 							<h2>Passwort ändern:</h2>
-							<Input_Settings  name="password" id="old_password" type="password" placeholder="Altes Passwort"/>
-							<Input_Settings  name="password" id="new_password" type="password" placeholder="Neues Passwort"/>
-							<Input_Settings  name="password" id="repeat_new_password" type="password" placeholder="Neues Passwort wiederholen"/>
-							<a href="/forgot-password" className="underline">Passwort vergessen</a>
+							<Input_Settings  name="password" id="old_password" type="password" placeholder="Altes Passwort" isDisabled={false} hasEditButton={false}/>
+							<Input_Settings  name="password" id="new_password" type="password" placeholder="Neues Passwort" isDisabled={false} hasEditButton={false}/>
+							<Input_Settings  name="password" id="repeat_new_password" type="password" placeholder="Neues Passwort wiederholen" isDisabled={false} hasEditButton={false}/>
 							
 							<h1 className="font-bold text-xl">Standardeinstellungen</h1>
 							<h2>Stadt ändern:</h2>
@@ -193,7 +197,9 @@ function Settings() {
 							</div>
 							<h1 className="font-bold text-xl">Gespeicherte Adressen</h1>
 							<h2>Adressen ändern:</h2>
-							<Input_Settings  name="address" id="address" type="text" placeholder="Adresse" in_cn="peer input mt-2 md:mt-5 dark:border-gray-500"/>
+							<Input_Settings  name="address" id="address" type="text" placeholder="Adresse" in_cn="peer input mt-2 md:mt-2 dark:border-gray-500 pr-12 \
+								disabled:bg-slate-50 dark:disabled:bg-gray-600 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none \
+								dark:disabled:border-gray-700 dark:disabled:text-slate-700"/>
 						</div>
 					</div>
 					<div className="flex justify-center space-x-10 pb-4 md:pb-8">
