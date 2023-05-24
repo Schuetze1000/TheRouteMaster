@@ -8,11 +8,11 @@ export const sendToken = (user: IUser, status: number, res: Response) => {
 	const token = user.getSignedToken();
 
 	const cookieConfig = {
-		httpOnly: true, 
-		secure: true, 
-		maxAge: jwtExpirySeconds * 1000 
+		//httpOnly: true, 
+		//secure: true, 
+		"maxAge": jwtExpirySeconds * 1000 
 	};
-	res.status(status).cookie("token", token, cookieConfig);
+	res.status(status).cookie("token", token, {maxAge: jwtExpirySeconds * 1000 });
 };
 
 export const verifyToken = async (req: Request, res: Response, getUser = true) => {

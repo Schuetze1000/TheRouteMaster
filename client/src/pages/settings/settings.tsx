@@ -5,6 +5,7 @@ import axios from "axios";
 import useColorMode from "../../hooks/useColorMode";
 import Select from "react-tailwindcss-select";
 import Input_Settings from "../../components/inputs/settings";
+import { error } from "console";
 
 interface HomeaddressStructure {
 	number: string;
@@ -125,32 +126,62 @@ function Settings() {
 	if (isLoading) {
 		return <div>Loading...</div>;
 	}
+	const getInputValue = (id: string): string => {
+		return (document.getElementById(id) as HTMLInputElement).value || "";
+	};
 
 	const saveAllChanges = () => {
-		
-	}
+		if (getInputValue("username") != "" && getInputValue("email") != "") {
+			const updateoption = {
+				method: "PUT",
+				url: "/user/updateprofile",
+				withCredentials: true,
+				data: {
+					ics_uid: selectedICS,
+					profile: {
+						firstname: getInputValue("firstname"),
+						surname: getInputValue("surname"),
+						avatar: getInputValue("avatar"),
+						homeaddress: {
+							number: getInputValue("number"),
+							street: getInputValue("street"),
+							zip: getInputValue("zip"),
+							city: getInputValue("city"),
+							state: getInputValue("state"),
+							country: getInputValue("country"),
+						},
+					},
+				},
+			};
+			axios(updateoption).catch((error) => {
+				if (error.response.status >= 400 && error.response.status < 500 && error.response.status != 418 ) {
+					//window.location.href = "/settings";
+				}
+				//TODO Save failed animation @Leonidas-maker / @Schuetze1000
+			});
+		}
+	};
 
 	const onClickUsername = () => {
 		setAnythingChanged(true);
 		setInUsernameisDisabled(false);
-	}
+	};
 	const onClickEmail = () => {
 		setAnythingChanged(true);
 		setInEmailisDisabled(false);
-	}
+	};
 
 	const onBtnBackClick = () => {
 		if (!anythingChanged) {
 			navigate("/");
-		}
-		else {
+		} else {
 			//TODO: Save-Cancel-Popup @Leonidas-maker
 		}
-	}
+	};
 
 	const onBtnSaveClick = () => {
 		saveAllChanges();
-	}
+	};
 
 	return (
 		<body className="h-screen">
@@ -166,18 +197,55 @@ function Settings() {
 					<div className="flex w-full h-auto items-center justify-center">
 						<div className="settings-box">
 							<h1 className="font-bold text-xl">Account bearbeiten</h1>
-							
-							<Input_Settings name="username" id="username" type="username" placeholder="Username" value={userInf.username} isDisabled={inUsernameisDisabled} Click={onClickUsername}/>
-							<Input_Settings name="identifier" id="identifier" type="identifier" placeholder="Email" value={userInf.email} isDisabled={inEmailisDisabled} Click={onClickEmail}/>
+
+							<Input_Settings
+								name="username"
+								id="username"
+								type="username"
+								placeholder="Username"
+								value={userInf.username}
+								isDisabled={inUsernameisDisabled}
+								Click={onClickUsername}
+							/>
+							<Input_Settings
+								name="identifier"
+								id="identifier"
+								type="identifier"
+								placeholder="Email"
+								value={userInf.email}
+								isDisabled={inEmailisDisabled}
+								Click={onClickEmail}
+							/>
 
 							<h2>Passwort ändern:</h2>
-							<Input_Settings  name="password" id="old_password" type="password" placeholder="Altes Passwort" isDisabled={false} hasEditButton={false}/>
-							<Input_Settings  name="password" id="new_password" type="password" placeholder="Neues Passwort" isDisabled={false} hasEditButton={false}/>
-							<Input_Settings  name="password" id="repeat_new_password" type="password" placeholder="Neues Passwort wiederholen" isDisabled={false} hasEditButton={false}/>
-							
+							<Input_Settings
+								name="password"
+								id="old_password"
+								type="password"
+								placeholder="Altes Passwort"
+								isDisabled={false}
+								hasEditButton={false}
+							/>
+							<Input_Settings
+								name="password"
+								id="new_password"
+								type="password"
+								placeholder="Neues Passwort"
+								isDisabled={false}
+								hasEditButton={false}
+							/>
+							<Input_Settings
+								name="password"
+								id="repeat_new_password"
+								type="password"
+								placeholder="Neues Passwort wiederholen"
+								isDisabled={false}
+								hasEditButton={false}
+							/>
+
 							<h1 className="font-bold text-xl">Standardeinstellungen</h1>
 							<h2>Stadt ändern:</h2>
-							<Input_Settings  name="city" id="city" type="text" placeholder="Stadt" value={userInf.homeaddress.city}/>
+							<Input_Settings name="city" id="city" type="text" placeholder="Stadt" value={userInf.homeaddress.city} />
 
 							<div className="relative mb-2 md:mb-10">
 								<h2>Universität ändern:</h2>
@@ -224,9 +292,15 @@ function Settings() {
 							</div>
 							<h1 className="font-bold text-xl">Gespeicherte Adressen</h1>
 							<h2>Adressen ändern:</h2>
-							<Input_Settings  name="address" id="address" type="text" placeholder="Adresse" in_cn="peer input mt-2 md:mt-2 dark:border-gray-500 pr-12 \
+							<Input_Settings
+								name="address"
+								id="address"
+								type="text"
+								placeholder="Adresse"
+								in_cn="peer input mt-2 md:mt-2 dark:border-gray-500 pr-12 \
 								disabled:bg-slate-50 dark:disabled:bg-gray-600 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none \
-								dark:disabled:border-gray-700 dark:disabled:text-slate-700"/>
+								dark:disabled:border-gray-700 dark:disabled:text-slate-700"
+							/>
 						</div>
 					</div>
 					<div className="flex justify-center space-x-10 pb-4 md:pb-8">
