@@ -12,8 +12,7 @@ export const sendToken = (user: IUser, status: number, res: Response) => {
 		//secure: true, 
 		"maxAge": jwtExpirySeconds * 1000 
 	};
-	res.status(status).json({"token":token, "maxAge": jwtExpirySeconds * 1000});
-	//res.status(status).cookie("token", token, cookieConfig);
+	res.status(status).cookie("token", token, cookieConfig);
 };
 
 export const verifyToken = async (req: Request, res: Response, getUser = true) => {
