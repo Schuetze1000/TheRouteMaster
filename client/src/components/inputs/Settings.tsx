@@ -1,3 +1,5 @@
+import { useEffect, useState } from 'react';
+
 const Input_Settings = ({
 	name = "",
 	id = "",
@@ -12,9 +14,19 @@ const Input_Settings = ({
 	Click = () => {}
 }) => {
 	let placeholderInput = ""
-	
+	const [valueOUT, setValueOUT] = useState(value)
+
+	useEffect(() => {
+
+	}, [])
+
+
 	if (!value){
 		placeholderInput = "0"
+	}
+
+	const onInputhange = (event) => {
+		setValueOUT(event.target.value)
 	}
 
 	if (hasEditButton){
@@ -38,7 +50,7 @@ const Input_Settings = ({
 						</svg>
 					</button>
 	
-					<input className={in_cn} disabled={isDisabled} name={name} id={id} type={type} placeholder={placeholderInput} value={value} />
+					<input className={in_cn} disabled={isDisabled} name={name} id={id} type={type} placeholder={placeholderInput} value={valueOUT} onChange={onInputhange} />
 					<label htmlFor={id} className="settings-input">
 						{placeholder}
 					</label>

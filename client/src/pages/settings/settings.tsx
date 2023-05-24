@@ -27,14 +27,19 @@ interface UserStructure {
 
 function Settings() {
 	const navigate = useNavigate();
-	const handleClick = () => navigate("/");
 	const [colorMode, setColorMode] = useColorMode();
 	const [icsNameList, setICSNameList] = useState<[{ value: string; label: string }]>([{ value: "", label: "" }]);
 	const [uniNameList, setUniNameList] = useState<[{ value: string; label: string }]>([{ value: "", label: "" }]);
 	const [isLoading, setLoading] = useState(true);
 	const [selectedICS, setSelectedICS] = useState(null);
 	const [selectedUni, setSelectedUni] = useState(null);
-	const [test2, setTest] = useState(true);
+
+	const [inUsernameisDisabled, setInUsernameisDisabled] = useState(true);
+	const [inEmailisDisabled, setInEmailisDisabled] = useState(true);
+	//const [inUsernameisDisabled, setInUsernameisDisabled] = useState(true);
+	//const [inUsernameisDisabled, setInUsernameisDisabled] = useState(true);
+	const [anythingChanged, setAnythingChanged] = useState(true);
+
 	const [userInf, setUserInf] = useState<UserStructure>({
 		username: "",
 		email: "",
@@ -121,8 +126,30 @@ function Settings() {
 		return <div>Loading...</div>;
 	}
 
-	const test = () => {
-		setTest(false);
+	const saveAllChanges = () => {
+		
+	}
+
+	const onClickUsername = () => {
+		setAnythingChanged(true);
+		setInUsernameisDisabled(false);
+	}
+	const onClickEmail = () => {
+		setAnythingChanged(true);
+		setInEmailisDisabled(false);
+	}
+
+	const onBtnBackClick = () => {
+		if (!anythingChanged) {
+			navigate("/");
+		}
+		else {
+			//TODO: Save-Cancel-Popup @Leonidas-maker
+		}
+	}
+
+	const onBtnSaveClick = () => {
+		saveAllChanges();
 	}
 
 	return (
@@ -140,8 +167,8 @@ function Settings() {
 						<div className="settings-box">
 							<h1 className="font-bold text-xl">Account bearbeiten</h1>
 							
-							<Input_Settings name="username" id="username" type="username" placeholder="Username" value={userInf.username} isDisabled={test2} Click={test}/>
-							<Input_Settings name="identifier" id="identifier" type="identifier" placeholder="Email" value={userInf.email}/>
+							<Input_Settings name="username" id="username" type="username" placeholder="Username" value={userInf.username} isDisabled={inUsernameisDisabled} Click={onClickUsername}/>
+							<Input_Settings name="identifier" id="identifier" type="identifier" placeholder="Email" value={userInf.email} isDisabled={inEmailisDisabled} Click={onClickEmail}/>
 
 							<h2>Passwort ändern:</h2>
 							<Input_Settings  name="password" id="old_password" type="password" placeholder="Altes Passwort" isDisabled={false} hasEditButton={false}/>
@@ -203,10 +230,10 @@ function Settings() {
 						</div>
 					</div>
 					<div className="flex justify-center space-x-10 pb-4 md:pb-8">
-						<button type="submit" className="button">
+						<button onClick={onBtnSaveClick} type="submit" className="button">
 							Speichern
 						</button>
-						<button onClick={handleClick} type="submit" className="button">
+						<button onClick={onBtnBackClick} type="submit" className="button">
 							Zurück
 						</button>
 					</div>

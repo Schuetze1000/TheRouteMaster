@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@capacitor/core": "^5.0.4",
     "@types/jest": "^29.5.1",
     "@types/node": "^20.1.0",
     "@types/react": "^18.2.6",

@@ -6,7 +6,13 @@ import jwt from "jsonwebtoken";
 export const sendToken = (user: IUser, status: number, res: Response) => {
 	const jwtExpirySeconds = parseInt(process.env.JWT_EXPIRE_SEC);
 	const token = user.getSignedToken();
-	res.status(status).cookie("token", token, { maxAge: jwtExpirySeconds * 1000 });
+
+	const cookieConfig = {
+		httpOnly: true, 
+		secure: true, 
+		maxAge: jwtExpirySeconds * 1000 
+	};
+	res.status(status).cookie("token", token, cookieConfig);
 };
 
 export const verifyToken = async (req: Request, res: Response, getUser = true) => {
