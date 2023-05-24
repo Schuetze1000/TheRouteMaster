@@ -5,6 +5,8 @@ import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { CapacitorCookies } from '@capacitor/core';
+import Response from 'express';
 
 function Login() {
 
@@ -50,8 +52,14 @@ function Login() {
             withCredentials: true
         };
 
-        await axios(options).then(() => {
-            window.location.href = "/settings";
+        await axios(options).then((response) => {
+            CapacitorCookies.setCookie({
+                url: 'http://localhost',
+                key: 'token',
+                value: response.data.token,
+              });
+            document.cookie = "token" + '=' + response.data.token;
+            
         }).catch((error) => {
             if (error.response.status >= 400 && error.response.status < 500) {
                 console.log(error);

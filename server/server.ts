@@ -7,11 +7,10 @@ import fs from  'fs';
 import * as path from "path";
 import cors from 'cors';
 import dotenv from 'dotenv';
-import morgan from 'morgan';
 
 dotenv.config({path: path.resolve( __dirname,".env")});
 
-const allowedOrigins = ['http://localhost:3000', 'https://the-routemaster.schuetz-andreas.dev'];
+const allowedOrigins = ['http://localhost:3000', 'https://the-routemaster.schuetz-andreas.dev', "https://localhost"];
 
 const options: cors.CorsOptions = {
   origin: allowedOrigins,
@@ -23,7 +22,6 @@ const app = Express();
 const port = process.env.PORT || 5000;
 app.use(cookieParser());
 app.use(Express.json());
-app.use(morgan('combined'));
 app.use(cors(options));
 
 connectDB().then(() => {
@@ -41,14 +39,6 @@ app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swagger_json));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/ics", require("./routes/ics"));
 app.use("/api/user", require("./routes/user"));
-
-app.use((err: any, req: Request, res: Response, next: NextFunction) => {
-  if (err.name === 'UnauthorizedError') {
-    // Logge blockierte Anfragen
-    console.error('Blockierte Anfrage:', err.message);
-  }
-  next();
-});
 
 const server = app.listen(port, () => {
 	console.log(`Server listen on ${port}`);
