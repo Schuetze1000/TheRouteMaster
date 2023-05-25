@@ -11,7 +11,6 @@ import axios from "axios";
 exports.login = async (req: Request, res: Response, next: any) => {
 	const { identifier, password, reToken } = req.body;
 	try {
-		console.log("LOGIN");
 		if (!identifier || !password || !reToken) {
 			return next(new ErrorResponse("Please provide a valid email, password and reToken", 400));
 		}

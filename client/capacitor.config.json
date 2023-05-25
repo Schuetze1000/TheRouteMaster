@@ -6,12 +6,8 @@
   "webDir": "build",
   "cordova": {},
   "server": {
-    "hostname":"the-routemaster.schuetz-andreas.dev",
     "androidScheme": "https"
   },
   "plugins": {
-    "CapacitorCookies": {
-      "enabled": true
-    }
   }
 }
