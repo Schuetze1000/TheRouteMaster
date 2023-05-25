@@ -5,6 +5,8 @@ import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
+import { isLoggedIn, setAuthTokens, getAccessToken,getRefreshToken } from 'axios-jwt'
+import { axiosInstance } from '../../hooks/api'
 
 function Login() {
 
@@ -23,7 +25,7 @@ function Login() {
     );
 
     useEffect(() => {
-        if (document.cookie.match("token")) {
+        if (isLoggedIn()) {
             navigate("/settings");
         };
     }, []);
@@ -50,8 +52,13 @@ function Login() {
             withCredentials: true
         };
 
-        await axios(options).then(() => {
-            window.location.href = "/settings";
+        await axiosInstance(options).then((response) => {
+     
+            setAuthTokens({
+                accessToken: response.data.token,
+                refreshToken: response.data.refresh_token
+              });
+              navigate("/settings");
         }).catch((error) => {
             if (error.response.status >= 400 && error.response.status < 500) {
                 console.log(error);

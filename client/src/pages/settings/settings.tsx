@@ -5,6 +5,8 @@ import axios from "axios";
 import useColorMode from "../../hooks/useColorMode";
 import Select from "react-tailwindcss-select";
 import Input_Settings from "../../components/inputs/settings";
+import { axiosInstance } from '../../hooks/api'
+import { getAccessToken } from "axios-jwt";
 
 interface HomeaddressStructure {
 	number: string;
@@ -63,9 +65,10 @@ function Settings() {
 		const optionsUser = {
 			method: "GET",
 			url: "/user/getuser",
+			headers: { "Authorization": "Bearer " + getAccessToken()},
 			withCredentials: true,
 		};
-		axios(optionsUser)
+		axiosInstance(optionsUser)
 			.then((resUserInf) => {
 				const dataUserInf = resUserInf.data;
 				let tmpuserinf: UserStructure = {
@@ -97,9 +100,10 @@ function Settings() {
 		const optionsGetICS = {
 			method: "GET",
 			url: "/ics/getavailableics",
+			headers: { "Authorization": "Bearer " + getAccessToken()},
 			withCredentials: true,
 		};
-		axios(optionsGetICS)
+		axiosInstance(optionsGetICS)
 			.then((resAvailableIcs) => {
 				var icsArray: [{ value: string; label: string }] = [{ label: resAvailableIcs.data[0].name, value: resAvailableIcs.data[0].uid }];
 				for (let index = 1; index < resAvailableIcs.data.length; index++) {
@@ -134,6 +138,7 @@ function Settings() {
 			const updateoption = {
 				method: "PUT",
 				url: "/user/updateprofile",
+				headers: { "Authorization": "Bearer " + getAccessToken()},
 				withCredentials: true,
 				data: {
 					ics_uid: selectedICS,

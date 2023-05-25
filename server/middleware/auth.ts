@@ -4,36 +4,36 @@ import { ErrorResponse } from "../utils/errorResponse";
 import jwt from "jsonwebtoken";
 
 export const sendToken = (user: IUser, status: number, res: Response) => {
-	const jwtExpirySeconds = parseInt(process.env.JWT_EXPIRE_SEC);
-	const token = user.getSignedToken();
-
-	const cookieConfig = {
-		httpOnly: true, 
-		//secure: true, 
-		"maxAge": jwtExpirySeconds * 1000 
-	};
-	res.status(status).cookie("token", token, cookieConfig);
+	const loginToken = user.getSignedLoginToken();
+	const refreshToken = user.getSignedRefreshToken();
+	res.status(status).send({"token":loginToken, "refreshToken":refreshToken});
 };
 
-export const verifyToken = async (req: Request, res: Response, getUser = true) => {
-	const jwt_token = req.cookies.token;
+export const verifyToken = async (req: Request, res: Response, getUser = true, isRefreshToken = false) => {
 	try {
-		if (!jwt_token) {
-			throw new ErrorResponse("Please provide a valid Token", 400);
+		var checked_token:string;
+		if (!isRefreshToken){
+			const jwt_token  = (req.headers.authorization).replace("Bearer ","");
+			if (!jwt_token) {
+				throw new ErrorResponse("Please provide a valid Token", 400);
+			}
+			jwt.verify(jwt_token, process.env.JWT_AUTH_SECRET!);
+			checked_token = jwt_token;
 		}
-
-		jwt.verify(jwt_token, process.env.JWT_SECRET!);
-		const { id, exp } = jwt.decode(jwt_token, { json: true });
+		else {
+		 	const { jwt_token } = req.body;
+			if (!jwt_token) {
+				throw new ErrorResponse("Please provide a valid Token", 400);
+			}
+			jwt.verify(jwt_token, process.env.JWT_REFRESH_SECRET!);
+			checked_token = jwt_token;
+		}
+		
+		const { id } = jwt.decode(checked_token, { json: true });
 		const user: IUser | undefined = await User.findById(id);
 
 		if (!user || !user.active) {
 			throw new ErrorResponse("Please provide a valid Token", 400);
-		}
-
-		let current_timestamp = Math.round(Date.now()/1000);
-
-		if (exp - 300 < current_timestamp) {
-			sendToken(user, 200, res);
 		}
 
 		if (getUser) {

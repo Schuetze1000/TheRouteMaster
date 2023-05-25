@@ -50,7 +50,8 @@ const UserSchema: Schema = new Schema({
 
 export interface IUser extends Document {
 	getResetPasswordToken(): string;
-	getSignedToken(): string;
+	getSignedLoginToken(): string;
+	getSignedRefreshToken(): string;
 	matchPassword(password: string): boolean | PromiseLike<boolean>;
 	mapUserStructure(): UserStructure;
 	updateProfile(profile:ProfileStructure):boolean;
@@ -96,10 +97,18 @@ UserSchema.methods.getResetPasswordToken = function () {
 	return resetToken;
 };
 
-UserSchema.methods.getSignedToken = function () {
-	return jwt.sign({ id: this._id }, process.env.JWT_SECRET!, {
-		expiresIn: process.env.JWT_EXPIRE,
+UserSchema.methods.getSignedLoginToken = function () {
+	const loginToken = jwt.sign({ id: this._id }, process.env.JWT_AUTH_SECRET!, {
+		expiresIn: process.env.JWT_AUTH_EXPIRE,
 	});
+	return loginToken;
+};
+
+UserSchema.methods.getSignedRefreshToken = function () {
+	const refreshToken = jwt.sign({ id: this._id }, process.env.JWT_Refresh_SECRET!, {
+		expiresIn: process.env.JWT_Refresh_EXPIRE,
+	});
+	return refreshToken;
 };
 
 UserSchema.methods.mapUserStructure = function() {
