@@ -7,8 +7,10 @@ import Settings from './pages/settings/settings';
 import Registration from './pages/registration/registration';
 import Calendar from './components/calendar';
 import Forgot_password from './pages/forgot_password/forgot_password';
+import Map from './components/map/map';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import * as path from 'path';
 
 
 function App() {
@@ -23,6 +25,7 @@ function App() {
         <Route path="/imprint" element={<Imprint />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/calendar" element={<Calendar />} />
+        <Route path="/map" element={<Map />} />
         <Route path="/forgot-password" element={<Forgot_password />}/>
       </Routes>
     </Router>
