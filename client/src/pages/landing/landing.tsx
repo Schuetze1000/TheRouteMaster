@@ -1,6 +1,7 @@
 import Navbar_landing from "../../components/navbars/Navbar_landing";
 import DarkMode_switch from "../../components/buttons/DarkMode_switch";
 import Weather from "../../components/weather";
+import React from "react";
 
 function Landing() {
     const LoginButton = () => {

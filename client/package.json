@@ -8,16 +8,11 @@
     "@capacitor/geolocation": "^5.0.2",
     "@capacitor/ios": "^5.0.4",
     "@types/jest": "^29.5.1",
-    "@types/node": "^20.1.0",
     "@types/react": "^18.2.6",
     "@types/react-dom": "^18.2.4",
     "and": "^0.0.3",
     "axios": "^1.4.0",
-<<<<<<< HEAD
-    "leaflet": "^1.9.4",
-=======
     "axios-jwt": "^3.0.0",
->>>>>>> 0d907222cbcd5060d48806dad2e54b5d9aaf09c0
     "react": "^18.2.0",
     "react-cookie": "^4.1.1",
     "react-dom": "^18.2.0",
@@ -61,6 +56,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
+    "@types/node": "^20.2.3",
     "autoprefixer": "^10.4.14",
     "postcss": "^8.4.23",
     "tailwindcss": "^3.3.2"

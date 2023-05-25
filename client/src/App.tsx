@@ -10,7 +10,7 @@ import Forgot_password from './pages/forgot_password/forgot_password';
 import Map from './components/map/map';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import * as path from 'path';
+import React from 'react';
 
 
 function App() {

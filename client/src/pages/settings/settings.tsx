@@ -4,9 +4,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import useColorMode from "../../hooks/useColorMode";
 import Select from "react-tailwindcss-select";
-import Input_Settings from "../../components/inputs/settings";
+import Input_Settings from "../../components/inputs/Settings";
 import { axiosInstance } from '../../hooks/api'
 import { getAccessToken } from "axios-jwt";
+import React from "react";
 
 interface HomeaddressStructure {
 	number: string;

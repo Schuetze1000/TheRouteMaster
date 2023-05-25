@@ -1,0 +1,7 @@
+{
+  "name": "theroutemaster",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
