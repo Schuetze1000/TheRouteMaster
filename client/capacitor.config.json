@@ -1,0 +1,13 @@
+{
+  "appId": "io.ionic.theroutemaster",
+  "appName": "theroutemaster",
+  "bundledWebRuntime": false,
+  "npmClient": "npm",
+  "webDir": "build",
+  "cordova": {},
+  "server": {
+    "androidScheme": "https"
+  },
+  "plugins": {
+  }
+}

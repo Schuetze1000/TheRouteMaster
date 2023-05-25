@@ -5,20 +5,22 @@ import { verifyToken, verifyAndMatch } from "../middleware/auth";
 import { ProfileStructure, UserStructure } from "../models/api";
 
 exports.updateProfile = async (req: Request, res: Response, next: any) => {
-	const profile: ProfileStructure  = req.body;
+	const profile: ProfileStructure  = req.body.profile;
+	const {ics_uid} = req.body;
 	try {
 		const user: IUser | null = await verifyToken(req, res);
 		user.updateProfile(profile);
+		user.ics_uid = ics_uid;
 		user.save();
 		res.status(200).json({
 			success: true,
-			data: "Profile updated successful",
+			data: "Profile and ICS_UID updated successful",
 		}).end();
 	} catch (error) {
 		if (error instanceof ErrorResponse) {
 			return next(new ErrorResponse(error.message, error.statusCode));
 		}
-		return next(new ErrorResponse(error.message, 400));
+		return next(new ErrorResponse(error.message, 418));
 	}
 };
 

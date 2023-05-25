@@ -3,7 +3,7 @@ import { ErrorResponse } from "../utils/errorResponse";
 import User, { IUser } from "../models/user";
 import sendEmail from "../utils/emailSender";
 import crypto from "crypto";
-import { sendToken } from "../middleware/auth";
+import { sendToken, verifyToken } from "../middleware/auth";
 import axios from "axios";
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
@@ -44,9 +44,9 @@ exports.login = async (req: Request, res: Response, next: any) => {
 		if (!isMatch) {
 			return next(new ErrorResponse("Invalid Credentials", 401));
 		}
-
 		sendToken(user, 201, res);
 		res.end();
+		console.log("true");
 	} catch (error: any) {
 		return next(new ErrorResponse(error.message, 400));
 	}
@@ -151,3 +151,14 @@ exports.resetPassword = async (req: Request, res: Response, next: any) => {
 		next(error);
 	}
 };
+
+exports.refreshToken = async (req: Request, res: Response, next: any) => {
+	try {
+		const user: IUser | null = await verifyToken(req, res, true, true);
+		sendToken(user, 201, res);
+		res.end();
+	} 
+	catch (error) {
+		next(error);
+	}
+}

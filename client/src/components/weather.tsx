@@ -1,5 +1,8 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
+import { Geolocation } from '@capacitor/geolocation';
+import { Capacitor } from '@capacitor/core';
+
 
 function Weather() {
 	const [city, setCity] = useState(String);
@@ -52,8 +55,7 @@ function Weather() {
 				return "n/a";
 		}
 	}
-
-	useEffect(() => {
+	const mainProcess = () => {
 		const weatherCodesToStr = {
 			0: "Klarer Himmel",
 			1: "Überwiegend klar",
@@ -84,7 +86,7 @@ function Weather() {
 			96: "Gewitter mit leichtem Hagel",
 			99: "Gewitter mit schwerem Hagel",
 		};
-
+	
 		const weatherCodesToIMG = {
 			0: "01",
 			1: "02",
@@ -116,9 +118,9 @@ function Weather() {
 			99: "11", //? Better Design
 		};
 
-		navigator.permissions.query({ name: "geolocation" }).then((PermissionStatus) => {
-			if (String(PermissionStatus.state) === "granted") {
-				navigator.geolocation.getCurrentPosition((position) => {
+		Geolocation.checkPermissions().then((PermissionStatus) => {
+			if (String(PermissionStatus.location) === "granted") {
+				Geolocation.getCurrentPosition().then((position) => {
 					const optionsWeatherAPI = {
 						method: "GET",
 						baseURL: "https://api.open-meteo.com/v1/forecast",
@@ -180,6 +182,23 @@ function Weather() {
 				setDisable(true);
 			}
 		});
+	}
+
+	useEffect(() => {
+		if (Capacitor.getPlatform() === 'web') {
+			navigator.permissions.query({ name: "geolocation" }).then(() => {
+				mainProcess();
+			})
+			
+		}
+		else
+		{
+			Geolocation.requestPermissions().then(() => {
+				mainProcess();
+			})
+		}
+
+		
 	}, []);
 
 	if (isLoading) {
