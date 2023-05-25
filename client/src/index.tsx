@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 
-axios.defaults.baseURL = process.env.BACKEND_URL;
+axios.defaults.baseURL = "https://the-routemaster.schuetz-andreas.dev/api";
 axios.defaults.headers.common = {
   'Accept': '*/*',
   'Content-Type': 'application/json;charset=UTF-8',
