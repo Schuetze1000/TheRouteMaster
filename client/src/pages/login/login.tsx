@@ -5,8 +5,8 @@ import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { isLoggedIn, setAuthTokens, getAccessToken,getRefreshToken } from 'axios-jwt'
-import { axiosInstance } from '../../hooks/api'
+import { axiosInstance } from '../../hooks/jwtAuth'
+import { setAuthTokens } from "axios-jwt";
 
 function Login() {
 
@@ -25,9 +25,7 @@ function Login() {
     );
 
     useEffect(() => {
-        if (isLoggedIn()) {
-            navigate("/settings");
-        };
+       
     }, []);
     
     async function loginUserCallback() {
@@ -52,11 +50,10 @@ function Login() {
             withCredentials: true
         };
 
-        await axiosInstance(options).then((response) => {
-     
+        await axios(options).then((response) => {
             setAuthTokens({
                 accessToken: response.data.token,
-                refreshToken: response.data.refresh_token
+                refreshToken: response.data.refreshToken
               });
               navigate("/settings");
         }).catch((error) => {

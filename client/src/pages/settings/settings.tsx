@@ -4,10 +4,10 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import useColorMode from "../../hooks/useColorMode";
 import Select from "react-tailwindcss-select";
-import Input_Settings from "../../components/inputs/Settings";
-import { axiosInstance } from '../../hooks/api'
+import Input_Settings from "../../components/inputs/settings";
 import { getAccessToken } from "axios-jwt";
 import React from "react";
+import { axiosInstance } from "../../hooks/jwtAuth";
 
 interface HomeaddressStructure {
 	number: string;
@@ -43,6 +43,7 @@ function Settings() {
 	//const [inUsernameisDisabled, setInUsernameisDisabled] = useState(true);
 	const [anythingChanged, setAnythingChanged] = useState(true);
 
+
 	const [userInf, setUserInf] = useState<UserStructure>({
 		username: "",
 		email: "",
@@ -66,7 +67,6 @@ function Settings() {
 		const optionsUser = {
 			method: "GET",
 			url: "/user/getuser",
-			headers: { "Authorization": "Bearer " + getAccessToken()},
 			withCredentials: true,
 		};
 		axiosInstance(optionsUser)
@@ -101,7 +101,6 @@ function Settings() {
 		const optionsGetICS = {
 			method: "GET",
 			url: "/ics/getavailableics",
-			headers: { "Authorization": "Bearer " + getAccessToken()},
 			withCredentials: true,
 		};
 		axiosInstance(optionsGetICS)

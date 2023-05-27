@@ -154,6 +154,8 @@ exports.resetPassword = async (req: Request, res: Response, next: any) => {
 
 exports.refreshToken = async (req: Request, res: Response, next: any) => {
 	try {
+		console.log("REFRESH");
+		
 		const user: IUser | null = await verifyToken(req, res, true, true);
 		sendToken(user, 201, res);
 		res.end();
