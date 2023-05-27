@@ -1,5 +1,5 @@
 import { useForm } from "../../hooks/useForm";
-import Back_landing from "../../components/buttons/Back_landing";
+import Back_landing from "../../components/navbars/buttons/btn_BackLanding";
 import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
 

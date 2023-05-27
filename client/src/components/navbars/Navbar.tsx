@@ -1,9 +1,9 @@
-import DarkMode_switch from "../buttons/DarkMode_switch";
-import HowToUse from "../buttons/HowToUse";
-import Dashboard from "../buttons/Dashboard";
-import Imprint from "../buttons/Imprint";
-import Account from "../buttons/Account";
-import Settings from "../buttons/Settings";
+import DarkMode_switch from "./buttons/btn_DarkModeSwitch";
+import HowToUse from "./buttons/btn_HowToUse";
+import Dashboard from "./buttons/btn_Dashboard";
+import Imprint from "./buttons/btn_Imprint";
+import Account from "./buttons/btn_Account";
+import Settings from "./buttons/btn_settings";
 
 const Navbar = () => {
     return (

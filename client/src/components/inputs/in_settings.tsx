@@ -11,6 +11,7 @@ const Input_Settings = ({
 	value = "",
 	hasEditButton=true,
 	isDisabled=true,
+	isVisable=true,
 	Click = () => {}
 }) => {
 	let placeholderInput = ""
@@ -28,7 +29,9 @@ const Input_Settings = ({
 	const onInputhange = (event) => {
 		setValueOUT(event.target.value)
 	}
-
+	if (!isVisable) {
+		return <div></div>
+	}
 	if (hasEditButton){
 		return (
 			<div>

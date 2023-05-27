@@ -1,12 +1,11 @@
 import { useForm } from "../../hooks/useForm";
-import Back_landing from "../../components/buttons/Back_landing";
+import Back_landing from "../../components/navbars/buttons/btn_BackLanding";
 import axios from "axios";
 import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
-import { axiosInstance } from '../../hooks/jwtAuth'
-import { setAuthTokens } from "axios-jwt";
+import { setAuthTokens, isLoggedIn } from "axios-jwt";
 
 function Login() {
 
@@ -25,7 +24,9 @@ function Login() {
     );
 
     useEffect(() => {
-       
+       if (isLoggedIn()) {
+            navigate("/settings");
+       }
     }, []);
     
     async function loginUserCallback() {

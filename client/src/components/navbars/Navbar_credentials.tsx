@@ -1,7 +1,7 @@
-import DarkMode_switch from "../buttons/DarkMode_switch";
-import Back_landing from "../buttons/Back_landing";
-import Imprint from "../buttons/Imprint";
-import HowToUse from "../buttons/HowToUse";
+import DarkMode_switch from "./buttons/btn_DarkModeSwitch";
+import Back_landing from "./buttons/btn_BackLanding";
+import Imprint from "./buttons/btn_Imprint";
+import HowToUse from "./buttons/btn_HowToUse";
 
 const Navbar_credentials = () => {
     return (

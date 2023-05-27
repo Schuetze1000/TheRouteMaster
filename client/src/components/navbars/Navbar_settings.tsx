@@ -1,4 +1,4 @@
-import DarkMode_switch from "../buttons/DarkMode_switch";
+import DarkMode_switch from "./buttons/btn_DarkModeSwitch";
 
 const Navbar_settings = () => {
     return (
