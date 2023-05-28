@@ -215,7 +215,7 @@ function Settings() {
 			if (zipCity.match("/[0-9]+,[A-Za-z]+/gm")) {
 				ar_zipCity = getInputValue("zip_city").split(",");
 			} else {
-				throw "Missmatch!";
+				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
 			}
 		}
 		if (streetNumber) {
@@ -223,7 +223,7 @@ function Settings() {
 				ar_streetNumber = getInputValue("street_number").split(",");
 				console.log(ar_streetNumber);
 			} else {
-				throw "Missmatch!";
+				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
 			}
 		}
 
