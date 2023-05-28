@@ -3,14 +3,14 @@ export function PopupSave({ isVisable = false, onClose, onSave, onDiscard }) {
 		return (
 			<div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
 				<div className=" flex flex-col">
-					<button className="text-white text-l place-self-end" onClick={() => onClose()}>
+					<button className="dark:text-white text-l place-self-end" onClick={() => onClose()}>
 						X
 					</button>
 					<div
 						className="bg-white dark:bg-slate-700 rounded-lg px-4 py-3  \
                          pb-2 md:pb-3 pt-2 md:pt-5"
 					>
-						<div className="text-white text-center text-lg font-bold mb-5">Accountsettings</div>
+						<div className="dark:text-white text-center text-lg font-bold mb-5">Accountsettings</div>
 						<div className="flex justify-between space-x-5 md:space-x-10">
 							<button
 								type="submit"
@@ -73,7 +73,7 @@ export function PopupPasswordRequired({ isVisable = false, onClose }) {
 					className="bg-white dark:bg-slate-700 rounded-lg px-4 py-3  \
                          pb-2 md:pb-3 pt-2 md:pt-5"
 				>
-					<div className="text-white text-center text-lg font-bold mb-5">Password ist erfolderlich!</div>
+					<div className="dark:text-white text-center text-lg font-bold mb-5">Password ist erfolderlich!</div>
 					<div className="flex justify-center">
 						<button
 							type="submit"

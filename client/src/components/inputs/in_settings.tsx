@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { on } from 'stream';
 
 const Input_Settings = ({
 	name = "",
@@ -12,7 +13,7 @@ const Input_Settings = ({
 	hasEditButton=true,
 	isDisabled=true,
 	isVisable=true,
-	Click = () => {}
+	Click = () => {},
 }) => {
 	let placeholderInput = ""
 	const [valueOUT, setValueOUT] = useState(value)
@@ -53,7 +54,7 @@ const Input_Settings = ({
 						</svg>
 					</button>
 	
-					<input className={in_cn} disabled={isDisabled} name={name} id={id} type={type} placeholder={placeholderInput} value={valueOUT} onChange={onInputhange} />
+					<input className={in_cn} disabled={isDisabled} name={name} id={id} type={type} placeholder={placeholderInput} value={valueOUT} onChange={onInputhange}/>
 					<label htmlFor={id} className="settings-input">
 						{placeholder}
 					</label>
