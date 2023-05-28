@@ -2,7 +2,7 @@ export function PopupSave({ isVisable = false, onClose, onSave, onDiscard }) {
 	if (isVisable) {
 		return (
 			<div className="fixed inset-0 bg-black bg-opacity-25 backdrop-blur-sm flex justify-center items-center">
-				<div className="w-1/5 flex flex-col">
+				<div className=" flex flex-col">
 					<button className="text-white text-l place-self-end" onClick={() => onClose()}>
 						X
 					</button>
@@ -11,7 +11,7 @@ export function PopupSave({ isVisable = false, onClose, onSave, onDiscard }) {
                          pb-2 md:pb-3 pt-2 md:pt-5"
 					>
 						<div className="text-white text-center text-lg font-bold mb-5">Accountsettings</div>
-						<div className="flex justify-between space-x-10">
+						<div className="flex justify-between space-x-5 md:space-x-10">
 							<button
 								type="submit"
 								className="inline-flex w-full justify-center rounded-md bg-green-600 px-5 py-2 text-sm font-semibold text-white shadow-sm \

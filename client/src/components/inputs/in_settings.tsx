@@ -65,7 +65,7 @@ const Input_Settings = ({
 		return (
 			<div>
 				<div className={div_cn}>
-					<input className={in_cn} disabled={isDisabled} name={name} id={id} type={type} placeholder={placeholderInput} value={value} />
+					<input className={in_cn} disabled={isDisabled} name={name} id={id} type={type} placeholder={placeholderInput} value={valueOUT}  onChange={onInputhange} />
 					<label htmlFor={id} className="settings-input">
 						{placeholder}
 					</label>

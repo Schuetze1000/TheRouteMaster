@@ -63,6 +63,11 @@ function Settings() {
 	const [inSurnameisDisabled, setInSurnameisDisabled] = useState(true);
 	const [inFirstnameisDisabled, setInFirstnameisDisabled] = useState(true);
 
+	const [inStateisDisabled, setInStateisDisabled] = useState(true);
+	const [inCountryisDisabled, setInCountryisDisabled] = useState(true);
+	const [inZipCityisDisabled, setInZipCityisDisabled] = useState(true);
+	const [inStreetNumberisDisabled, setInStreetNumberisDisabled] = useState(true);
+
 	const [passwordNeeded, setPasswordNeeded] = useState(false);
 
 	const [profileChanged, setProfileChanged] = useState(false);
@@ -98,13 +103,14 @@ function Settings() {
 					},
 				};
 
+				setSelectedICSValue(tmpuserinf.ics_uid);
 				setUserInf(tmpuserinf);
 				if (tmpuserinf.homeaddress.zip && tmpuserinf.homeaddress.city) {
-					setZip_City(`${userInf.homeaddress.zip}, ${userInf.homeaddress.city}`);
+					setZip_City(`${tmpuserinf.homeaddress.zip}, ${tmpuserinf.homeaddress.city}`);
 				}
 
 				if (tmpuserinf.homeaddress.street && tmpuserinf.homeaddress.number) {
-					setZip_City(`${userInf.homeaddress.street}, ${userInf.homeaddress.number}`);
+					setStreet_Number(`${tmpuserinf.homeaddress.street}, ${tmpuserinf.homeaddress.number}`);
 				}
 
 				setLoading(false);
@@ -155,6 +161,9 @@ function Settings() {
 	}
 	function saveEmailAndUsername() {
 		const password = getInputValue("password");
+		const email = getInputValue("email");
+		const username = getInputValue("username");
+
 		if (!password) {
 			setPasswortPopupVisible(true);
 			throw "password required!";
@@ -165,7 +174,7 @@ function Settings() {
 			headers: { Authorization: "Bearer " + getAccessToken() },
 			withCredentials: true,
 			data: {
-				email: getInputValue("email"),
+				newEmail: email,
 				password: password,
 			},
 		};
@@ -174,11 +183,11 @@ function Settings() {
 			.then(() => {
 				const updateoption2 = {
 					method: "PUT",
-					url: "/user/username",
+					url: "/user/updateusername",
 					headers: { Authorization: "Bearer " + getAccessToken() },
 					withCredentials: true,
 					data: {
-						email: getInputValue("username"),
+						newUsername: username,
 						password: password,
 					},
 				};
@@ -201,12 +210,20 @@ function Settings() {
 		const zipCity = getInputValue("zip_city");
 		let ar_streetNumber = ["", ""];
 		let ar_zipCity = ["", ""];
-
-		if (streetNumber.match("/[A-Z]+.[0-9]+/gm") || zipCity.match("/[0-9]+,[A-Z]+/gm")) {
-			ar_streetNumber = getInputValue("street_number").split(",");
-			ar_zipCity = getInputValue("zip_city").split(",");
-		} else {
-			throw "Missmatch!";
+		if (zipCity) {
+			if (zipCity.match("/[0-9]+,[A-Za-z]+/gm")) {
+				ar_zipCity = getInputValue("zip_city").split(",");
+			} else {
+				throw "Missmatch!";
+			}
+		}
+		if (streetNumber) {
+			if (streetNumber.match("[A-Za-z. ]+,[0-9]+")) {
+				ar_streetNumber = getInputValue("street_number").split(",");
+				console.log(ar_streetNumber);
+			} else {
+				throw "Missmatch!";
+			}
 		}
 
 		const updateoption = {
@@ -238,6 +255,9 @@ function Settings() {
 		});
 	}
 
+	// ---------------------------------------------------------------------------------------------- //
+	// ------------------------------------ Input-Fields Handler ------------------------------------ //
+	// ---------------------------------------------------------------------------------------------- //
 	function onClickUsername() {
 		setEmailOrUsernameChanged(true);
 		setInUsernameisDisabled(false);
@@ -259,6 +279,29 @@ function Settings() {
 		setInSurnameisDisabled(false);
 	}
 
+	function onClickCountry() {
+		setProfileChanged(true);
+		setInCountryisDisabled(false);
+	}
+
+	function onClickState() {
+		setProfileChanged(true);
+		setInStateisDisabled(false);
+	}
+
+	function onClickZipCity() {
+		setProfileChanged(true);
+		setInZipCityisDisabled(false);
+	}
+
+	function onClickStreetNumber() {
+		setProfileChanged(true);
+		setInStreetNumberisDisabled(false);
+	}
+
+	// ---------------------------------------------------------------------------------------------- //
+	// --------------------------------------- Button Handler --------------------------------------- //
+	// ---------------------------------------------------------------------------------------------- //
 	function onBtnBackClick(force: boolean) {
 		if ((!profileChanged && !emailOrUsernameChanged) || force) {
 			navigate("/");
@@ -274,6 +317,13 @@ function Settings() {
 
 	function onBtnSaveClick() {
 		try {
+			if (profileChanged) {
+				saveProfileChanges();
+			}
+			if (emailOrUsernameChanged) {
+				saveEmailAndUsername();
+			}
+
 			setInEmailisDisabled(true);
 			setInUsernameisDisabled(true);
 			setInFirstnameisDisabled(true);
@@ -283,12 +333,6 @@ function Settings() {
 			setProfileChanged(false);
 		} catch (error) {
 			console.error(error);
-		}
-		if (profileChanged) {
-			saveProfileChanges();
-		}
-		if (emailOrUsernameChanged) {
-			saveEmailAndUsername();
 		}
 	}
 
@@ -300,6 +344,9 @@ function Settings() {
 		setPasswortPopupVisible(false);
 	}
 
+	// ---------------------------------------------------------------------------------------------- //
+	// -------------------------------------- Return Functions -------------------------------------- //
+	// ---------------------------------------------------------------------------------------------- //
 	if (isLoading) {
 		return <DummySettings />;
 	}
@@ -397,11 +444,35 @@ function Settings() {
 
 							<h1 className="font-bold text-xl">Standardeinstellungen</h1>
 							<h2>Wohnort ändern:</h2>
-							<div className=" grid grid-cols-4 gap-x-6">
-								<Input_Settings name="country" id="country" type="text" placeholder="Land" value={userInf.homeaddress.country} isDisabled={true} />
-								<Input_Settings name="state" id="state" type="text" placeholder="Bundesland" value={userInf.homeaddress.state} isDisabled={true} />
+							<div className=" grid grid-cols-2 md:grid-cols-4 gap-x-6">
+								<Input_Settings
+									name="country"
+									id="country"
+									type="text"
+									placeholder="Land"
+									value={userInf.homeaddress.country}
+									isDisabled={inCountryisDisabled}
+									Click={onClickCountry}
+								/>
+								<Input_Settings
+									name="state"
+									id="state"
+									type="text"
+									placeholder="Bundesland"
+									value={userInf.homeaddress.state}
+									isDisabled={inStateisDisabled}
+									Click={onClickState}
+								/>
 
-								<Input_Settings name="zip_city" id="city" type="text" placeholder="PLZ, Stadt" value={zip_city} isDisabled={true} />
+								<Input_Settings
+									name="zip_city"
+									id="city"
+									type="text"
+									placeholder="PLZ, Stadt"
+									value={zip_city}
+									isDisabled={inZipCityisDisabled}
+									Click={onClickZipCity}
+								/>
 
 								<Input_Settings
 									name="street_number"
@@ -409,7 +480,8 @@ function Settings() {
 									type="text"
 									placeholder="Straße, Hausnummer"
 									value={street_number}
-									isDisabled={true}
+									isDisabled={inStreetNumberisDisabled}
+									Click={onClickStreetNumber}
 								/>
 							</div>
 
@@ -470,7 +542,7 @@ function Settings() {
 						</div>
 					</div>
 					<div className="flex justify-center space-x-10 pb-4 md:pb-8">
-						<button onClick={() => onBtnSaveClick()} type="submit" className="button">
+						<button onClick={onBtnSaveClick} type="submit" className="button">
 							Speichern
 						</button>
 						<button onClick={() => onBtnBackClick(false)} type="submit" className="button">

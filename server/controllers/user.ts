@@ -85,13 +85,17 @@ exports.deactivateAccount = async (req: Request, res: Response, next: any) => {
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 exports.deleteAccount = async (req: Request, res: Response, next: any) => {
-	const { password, newemail } = req.body;
+	const { password, email } = req.body;
 	try {
-		if (!password || !newemail) {
+		if (!password || !email) {
 			return next(new ErrorResponse("Please provide a valid Request", 400));
 		}
-		const userID = await verifyToken(req, res, false);
-		
+		const user: IUser | null = await verifyAndMatch(req, res, password, true);
+		await user.deleteOne();
+		res.status(200).json({
+			success: true,
+			data: "Account deleted!",
+		}).end();
 	} catch (error) {
 		if (error instanceof ErrorResponse) {
 			return next(new ErrorResponse(error.message, error.statusCode));
@@ -105,6 +109,9 @@ exports.deleteAccount = async (req: Request, res: Response, next: any) => {
 exports.updateEmail = async (req: Request, res: Response, next: any) => {
 	const { password, newEmail } = req.body;
 	try {
+		if (!password || !newEmail) {
+			return next(new ErrorResponse("Please provide a valid Credentials", 400));
+		}
 		const user: IUser | null = await verifyAndMatch(req, res, password, true);
 		user.email = newEmail;
 		user.save();
@@ -123,9 +130,12 @@ exports.updateEmail = async (req: Request, res: Response, next: any) => {
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 exports.updateUsername = async (req: Request, res: Response, next: any) => {
-	const { newUsername } = req.body;
+	const { password, newUsername } = req.body;
 	try {
-		const user: IUser | null = await verifyToken(req, res);
+		if (!password || !newUsername) {
+			return next(new ErrorResponse("Please provide a valid Credentials", 400));
+		}
+		const user: IUser | null = await verifyAndMatch(req, res, password, true);
 		user.username = newUsername;
 		user.save();
 		res.status(201).json({
