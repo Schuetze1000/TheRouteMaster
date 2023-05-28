@@ -2,10 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import { LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
-
-//TODO: Fix missing map icons
-L.Icon.Default.imagePath = "public/map_icons/";
+import markerIconPng from "leaflet/dist/images/marker-icon.png"
+import {Icon} from 'leaflet'
 
 function SetViewOnClick({ coords }: { coords: LatLngTuple }) {
   const map = useMap();
@@ -60,7 +58,7 @@ const Map = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
         />
-        <Marker position={coords} >
+        <Marker position={coords} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}>
           <Popup>
             A pretty CSS3 popup. Easily customizable.
           </Popup>
