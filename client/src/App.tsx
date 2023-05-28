@@ -4,6 +4,7 @@ import Dashboard from './pages/dashboard/dashboard';
 import HowToUse from './pages/howToUse/howToUse';
 import Imprint from './pages/imprint/imprint';
 import Settings from './pages/settings/settings';
+import ChangePassword from './pages/settings/settings_changePassword';
 import Registration from './pages/registration/registration';
 import Calendar from './components/calendar';
 import Forgot_password from './pages/forgot_password/forgot_password';
@@ -24,6 +25,8 @@ function App() {
         <Route path="/howtouse" element={<HowToUse />} />
         <Route path="/imprint" element={<Imprint />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/settings/changepassword" element={<ChangePassword />} />
+            
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/map" element={<Map />} />
         <Route path="/forgot-password" element={<Forgot_password />}/>

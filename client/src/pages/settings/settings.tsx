@@ -159,6 +159,7 @@ function Settings() {
 			return "";
 		}
 	}
+
 	function saveEmailAndUsername() {
 		const password = getInputValue("password");
 		const email = getInputValue("email");
@@ -360,11 +361,11 @@ function Settings() {
 					style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}
 				>
 					<div className="relative top-[2%]">
-						<h1 className="text-white font-bold text-7xl tracking-wider">Settings</h1>
+						<h1 className="text-white font-bold text-4xl md:text-7xl tracking-wider">Settings</h1>
 					</div>
 					<div className="flex w-full h-auto items-center justify-center">
-						<div className="settings-box">
-							<h1 className="font-bold text-xl">Account bearbeiten</h1>
+						<div className="relative bg-white dark:bg-neutral-600 bg-opacity-100 rounded-lg w-[90%] h-full mx-auto p-10 mt-10 mb-5 shadow-2xl grid top-[8%] items-center">
+							<h1 className="dark:text-white font-bold text-xl">Account bearbeiten</h1>
 
 							<Input_Settings
 								name="username"
@@ -416,34 +417,10 @@ function Settings() {
 								Click={onClickSurname}
 							/>
 
-							<h2>Passwort ändern:</h2>
-							<Input_Settings
-								name="password"
-								id="old_password"
-								type="password"
-								placeholder="Altes Passwort"
-								isDisabled={false}
-								hasEditButton={false}
-							/>
-							<Input_Settings
-								name="password"
-								id="new_password"
-								type="password"
-								placeholder="Neues Passwort"
-								isDisabled={false}
-								hasEditButton={false}
-							/>
-							<Input_Settings
-								name="password"
-								id="repeat_new_password"
-								type="password"
-								placeholder="Neues Passwort wiederholen"
-								isDisabled={false}
-								hasEditButton={false}
-							/>
+							
 
-							<h1 className="font-bold text-xl">Standardeinstellungen</h1>
-							<h2>Wohnort ändern:</h2>
+							<h1 className="font-bold text-xl dark:text-white ">Standardeinstellungen</h1>
+							<h2 className="dark:text-white ">Wohnort ändern:</h2>
 							<div className=" grid grid-cols-2 md:grid-cols-4 gap-x-6">
 								<Input_Settings
 									name="country"
@@ -504,7 +481,7 @@ function Settings() {
 									}}
 								/>
 							</div>
-							<div className="relative mb-2 md:mb-10">
+							<div className="relative mb-2 md:mb-5">
 								<h2>Kurs ändern:</h2>
 								<Select
 									primaryColor={"blue"} // Not Working
@@ -528,17 +505,14 @@ function Settings() {
 									}}
 								/>
 							</div>
-							<h1 className="font-bold text-xl">Gespeicherte Adressen</h1>
-							<h2>Adressen ändern:</h2>
-							<Input_Settings
-								name="address"
-								id="address"
-								type="text"
-								placeholder="Adresse"
-								in_cn="peer input mt-2 md:mt-2 dark:border-gray-500 pr-12 \
-								disabled:bg-slate-50 dark:disabled:bg-gray-600 disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none \
-								dark:disabled:border-gray-700 dark:disabled:text-slate-700"
-							/>
+							<button
+								onClick={() => navigate("/settings/changepassword")}
+								type="submit"
+								className="inline-flex justify-center rounded-md bg-orange-600 px-5 py-2 text-sm \
+								font-semibold text-white shadow-sm hover:bg-orange-500"
+							>
+								Passwort ändern?
+							</button>
 						</div>
 					</div>
 					<div className="flex justify-center space-x-10 pb-4 md:pb-8">

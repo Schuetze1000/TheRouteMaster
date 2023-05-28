@@ -80,7 +80,7 @@ function Login() {
     };
 
     const togglePassword = () => {
-        setPasswordShown(!passwordShown);
+        setPasswordShown(!passwordShown); //TODO Implement @Leonidas-maker
     };
 
     return (
