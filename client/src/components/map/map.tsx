@@ -1,27 +1,73 @@
-import React, {useState} from "react";
-import { MapContainer, TileLayer, Marker, Popup, useMap, useMapEvents } from 'react-leaflet';
-import * as Leaflet from 'leaflet'
-import { Icon } from "leaflet";
+import React, { useEffect, useState } from 'react';
+import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
+import { LatLngTuple } from 'leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
 
-function Map() {
-	const map = useMapEvents({
-		click: () => {
-		  map.locate()
+//TODO: Fix missing map icons
+L.Icon.Default.imagePath = "public/map_icons/";
+
+function SetViewOnClick({ coords }: { coords: LatLngTuple }) {
+  const map = useMap();
+  map.setView(coords, map.getZoom());
+
+  return null;
+}
+
+const Map = () => { 
+  	interface LocationState {
+		latitude: number | null;
+		longitude: number | null;
+		error: string | null;
+  	}
+  
+	const [location, setLocation] = useState<LocationState>({
+		latitude: null,
+		longitude: null,
+		error: null,
+	});
+
+	const defaultLocation = {
+		latitude: 49.473780021177674, // Standardbreite für DHBW
+		longitude: 8.53439744049763, // Standardlänge für DHBW
+		error: null,
+	  };
+
+	useEffect(() => {
+		navigator.geolocation.getCurrentPosition(
+		(position) => {
+			setLocation({
+			latitude: position.coords.latitude,
+			longitude: position.coords.longitude,
+			error: null,
+			});
 		},
-		locationfound: (location) => {
-		  console.log('location found:', location)
-		},
-	  })
-	  return null
-	}
-	
-function MapComponent() {
-	return (
-		<div></div>
-		// <MapContainer center={[50.5, 30.5]} zoom={13}>
-		// 	<Map />
-		// </MapContainer>
-	);
+		(error) => setLocation({
+			...defaultLocation,
+			error: error.message
+		  }),
+		{ enableHighAccuracy: true, timeout: 20000, maximumAge: 1000 },
+		);
+	}, []);
+
+	const coords: LatLngTuple = [location.latitude || 0, location.longitude || 0];
+
+  return (
+    <div style={{ height: "100vh", width: "100%" }}>
+      <MapContainer style={{ height: "100%", width: "100%" }} center={coords} zoom={13}>
+        <SetViewOnClick coords={coords} />
+        <TileLayer
+          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        />
+        <Marker position={coords} >
+          <Popup>
+            A pretty CSS3 popup. Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </div>
+  );
 }
 
 export default Map;
