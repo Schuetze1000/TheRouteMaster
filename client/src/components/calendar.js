@@ -38,13 +38,14 @@ function FullCalendarApp() {
         firstDay= {1} //Der Montag ist der erste dargestellte Tag
         slotMinTime={'06:00:00'} //Die frühste Uhrzeit, die dargestellt wird
         slotMaxTime={'22:00:00'} //Die späteste Uhrzeit, die dargestellt wird
-        slotDuration={'00:15:00'} //Die Länge eines Slots
+        slotDuration={'00:30:00'} //Die Zeitspanne, die eine Slot beinhaltet, kleinere Slots bedeuten, dass der gesamte Kalender länger wird
         hiddenDays = {'0'} //Der Sonntag wird versteckt
         eventColor="#a01b1b"  //Farbe der Event-Felder
         eventTextColor='black' //Farbe der Schrift in den Eventfeldern
         nowIndicator    //Ein roter Strich, welcher die aktuelle Uhrzeit anzeigt, wird im Kalender dargestellt
         locale={'de'}   //Setzt die Sprache z.B. beim Ausschreiben der Monate und Wochentage auf Deutsch
         allDaySlot = {false}  //Entfernt den Slot für ganztägige Events
+        height={1000}
 
         eventTimeFormat={{  //Format der Zeitdarstellung in den Eventblöcken
           hour: "numeric",    //Darstellen der Stunden in der numerischen Form, also ohne führende Nullen bei einer einstelligen Zahl
@@ -65,7 +66,7 @@ function FullCalendarApp() {
         {
           id: 2,
           title: 'Mathe',
-          start: '2023-06-02T13:00:00',
+          start: '2023-06-02T13:15:00',
           end: '2023-06-02T18:00:00',
         },
         { id: 3, title: 'BWL', start: '2023-05-30T17:00:00', end: '2023-05-30T19:00:00', url:'https://www.youtube.com/watch?v=4f_mIRrns2U' },
