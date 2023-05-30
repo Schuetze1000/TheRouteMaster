@@ -45,7 +45,7 @@ function FullCalendarApp() {
         nowIndicator    //Ein roter Strich, welcher die aktuelle Uhrzeit anzeigt, wird im Kalender dargestellt
         locale={'de'}   //Setzt die Sprache z.B. beim Ausschreiben der Monate und Wochentage auf Deutsch
         allDaySlot = {false}  //Entfernt den Slot für ganztägige Events
-        height={1000}
+        height={1000} //Die maximale Höhe des Kalenders. Bei Überschreitung werden Scrollbars eingesetzt 
 
         eventTimeFormat={{  //Format der Zeitdarstellung in den Eventblöcken
           hour: "numeric",    //Darstellen der Stunden in der numerischen Form, also ohne führende Nullen bei einer einstelligen Zahl
@@ -61,7 +61,6 @@ function FullCalendarApp() {
           start: '2023-06-01T10:00:00', //Anfangsdatum und Zeit des Events
           end: '2023-06-01T12:00:00',     //Enddatum und Zeit des Events
           url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', //Diese Zeile macht überhaupt gar nichts und sollte in keinem Fall beachtet werden, weil sie wirklich gar nichts macht
-          extendedProps: 'RADASDASD'
         },
         {
           id: 2,
