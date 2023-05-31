@@ -61,7 +61,7 @@ axiosInstance(optionsGetICS)
   });
 */
 
-
+     
   const optionsGetICS = {
     method: "GET",
     url: "/ics/getics", 
@@ -69,30 +69,34 @@ axiosInstance(optionsGetICS)
   };
   axiosInstance(optionsGetICS)
     .then((resAvailableIcs) => {
+      var evntLst = [{}]
       eventsL.push(testEvent) //Hat hier nur debuggende Funktion, ähnlich einem Print-statement, das signalisiert, dass dieser Codeblock abgearbeitet wird
       if (resAvailableIcs.data.hash == currentHash) {
-        eventsL.push({ title: 'Theoretische Informatik I',start: '2023-06-02T09:00:00',end: '2023-06-02T11:00:00',//Hat hier nur debuggende Funktion, ähnlich einem Print-statement, das signalisiert, dass dieser Codeblock abgearbeitet wird
-        })
         currentHash = resAvailableIcs.data.hash 
+       
       }
     else {
+     
       currentHash = resAvailableIcs.data.hash
       kursName = resAvailableIcs.data.name
       ICSString = resAvailableIcs.data.data
+      console.log({ICSString})
       const rawEvents = ICSString.split("BEGIN:VEVENT")
       for (let i = 1; i < rawEvents.length; i++) {
         var singularEvent = rawEvents[i].split("\n")
+        console.log({singularEvent})
         eventsL.push({
-          title: singularEvent[2].replace("SUMMARY:","")+"     "+singularEvent[1].replace("LOCATION:", ""), 
-          start: singularEvent[3].replace("DTSTART:",""),
-          end: singularEvent[4].replace("DTEND:",""),
-      })
+          title: singularEvent[3].replace("SUMMARY:","")+"     "+singularEvent[2].replace("LOCATION:", ""), 
+          start: singularEvent[4].replace("DTSTART:",""),
+          end: singularEvent[5].replace("DTEND:",""),
+        })
       }
+      console.log({eventsL})
     }
   });
 
-
-
+console.log("DEBUG")
+console.log({eventsL})
 
 
 /**
