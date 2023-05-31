@@ -1,11 +1,11 @@
 import { IAuthTokens, TokenRefreshRequest, applyAuthTokenInterceptor, clearAuthTokens } from "axios-jwt";
 import axios from "axios";
 
-export const axiosInstance = axios.create({ baseURL: "http://localhost:5000/api" });
+export const axiosInstance = axios.create({ baseURL: "https://the-routemaster.schuetz-andreas.dev/api/" });
 
 const requestRefresh: TokenRefreshRequest = async (refreshToken: string): Promise<IAuthTokens | string> => {
 	try {
-		const response = await axios.post(`http://localhost:5000/api/auth/refreshtoken`, { jwt_token: refreshToken });
+		const response = await axios.post(`https://the-routemaster.schuetz-andreas.dev/api/auth/refreshtoken`, { jwt_token: refreshToken });
    
 	return {
 		accessToken: response.data.token,

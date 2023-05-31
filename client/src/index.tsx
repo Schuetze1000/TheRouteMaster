@@ -5,7 +5,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import axios from 'axios';
 
-axios.defaults.baseURL = "http://localhost:5000/api";
+axios.defaults.baseURL = "https://the-routemaster.schuetz-andreas.dev/api/";
 axios.defaults.headers.common = {
   'Accept': '*/*',
   'Content-Type': 'application/json;charset=UTF-8',
