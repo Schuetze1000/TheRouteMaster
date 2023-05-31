@@ -3,25 +3,41 @@ import dayGridPlugin from '@fullcalendar/daygrid';
 import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
 import deLocale from '@fullcalendar/core/locales/de';
+import { Calendar } from 'fullcalendar';
+import { Interface } from 'readline';
+import { useState } from 'react';
 
-const events = [
+const eventsL = [
   {
-    id: 1,
-    title: 'event 1',
-    start: '2021-06-14T10:00:00',
-    end: '2021-06-14T12:00:00',
+    title: "Kryptologie Raum 161C",  //Titel der Vorlesung, wird im Eventfeld angezeigt
+    start: '20230601T100000', //Anfangsdatum und Zeit des Events
+    end: '20230601T120000',     //Enddatum und Zeit des Events
+    url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ'
   },
   {
-    id: 2,
     title: 'event 2',
-    start: '2021-06-16T13:00:00',
-    end: '2021-06-16T18:00:00',
+    start: '2023-06-02T13:00:00',
+    end: '2023-06-02T18:00:00',
   },
-  { id: 3, title: 'event 3', start: '2021-06-17', end: '2021-06-20' },
+ // { id: '3',  title: 'BWL Raum 161C', start: '20230530T170000', end: '20230-30T190000'},
 ];
 
+//Volle Dokumentation bei https://fullcalendar.io/docs
+const pppppp = {id: '3',  title: 'BWL Raum 162C', start: '20230530T170000', end: '20230-30T190000', url:'https://www.youtube.com/watch?v=4f_mIRrns2U'}
+
+interface iEvent {
+  title: string;
+  start: string;
+  end: string;
+}
+
+function addEvent(eventArr: iEvent) {
+  eventsL.push(eventArr)
+}
+addEvent(pppppp)
 
 function FullCalendarApp() {
+  const[iEvent, setEvent] = useState(String);
   return (
     <div className="App">
       <FullCalendar
@@ -31,13 +47,13 @@ function FullCalendarApp() {
         initialView="timeGridWeek"  //Wochendarstellung, die Tage werden als Spalten nebeneinander angezeigt
         headerToolbar={{  //Die Toolbar über dem eigentlichen Kalender enthält per Default Knöpfe und Funktionalitäten z.B. zum Umschalten auf Tages- oder Monatsansicht, oder zum Spulen der Wochen
           center: 'title', //Es das Anfangs- und Enddatum der aktuell dargestellten Woche angezeigt
-          left: '', //Hier würde per default der titel stehen
-          right: '', //Hier wären per default buttons zum Navigieren zur nächsten, vorherigen oder aktuellen Woche
+          left: 'dayGridMonth timeGridWeek', //Buttons zum Umschalten von Monats- und Wochenansicht
+          right: 'prev,today,next', //Die Buttons zum Navigieren der Wochen. Trennung durch Leerzeichen statt Komma trennt die Buttons visuell voneinander. Komma und Leerzeichen sorgen für eine whacke Darstellung
         }}
         firstDay= {1} //Der Montag ist der erste dargestellte Tag
         slotMinTime={'06:00:00'} //Die frühste Uhrzeit, die dargestellt wird
         slotMaxTime={'22:00:00'} //Die späteste Uhrzeit, die dargestellt wird
-        slotDuration={'00:30:00'} //Die Zeitspanne, die eine Slot beinhaltet, kleinere Slots bedeuten, dass der gesamte Kalender länger wird
+        slotDuration={'00:30:00'} //Die Zeitspanne, die ein Slot beinhaltet, kleinere Slots bedeuten, dass der gesamte Kalender länger wird
         hiddenDays = {[0]} //Der Sonntag wird versteckt
         eventColor="#a01b1b"  //Farbe der Event-Felder
         eventTextColor='black' //Farbe der Schrift in den Eventfeldern
@@ -52,24 +68,25 @@ function FullCalendarApp() {
           hour12: false   //Die Stunden werden im 1-24 Format angezeigt, und nicht im 1-12 Format, wie per default
           }}
 
-
+        
         //Hier werden die Events deklariert, die dann im Kalender dargestellt werden. Sinvollerweise sollte dies später durch automatische Prozesse erledigt werden
-        events={[{
-          id: '1',    //Event-ID. Zum Berarbeiten der Events bestimmt hilfreich, aber hier eigentlich unnötig
-          title: "Krypto Raum161C",  //Titel der Vorlesung, wird im Eventfeld angezeigt
-          start: '2023-06-01T10:00:00', //Anfangsdatum und Zeit des Events
-          end: '2023-06-01T12:00:00',     //Enddatum und Zeit des Events
+      
+       /**  events={[{
+         // id: '1',    //Event-ID. Zum Berarbeiten der Events bestimmt hilfreich, aber hier eigentlich unnötig
+          title: "Kryptologie Raum 161C",  //Titel der Vorlesung, wird im Eventfeld angezeigt
+          start: '20230601T100000', //Anfangsdatum und Zeit des Events
+          end: '20230601T120000',     //Enddatum und Zeit des Events
           url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', //Diese Zeile macht überhaupt gar nichts und sollte in keinem Fall beachtet werden, weil sie wirklich gar nichts macht
         },
         {
-          id: '2',
-          title: 'Mathe',
-          start: '2023-06-02T13:15:00',
-          end: '2023-06-02T18:00:00',
+          //id: '2',
+          title: 'Mathematik Raum 161C',
+          start: '20230602T131500',
+          end: '20230602T180000',
         },
-        { id: '3', title: 'BWL', start: '2023-05-30T17:00:00', end: '2023-05-30T19:00:00', url:'https://www.youtube.com/watch?v=4f_mIRrns2U' },
-        ]}
-
+        { id: '3',  title: 'BWL Raum 161C', start: '20230530T170000', end: '20230-30T190000', url:'https://www.youtube.com/watch?v=4f_mIRrns2U' },
+        ]} */
+        events = {eventsL}
 
       />
     </div>
@@ -77,3 +94,11 @@ function FullCalendarApp() {
 }
 
 export default FullCalendarApp;
+
+
+
+//Additional Intended Features:
+//Creation of Custom Events
+//Custom Buttons, for Example to visit the page hosting the DHBW-Calendar
+//Automatic addition or removal of events according to the .ics file
+//Popup with additional information, perhaps even custom notes
