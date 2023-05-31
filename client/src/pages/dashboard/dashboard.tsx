@@ -1,12 +1,15 @@
 import React from "react";
 import Navbar from "../../components/navbars/Navbar";
+import Map from "../../components/map/map";
 
 function Dashboard() {
 
     return (
         <div>
             <Navbar />
-            <h1 className="text-center text-green-500">Willkommen beim Dashboard!</h1>
+            <div className="relative flex w-20 h-20">
+                <Map />
+            </div>
         </div>
     );
 }

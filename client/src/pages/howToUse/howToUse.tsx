@@ -12,7 +12,7 @@ function HowToUse() {
 						<h1 className="text-white font-bold text-7xl tracking-wider">How To Use</h1>
 					</div>
 					<div className="flex w-full h-auto items-center justify-center">
-						<div className="settings-box">
+						<div className="background-box">
 							<div className="relative mb-2 md:mb-10">
                                 <h1 className="font-bold text-3xl">Welche Funktionen es gibt</h1>
                                 <p>Hier sollten wir mit kleinen Bildern zeigen welche Funktionen es gibt (Mit Namen).</p>

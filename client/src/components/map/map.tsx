@@ -52,20 +52,20 @@ const Map = () => {
 	const coords: LatLngTuple = [location.latitude || 0, location.longitude || 0];
 
 	return (
-	<div style={{ height: "100vh", width: "100%" }}>
-		<MapContainer style={{ height: "100%", width: "100%" }} center={coords} zoom={13}>
-		<SetViewOnClick coords={coords} />
-		<TileLayer
-			url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-			attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-		/>
-		<Marker position={coords} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}>
-			<Popup>
-			A pretty CSS3 popup. Easily customizable.
-			</Popup>
-		</Marker>
-		</MapContainer>
-	</div>
+		<div style={{ height: "100vh", width: "100%" }}>
+			<MapContainer style={{ height: "100%", width: "100%" }} center={coords} zoom={13}>
+			<SetViewOnClick coords={coords} />
+			<TileLayer
+				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+			/>
+			<Marker position={coords} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}>
+				<Popup>
+				A pretty CSS3 popup. Easily customizable.
+				</Popup>
+			</Marker>
+			</MapContainer>
+		</div>
 	);
 	}
 
