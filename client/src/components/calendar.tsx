@@ -62,17 +62,18 @@ axiosInstance(optionsGetICS)
 */
 
 
-  const checkForICSUpdate = {
+  const optionsGetICS = {
     method: "GET",
     url: "/ics/getics", 
     withCredentials: true,
   };
-  axiosInstance(checkForICSUpdate)
+  axiosInstance(optionsGetICS)
     .then((resAvailableIcs) => {
       eventsL.push(testEvent)
       if (resAvailableIcs.data.hash == currentHash) {
         eventsL.push({ title: 'Theoretische Informatik I',start: '2023-06-02T09:00:00',end: '2023-06-02T11:00:00',
-        }) 
+        })
+        currentHash = resAvailableIcs.data.hash 
       }
     else {
       currentHash = resAvailableIcs.data.hash
@@ -121,12 +122,6 @@ function addEvent(eventArr: IEvent) {
 }
 
 
-function FullCalendarApp() {
-  const[iEvent, setEvent] = useState<IEvent[]>();
-
-  useEffect(() => {
-    let tmpEvent: IEvent[];
-  }, []);
 
   return (
     <div className="App">
@@ -172,28 +167,9 @@ function FullCalendarApp() {
 
         events = {eventsL}
 
-        //Hier werden die Events deklariert, die dann im Kalender dargestellt werden. Sinvollerweise sollte dies später durch automatische Prozesse erledigt werden
-      
-       /**  events={[{
-         // id: '1',    //Event-ID. Zum Berarbeiten der Events bestimmt hilfreich, aber hier eigentlich unnötig
-          title: "Kryptologie Raum 161C",  //Titel der Vorlesung, wird im Eventfeld angezeigt
-          start: '20230601T100000', //Anfangsdatum und Zeit des Events
-          end: '20230601T120000',     //Enddatum und Zeit des Events
-          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', //Diese Zeile macht überhaupt gar nichts und sollte in keinem Fall beachtet werden, weil sie wirklich gar nichts macht
-        },
-        {
-          //id: '2',
-          title: 'Mathematik Raum 161C',
-          start: '20230602T131500',
-          end: '20230602T180000',
-        },
-        { id: '3',  title: 'BWL Raum 161C', start: '20230530T170000', end: '20230-30T190000', url:'https://www.youtube.com/watch?v=4f_mIRrns2U' },
-        ]} */
-
       />
     </div>
   );}
-}
 
 
-export default FullCalendarApp;
+export default FullCalendarApp; 
