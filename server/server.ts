@@ -48,6 +48,7 @@ app.use('/api/swagger', swaggerUi.serve, swaggerUi.setup(swagger_json));
 app.use("/api/auth", require("./routes/auth"));
 app.use("/api/ics", require("./routes/ics"));
 app.use("/api/user", require("./routes/user"));
+app.use("/api/email", require("./routes/imgEmail"));
 
 const server = app.listen(port, () => {
 	console.log(`Server listen on ${port}`);
