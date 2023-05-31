@@ -11,7 +11,7 @@ const Dashboard = ({ text = "Dashboard" }) => {
             </svg>
 
 
-            <span className="navbar-text group-hover:scale-100">
+            <span className="navbar-text group-hover:scale-100 z-50">
                 {text}
             </span>
         </div>

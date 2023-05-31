@@ -61,7 +61,7 @@ const Map = () => {
 			/>
 			<Marker position={coords} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}>
 				<Popup>
-				A pretty CSS3 popup. Easily customizable.
+					Dein Standort
 				</Popup>
 			</Marker>
 			</MapContainer>

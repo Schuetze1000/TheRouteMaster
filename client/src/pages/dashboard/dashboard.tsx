@@ -1,16 +1,35 @@
 import React from "react";
-import Navbar from "../../components/navbars/Navbar";
+import Navbar_dashboard from "../../components/navbars/Navbar_dashboard";
 import Map from "../../components/map/map";
+import FullCalendarApp from "../../components/calendar";
 
 function Dashboard() {
 
     return (
-        <div>
-            <Navbar />
-            <div className="relative flex w-20 h-20">
-                <Map />
+        <body className="h-screen">
+        <Navbar_dashboard />
+        <div className="relative overflow-auto bg-cover bg-no-repeat h-full w-full text-center bg-landing m-auto object-none object-center">
+            <div
+                className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-auto bg-fixed"
+                style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}>
+                <div className="relative top-[2%]">
+                    <h1 className="text-white font-bold text-7xl tracking-wider">Dashboard</h1>
+                </div>
+                <div className="flex w-full h-auto items-center justify-center">
+                    <div className="background-box">
+                        <div className="space-y-10 z-10">
+                            <div className="relative">
+                                <FullCalendarApp />
+                            </div>
+                            <div className="relatve flex">
+                                <Map />
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
+    </body>
     );
 }
 
