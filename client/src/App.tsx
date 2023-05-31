@@ -9,6 +9,7 @@ import Registration from './pages/registration/registration';
 import Calendar from './components/calendar';
 import Forgot_password from './pages/forgot_password/forgot_password';
 import Map from './components/map/map';
+import ErrorPage from './pages/404/errorPage';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
@@ -26,10 +27,10 @@ function App() {
         <Route path="/imprint" element={<Imprint />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/settings/changepassword" element={<ChangePassword />} />
-            
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/map" element={<Map />} />
         <Route path="/forgot-password" element={<Forgot_password />} />
+        <Route path="*" element={<ErrorPage />} />
       </Routes>
     </Router>
   );  

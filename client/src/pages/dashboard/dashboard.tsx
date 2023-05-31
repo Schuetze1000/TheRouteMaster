@@ -1,10 +1,17 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar_dashboard from "../../components/navbars/Navbar_dashboard";
 import Map from "../../components/map/map";
 import FullCalendarApp from "../../components/calendar";
 import Weather from "../../components/weather";
+import { isLoggedIn } from "axios-jwt";
 
 function Dashboard() {
+
+    useEffect(() => {
+        if (!isLoggedIn()) {
+            window.location.href = "/login";
+        }
+    }, []);
 
     return (
         <body className="h-screen">
