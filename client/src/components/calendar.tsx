@@ -87,11 +87,9 @@ axiosInstance(optionsGetICS)
 				currentHash = resAvailableIcs.data.hash;
 				kursName = resAvailableIcs.data.name;
 				ICSString = resAvailableIcs.data.data;
-				console.log({ ICSString });
 				const rawEvents = ICSString.split("BEGIN:VEVENT");
 				for (let i = 1; i < rawEvents.length; i++) {
 					var singularEvent = rawEvents[i].split("\n");
-					console.log({ singularEvent });
 					evntLst.push({
 						title: singularEvent[3].replace("SUMMARY:", "") + "     " + singularEvent[2].replace("LOCATION:", ""),
 						start: singularEvent[4].replace("DTSTART:", ""),
@@ -99,11 +97,10 @@ axiosInstance(optionsGetICS)
 					});
 				}
         setEvent(evntLst);
+        console.log("DEBUG");
+		    console.log({ evntLst });
 			}
 		});
-
-		console.log("DEBUG");
-		console.log({ evntLst });
 	}, []);
 
 	return (
