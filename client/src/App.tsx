@@ -10,8 +10,6 @@ import Calendar from './components/calendar';
 import Forgot_password from './pages/forgot_password/forgot_password';
 import Map from './components/map/map';
 
-import Location from './components/location';
-
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
 
@@ -32,7 +30,6 @@ function App() {
         <Route path="/calendar" element={<Calendar />} />
         <Route path="/map" element={<Map />} />
         <Route path="/forgot-password" element={<Forgot_password />} />
-        <Route path="/location" element={<Location />} />
       </Routes>
     </Router>
   );  

@@ -27,7 +27,6 @@ function FullCalendarApp() {
       <FullCalendar
         plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
 
-
         //Ab hier findet Customization statt, um den Kalender an Bedürfnisse/Gewohnheiten anzupassen
         initialView="timeGridWeek"  //Wochendarstellung, die Tage werden als Spalten nebeneinander angezeigt
         headerToolbar={{  //Die Toolbar über dem eigentlichen Kalender enthält per Default Knöpfe und Funktionalitäten z.B. zum Umschalten auf Tages- oder Monatsansicht, oder zum Spulen der Wochen
@@ -39,7 +38,7 @@ function FullCalendarApp() {
         slotMinTime={'06:00:00'} //Die frühste Uhrzeit, die dargestellt wird
         slotMaxTime={'22:00:00'} //Die späteste Uhrzeit, die dargestellt wird
         slotDuration={'00:30:00'} //Die Zeitspanne, die eine Slot beinhaltet, kleinere Slots bedeuten, dass der gesamte Kalender länger wird
-        hiddenDays = {'0'} //Der Sonntag wird versteckt
+        hiddenDays = {[0]} //Der Sonntag wird versteckt
         eventColor="#a01b1b"  //Farbe der Event-Felder
         eventTextColor='black' //Farbe der Schrift in den Eventfeldern
         nowIndicator    //Ein roter Strich, welcher die aktuelle Uhrzeit anzeigt, wird im Kalender dargestellt
@@ -56,19 +55,19 @@ function FullCalendarApp() {
 
         //Hier werden die Events deklariert, die dann im Kalender dargestellt werden. Sinvollerweise sollte dies später durch automatische Prozesse erledigt werden
         events={[{
-          id: 1,    //Event-ID. Zum Berarbeiten der Events bestimmt hilfreich, aber hier eigentlich unnötig
+          id: '1',    //Event-ID. Zum Berarbeiten der Events bestimmt hilfreich, aber hier eigentlich unnötig
           title: "Krypto Raum161C",  //Titel der Vorlesung, wird im Eventfeld angezeigt
           start: '2023-06-01T10:00:00', //Anfangsdatum und Zeit des Events
           end: '2023-06-01T12:00:00',     //Enddatum und Zeit des Events
           url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', //Diese Zeile macht überhaupt gar nichts und sollte in keinem Fall beachtet werden, weil sie wirklich gar nichts macht
         },
         {
-          id: 2,
+          id: '2',
           title: 'Mathe',
           start: '2023-06-02T13:15:00',
           end: '2023-06-02T18:00:00',
         },
-        { id: 3, title: 'BWL', start: '2023-05-30T17:00:00', end: '2023-05-30T19:00:00', url:'https://www.youtube.com/watch?v=4f_mIRrns2U' },
+        { id: '3', title: 'BWL', start: '2023-05-30T17:00:00', end: '2023-05-30T19:00:00', url:'https://www.youtube.com/watch?v=4f_mIRrns2U' },
         ]}
 
 
