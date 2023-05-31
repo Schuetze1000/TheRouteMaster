@@ -23,14 +23,13 @@ const eventsL = [
 ];
 
 //Volle Dokumentation bei https://fullcalendar.io/docs
-const pppppp = {id: '3',  title: 'BWL Raum 162C', start: '20230530T170000', end: '20230-30T190000', url:'https://www.youtube.com/watch?v=4f_mIRrns2U'}
+const pppppp = {id: '3',  title: 'BWL Raum 161C', start: '20230530T170000', end: '20230-30T190000', url:'https://www.youtube.com/watch?v=4f_mIRrns2U'}
 
 interface iEvent {
   title: string;
   start: string;
   end: string;
 }
-
 function addEvent(eventArr: iEvent) {
   eventsL.push(eventArr)
 }
@@ -93,9 +92,12 @@ function FullCalendarApp() {
   );
 }
 
+
 export default FullCalendarApp;
 
+function parseAllEvents() {
 
+}
 
 //Additional Intended Features:
 //Creation of Custom Events
