@@ -17,8 +17,10 @@ function ErrorPage() {
                     className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-hidden bg-fixed"
                     style={{backgroundColor: "rgba(0, 0, 0, 0.6)"}}>
                     <div className="flex h-full items-center justify-center">
-                        <div className="text-white">
-                            <p>Error 418</p>
+                        <div className="error-box">
+                            <h1>Error 418</h1>
+                            <h2>I’m a teapot</h2>
+                            <h3>Oh, and by the way, the page you are looking for was not found.</h3>
                         </div>
                     </div>
                 </div>
