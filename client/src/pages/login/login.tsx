@@ -50,7 +50,6 @@ function Login() {
             },
             withCredentials: true
         };
-
         await axios(options).then((response) => {
             setAuthTokens({
                 accessToken: response.data.token,

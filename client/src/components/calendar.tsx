@@ -5,8 +5,12 @@ import interactionPlugin from '@fullcalendar/interaction';
 import deLocale from '@fullcalendar/core/locales/de';
 import { Calendar } from 'fullcalendar';
 import { Interface } from 'readline';
+<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 import { axiosInstance } from "../hooks/jwtAuth";
+=======
+import { useEffect, useState } from 'react';
+>>>>>>> f04320500635b4499feba4dd9eaaf93f8810036b
 
 var eventsL = [
   {
@@ -26,11 +30,12 @@ var eventsL = [
 //Volle Dokumentation bei https://fullcalendar.io/docs
 const testEvent = {id: '3',  title: 'BWL Raum 161C', start: '20230530T170000', end: '20230-30T190000', url:'https://www.youtube.com/watch?v=4f_mIRrns2U'}
 
-interface iEvent {
+interface IEvent {
   title: string;
   start: string;
   end: string;
 }
+<<<<<<< HEAD
 
 
 function FullCalendarApp() {
@@ -114,6 +119,20 @@ axiosInstance(updateoption1)
     }
   });
 */
+=======
+function addEvent(eventArr: IEvent) {
+  eventsL.push(eventArr)
+}
+addEvent(pppppp)
+
+function FullCalendarApp() {
+  const[iEvent, setEvent] = useState<IEvent[]>();
+
+  useEffect(() => {
+    let tmpEvent: IEvent[];
+  }, []);
+
+>>>>>>> f04320500635b4499feba4dd9eaaf93f8810036b
   return (
     <div className="App">
       <FullCalendar
@@ -155,7 +174,28 @@ axiosInstance(updateoption1)
           hour12: false   //Die Stunden werden im 1-24 Format angezeigt, und nicht im 1-12 Format, wie per default
           }}
         
+<<<<<<< HEAD
         events = {eventsL}
+=======
+        //Hier werden die Events deklariert, die dann im Kalender dargestellt werden. Sinvollerweise sollte dies später durch automatische Prozesse erledigt werden
+      
+       /**  events={[{
+         // id: '1',    //Event-ID. Zum Berarbeiten der Events bestimmt hilfreich, aber hier eigentlich unnötig
+          title: "Kryptologie Raum 161C",  //Titel der Vorlesung, wird im Eventfeld angezeigt
+          start: '20230601T100000', //Anfangsdatum und Zeit des Events
+          end: '20230601T120000',     //Enddatum und Zeit des Events
+          url: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ', //Diese Zeile macht überhaupt gar nichts und sollte in keinem Fall beachtet werden, weil sie wirklich gar nichts macht
+        },
+        {
+          //id: '2',
+          title: 'Mathematik Raum 161C',
+          start: '20230602T131500',
+          end: '20230602T180000',
+        },
+        { id: '3',  title: 'BWL Raum 161C', start: '20230530T170000', end: '20230-30T190000', url:'https://www.youtube.com/watch?v=4f_mIRrns2U' },
+        ]} */
+        events = {iEvent}
+>>>>>>> f04320500635b4499feba4dd9eaaf93f8810036b
 
       />
     </div>
