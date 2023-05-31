@@ -6,3 +6,4 @@
 /client/ios
 /client/.env
 /server/.env
+/server/test
