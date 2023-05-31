@@ -69,9 +69,9 @@ axiosInstance(optionsGetICS)
   };
   axiosInstance(optionsGetICS)
     .then((resAvailableIcs) => {
-      eventsL.push(testEvent)
+      eventsL.push(testEvent) //Hat hier nur debuggende Funktion, ähnlich einem Print-statement, das signalisiert, dass dieser Codeblock abgearbeitet wird
       if (resAvailableIcs.data.hash == currentHash) {
-        eventsL.push({ title: 'Theoretische Informatik I',start: '2023-06-02T09:00:00',end: '2023-06-02T11:00:00',
+        eventsL.push({ title: 'Theoretische Informatik I',start: '2023-06-02T09:00:00',end: '2023-06-02T11:00:00',//Hat hier nur debuggende Funktion, ähnlich einem Print-statement, das signalisiert, dass dieser Codeblock abgearbeitet wird
         })
         currentHash = resAvailableIcs.data.hash 
       }
