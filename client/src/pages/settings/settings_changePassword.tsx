@@ -79,7 +79,7 @@ function ChangePassword() {
 				>
 					<form onSubmit={onSubmit} className="flex justify-center flex-col m-auto h-screen w-screen">
 						<div className="relative bg-white dark:bg-neutral-600 bg-opacity-100 rounded-lg w-75 h-50 mx-auto p-6 mb-2 shadow-2xl grid items-center">
-							<h1 className="text-white font-bold text-2xl mb-5">Passwort ändern</h1>
+							<h1 className="text-black dark:text-white font-bold text-2xl mb-5">Passwort ändern</h1>
 
 							<div className="relative mb-3">
 								<input
