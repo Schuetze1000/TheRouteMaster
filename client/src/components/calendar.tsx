@@ -5,12 +5,9 @@ import interactionPlugin from '@fullcalendar/interaction';
 import deLocale from '@fullcalendar/core/locales/de';
 import { Calendar } from 'fullcalendar';
 import { Interface } from 'readline';
-<<<<<<< HEAD
 import { useState, useEffect } from 'react';
 import { axiosInstance } from "../hooks/jwtAuth";
-=======
-import { useEffect, useState } from 'react';
->>>>>>> f04320500635b4499feba4dd9eaaf93f8810036b
+
 
 var eventsL = [
   {
@@ -35,7 +32,6 @@ interface IEvent {
   start: string;
   end: string;
 }
-<<<<<<< HEAD
 
 
 function FullCalendarApp() {
@@ -119,11 +115,11 @@ axiosInstance(updateoption1)
     }
   });
 */
-=======
+
 function addEvent(eventArr: IEvent) {
   eventsL.push(eventArr)
 }
-addEvent(pppppp)
+
 
 function FullCalendarApp() {
   const[iEvent, setEvent] = useState<IEvent[]>();
@@ -132,7 +128,6 @@ function FullCalendarApp() {
     let tmpEvent: IEvent[];
   }, []);
 
->>>>>>> f04320500635b4499feba4dd9eaaf93f8810036b
   return (
     <div className="App">
       <FullCalendar
@@ -174,9 +169,9 @@ function FullCalendarApp() {
           hour12: false   //Die Stunden werden im 1-24 Format angezeigt, und nicht im 1-12 Format, wie per default
           }}
         
-<<<<<<< HEAD
+
         events = {eventsL}
-=======
+
         //Hier werden die Events deklariert, die dann im Kalender dargestellt werden. Sinvollerweise sollte dies später durch automatische Prozesse erledigt werden
       
        /**  events={[{
@@ -194,20 +189,11 @@ function FullCalendarApp() {
         },
         { id: '3',  title: 'BWL Raum 161C', start: '20230530T170000', end: '20230-30T190000', url:'https://www.youtube.com/watch?v=4f_mIRrns2U' },
         ]} */
-        events = {iEvent}
->>>>>>> f04320500635b4499feba4dd9eaaf93f8810036b
 
       />
     </div>
-  );
+  );}
 }
 
 
 export default FullCalendarApp;
-
-
-//Additional Intended Features:
-//Creation of Custom Events
-//Custom Buttons, for Example to visit the page hosting the DHBW-Calendar
-//Automatic addition or removal of events according to the .ics file
-//Popup with additional information, perhaps even custom notes
