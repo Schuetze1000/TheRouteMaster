@@ -2,6 +2,7 @@ import React from "react";
 import Navbar_dashboard from "../../components/navbars/Navbar_dashboard";
 import Map from "../../components/map/map";
 import FullCalendarApp from "../../components/calendar";
+import Weather from "../../components/weather";
 
 function Dashboard() {
 
@@ -18,6 +19,9 @@ function Dashboard() {
                 <div className="flex w-full h-auto items-center justify-center">
                     <div className="background-box">
                         <div className="space-y-10 z-10">
+                        <div className="relative">
+                                <Weather />
+                            </div>
                             <div className="relative">
                                 <FullCalendarApp />
                             </div>
