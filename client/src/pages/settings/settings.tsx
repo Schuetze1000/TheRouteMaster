@@ -516,10 +516,10 @@ function Settings() {
 						</div>
 					</div>
 					<div className="flex justify-center space-x-10 pb-4 md:pb-8">
-						<button onClick={onBtnSaveClick} type="submit" className="button">
+						<button onClick={onBtnSaveClick} type="submit" className="standard-button">
 							Speichern
 						</button>
-						<button onClick={() => onBtnBackClick(false)} type="submit" className="button">
+						<button onClick={() => onBtnBackClick(false)} type="submit" className="standard-button">
 							Zurück
 						</button>
 					</div>

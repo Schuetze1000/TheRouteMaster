@@ -1,9 +1,7 @@
-import Navbar_landing from "../../components/navbars/Navbar_landing";
-import DarkMode_switch from "../../components/navbars/buttons/btn_DarkModeSwitch";
-import Weather from "../../components/weather";
-import React from "react";
+import { useNavigate } from "react-router-dom";
 
 function ErrorPage() {
+    const navigate = useNavigate();
 
     return (
         <body className="h-screen">
@@ -18,9 +16,15 @@ function ErrorPage() {
                     style={{backgroundColor: "rgba(0, 0, 0, 0.6)"}}>
                     <div className="flex h-full items-center justify-center">
                         <div className="error-box">
-                            <h1>Error 418</h1>
-                            <h2>I’m a teapot</h2>
-                            <h3>Oh, and by the way, the page you are looking for was not found.</h3>
+                            <h1 className="font-bold text-8xl">Error 418</h1>
+                            <h2 className="text-3xl">I’m a teapot</h2>
+                            <h3 className="text-5xl mt-12 mb-12">Oh, and by the way, the page you are looking for was not found.</h3>
+                            <button
+								onClick={() => navigate("/")}
+								type="submit"
+								className="standard-button">
+								Zurück zur Startseite
+							</button>
                         </div>
                     </div>
                 </div>
