@@ -8,30 +8,6 @@ import { Interface } from "readline";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../hooks/jwtAuth";
 
-var eventsL = [
-	{
-		title: "Kryptologie Raum 161C", //Titel der Vorlesung, wird im Eventfeld angezeigt
-		start: "20230601T100000", //Anfangsdatum und Zeit des Events
-		end: "20230601T120000", //Enddatum und Zeit des Events
-		url: "https://www.youtube.com/watch?v=dQw4w9WgXcQ",
-	},
-	{
-		title: "Mathe",
-		start: "2023-06-02T13:00:00",
-		end: "2023-06-02T18:00:00",
-	},
-	// { id: '3',  title: 'BWL Raum 161C', start: '20230530T170000', end: '20230-30T190000'},
-];
-
-//Volle Dokumentation bei https://fullcalendar.io/docs
-const testEvent = {
-	id: "3",
-	title: "BWL Raum 161C",
-	start: "20230530T170000",
-	end: "20230-30T190000",
-	url: "https://www.youtube.com/watch?v=4f_mIRrns2U",
-};
-
 function FullCalendarApp() {
 	interface IEvent {
 		title: string;
@@ -40,8 +16,9 @@ function FullCalendarApp() {
 	}
 	const [iEvent, setEvent] = useState<IEvent[]>();
 	var currentHash = "";
-	var kursName = "TINF22CS1";
+	var [kursName, setKursName] = useState<string>("");
 	var ICSString = "";
+
 
 	/** 
   const optionsGetICS = {
@@ -79,13 +56,11 @@ axiosInstance(optionsGetICS)
 		};
 		axiosInstance(optionsGetICS).then((resAvailableIcs) => {
 
-			evntLst.push(testEvent); //Hat hier nur debuggende Funktion, ähnlich einem Print-statement, das signalisiert, dass dieser Codeblock abgearbeitet wird
-
 			if (resAvailableIcs.data.hash == currentHash) {
 				currentHash = resAvailableIcs.data.hash;
 			} else {
 				currentHash = resAvailableIcs.data.hash;
-				kursName = resAvailableIcs.data.name;
+				setKursName(resAvailableIcs.data.name);
 				ICSString = resAvailableIcs.data.data;
 				const rawEvents = ICSString.split("BEGIN:VEVENT");
 				for (let i = 1; i < rawEvents.length; i++) {

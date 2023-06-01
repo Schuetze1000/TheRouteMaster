@@ -1,4 +1,5 @@
 import DarkMode_switch from "./buttons/btn_DarkModeSwitch";
+import Dashboard from "./buttons/btn_Dashboard";
 import Logout from "./buttons/btn_Logout";
 
 const Navbar_settings = () => {
@@ -6,6 +7,8 @@ const Navbar_settings = () => {
         <div className="fixed top-0 h-full w-16 m-0 flex flex-col text-white z-50">
             
             <DarkMode_switch />
+            <Divider />
+            <Dashboard />
             <Divider />
             <Logout />
         </div>
