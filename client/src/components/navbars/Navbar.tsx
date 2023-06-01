@@ -2,7 +2,7 @@ import DarkMode_switch from "./buttons/btn_DarkModeSwitch";
 import HowToUse from "./buttons/btn_HowToUse";
 import Dashboard from "./buttons/btn_Dashboard";
 import Imprint from "./buttons/btn_Imprint";
-import Account from "./buttons/btn_Account";
+import Account from "./buttons/btn_Logout";
 import Settings from "./buttons/btn_settings";
 
 const Navbar = () => {
