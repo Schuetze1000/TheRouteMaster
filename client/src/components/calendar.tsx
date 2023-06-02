@@ -9,37 +9,20 @@ import { useState, useEffect } from "react";
 import { axiosInstance } from "../hooks/jwtAuth";
 
 function FullCalendarApp() {
+	function randomIntFromInterval(min, max) { // min and max included 
+		return Math.floor(Math.random() * (max - min + 1) + min)
+	  }
+
 	interface IEvent {
 		title: string;
 		start: string;
 		end: string;
+		color: string;
 	}
 	const [iEvent, setEvent] = useState<IEvent[]>();
 	var currentHash = "";
 	var [kursName, setKursName] = useState<string>("");
 	var ICSString = "";
-
-
-	/** 
-  const optionsGetICS = {
-  method: "GET",
-  url: "/ics/getavailableics",
-  withCredentials: true,
-};
-axiosInstance(optionsGetICS)
-  .then((resAvailableIcs) => {
-    var icsArray: [{ value: string; label: string }] = [{ label: resAvailableIcs.data[0].name, value: resAvailableIcs.data[0].uid }];
-    for (let index = 1; index < resAvailableIcs.data.length; index++) {
-      icsArray.push({ label: resAvailableIcs.data[index].name, value: resAvailableIcs.data[index].uid });
-    }
-    setICSNameList(icsArray);
-  })
-  .catch((error) => {
-    if (error.response.status >= 400 && error.response.status < 500) {
-      window.location.href = "/login";
-    }
-  });
-*/
 
 	useEffect(() => {
     var evntLst: IEvent[] = [
@@ -47,6 +30,7 @@ axiosInstance(optionsGetICS)
         title: "",
         start: "",
         end: "",
+		color: ""
       },
     ];
 		const optionsGetICS = {
@@ -63,12 +47,16 @@ axiosInstance(optionsGetICS)
 				setKursName(resAvailableIcs.data.name);
 				ICSString = resAvailableIcs.data.data;
 				const rawEvents = ICSString.split("BEGIN:VEVENT");
+
+				let colors = ['purple', "green", "red", "cyan", "blue"];
+
 				for (let i = 1; i < rawEvents.length; i++) {
 					var singularEvent = rawEvents[i].split("\n");
 					evntLst.push({
 						title: singularEvent[3].replace("SUMMARY:", "") + "     " + singularEvent[2].replace("LOCATION:", ""),
 						start: singularEvent[4].replace("DTSTART:", ""),
 						end: singularEvent[5].replace("DTEND:", ""),
+						color: colors[randomIntFromInterval(0,5)] // How to change colors
 					});
 				}
         setEvent(evntLst);

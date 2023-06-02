@@ -3,11 +3,23 @@ import Back_landing from "../../components/navbars/buttons/btn_BackLanding";
 import axios from "axios";
 import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useState, useEffect } from "react";
+import { isLoggedIn } from "axios-jwt";
+import { useNavigate } from "react-router";
 
 let captchaRef;
 let captchaReset = false;
 function Registration() {
+    const [passwordShown, setPasswordShown] = useState(false);
+
+    const navigate = useNavigate();
     
+    const [pswSVGx, setPswSVGx] = useState<number>(23);
+    const [pswSVGy, setPswSVGy] = useState<number>(23);
+    const [pswSVGr, setPswSVGr] = useState<number>(0);
+    const [pswSVG, setPswSVG] = useState<string>("M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24");
+
+
     const initialState = {
         email: "",
         password: "",
@@ -17,6 +29,27 @@ function Registration() {
         registerUserCallback,
         initialState,
     );
+
+    useEffect(() => {
+        if (isLoggedIn()) {
+             navigate("/dashboard");
+        }
+     }, []);
+
+    const togglePasswordVisiblity = () => {
+        setPasswordShown(passwordShown ? false : true);
+        if (pswSVGx == 23) {
+            setPswSVGx(1);
+            setPswSVGy(1);
+            setPswSVGr(3);
+            setPswSVG("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z");
+        } else {
+            setPswSVGx(23);
+            setPswSVGy(23);
+            setPswSVGr(0);
+            setPswSVG("M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24");
+        }
+    };
     
     async function registerUserCallback() {
         const token = await captchaRef.executeAsync();
@@ -109,7 +142,7 @@ function Registration() {
                                 className="peer input"
                                 name="password"
                                 id="password"
-                                type="password"
+                                type={passwordShown ? "text" : "password"}
                                 placeholder="Passwort"
                                 onChange={onChange}
                                 required
@@ -119,6 +152,24 @@ function Registration() {
                                 htmlFor="password"
                                 className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">Passwort
                             </label>
+                            <button className="absolute inset-y-0 right-0 bottom-5 top-5 flex items-center pr-3" onClick={togglePasswordVisiblity} type="button">
+                                <svg
+                                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d={pswSVG}
+                                    />
+                                    <line x1="1" y1="1" x2={pswSVGx} y2={pswSVGy} />
+                                    <circle cx="12" cy="12" r={pswSVGr} />
+                                </svg>
+                            </button>
                         </div>
                         
                         <div className="relative mb-3">
@@ -126,7 +177,7 @@ function Registration() {
                                 className="peer input"
                                 name="repeat_password"
                                 id="repeat_password"
-                                type="password"
+                                type={passwordShown ? "text" : "password"}
                                 placeholder="Passwort wiederholen"
                                 onChange={onChange}
                                 required
@@ -136,6 +187,24 @@ function Registration() {
                                 htmlFor="repeat_password"
                                 className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">Passwort wiederholen
                             </label>
+                            <button className="absolute inset-y-0 right-0 top-5 bottom-5 flex items-center pr-3" onClick={togglePasswordVisiblity} type="button">
+                                <svg
+                                    className="w-5 h-5 text-gray-500 dark:text-gray-400"
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    fill="none"
+                                    viewBox="0 0 24 24"
+                                    stroke-width="1.5"
+                                    stroke="currentColor"
+                                >
+                                    <path
+                                        stroke-linecap="round"
+                                        stroke-linejoin="round"
+                                        d={pswSVG}
+                                    />
+                                    <line x1="1" y1="1" x2={pswSVGx} y2={pswSVGy} />
+                                    <circle cx="12" cy="12" r={pswSVGr} />
+                                </svg>
+                            </button>
                         </div>
 
                         <ReCAPTCHA 
