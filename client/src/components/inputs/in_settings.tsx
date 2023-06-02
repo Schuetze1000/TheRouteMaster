@@ -22,7 +22,6 @@ const Input_Settings = ({
 
 	}, [])
 
-
 	if (!value){
 		placeholderInput = "0"
 	}
@@ -74,8 +73,6 @@ const Input_Settings = ({
 			</div>
 		);
 	}
-
-	
 };
 
 export default Input_Settings;
