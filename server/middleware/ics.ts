@@ -8,7 +8,7 @@ import * as colors from "ansi-colors";
 
 export const getICSfromUser = async (user: IUser) => {
 	// ----------------- Get ICS-Model from specified user ----------------- //
-	const uid = parseInt(user.ics_uid);
+	const uid = user.ics_uid;
 	if (!uid) {
 		throw new ErrorResponse("No ics_uid specified", 401);
 	}
@@ -16,7 +16,6 @@ export const getICSfromUser = async (user: IUser) => {
 	const ics: IICS_Data | null = await ICS.findOne({ uid });
 
 	if (!ics) {
-		user.ics_uid = "";
 		throw new ErrorResponse("ICS not found", 418);
 	}
 	return ics;
@@ -94,9 +93,9 @@ export async function UpdateActiveICS() {
 
 	for (let x = 0; x < user.length; x++) {
 		if (user[x].ics_uid) {
-			const str_exists = active_uid_list.indexOf(user[x].ics_uid);
+			const str_exists = active_uid_list.indexOf(String(user[x].ics_uid));
 			if (str_exists == -1) {
-				active_uid_list.push(user[x].ics_uid);
+				active_uid_list.push(String(user[x].ics_uid));
 			}
 		}
 		bar1.increment();

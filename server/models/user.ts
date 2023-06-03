@@ -39,9 +39,20 @@ const UserSchema: Schema = new Schema({
 			country: String,
 		},
 	},
+
+	configTrain: {
+		homeTrainStationID: Number,
+		workTrainStationID: Number,
+		dbrouteid: Number,
+		active: {
+			type: Boolean,
+			default: false,
+		},
+	},
+
 	resetPasswordToken: String,
 	resetPasswordExpire: String,
-	ics_uid: String,
+	ics_uid: Number,
 	active: {
 		type: Boolean,
 		default: true,
@@ -73,7 +84,14 @@ export interface IUser extends Document {
 			country: String;
 		};
 	};
-	ics_uid: string,
+
+	configTrain: {
+		homeTrainStationID: Number,
+		workTrainStationID: Number,
+		dbrouteid: Number,
+		active: Boolean,
+	},
+	ics_uid: Number,
 	active: boolean;
 }
 

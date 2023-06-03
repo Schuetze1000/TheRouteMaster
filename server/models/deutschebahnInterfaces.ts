@@ -1,3 +1,13 @@
+export interface IDBStruct {
+	fromID: Number,
+	from: String,
+	fromLocation: IPosition,
+	toID: Number,
+	to: String,
+	toLocation: IPosition,
+	routes: IDBRoutes[],
+}
+
 export interface IDBRoutes {
 	arrival: String;
 	plannedArrival: String;
@@ -51,4 +61,22 @@ export interface IFoot {
 export interface IPosition {
 	latitude: Number;
 	longitude: Number;
+}
+
+// -------------------------------------------- Time -------------------------------------------- //
+export interface IDateTime {
+	date: String;
+	hour: Number;
+	minutes: Number;
+	seconds: Number;
+}
+
+export interface IEventDay {
+	startDateTime: IDateTime;
+	endDateTime: IDateTime;
+}
+
+export interface IEvents {
+	firstDay: IEventDay;
+	secondDay: IEventDay;
 }
