@@ -1,0 +1,59 @@
+{
+	"fromID": 0,
+	"from": "",
+	"fromLocation": {
+		"latitude": 0,
+		"longitude": 0
+	},
+	"toID": 0,
+	"to": "",
+	"toLocation": {
+		"latitude": 0,
+		"longitude": 0
+	},
+
+	"routes": [
+		{
+			"arrival": "",
+			"plannedArrival": "",
+			"arivalDelay": 0,
+			"route": [
+				{
+					"index": 0,
+					"walk": false,
+					"types": {
+						"name": "",
+						"idNr": "",
+						"types": "",
+
+						"direction": "",
+						"from": "",
+						"fromLocation": {
+							"latitude": 0,
+							"longitude": 0
+						},
+						"to": "",
+						"toLocation": {
+							"latitude": 0,
+							"longitude": 0
+						},
+						"departure": "",
+						"plannedDeparture": "",
+						"departureDelay": "",
+						"plannedArrival": "",
+						"arrival": "",
+						"arivalDelay": 0,
+
+						"distance": 0,
+						"walkTime": 0
+					}
+				}
+			],
+			"price": {
+				"amount": 0,
+				"currency": ""
+			}
+		}
+	],
+	"routesHash": ""
+}
