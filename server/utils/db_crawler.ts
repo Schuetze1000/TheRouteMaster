@@ -6,9 +6,16 @@ import ICSWrapper from "./ics_s-e-wrapper";
 const createClient = require("hafas-client");
 const dbProfile = require("hafas-client/p/db/index.js");
 
-async function crawlDB(fromID:Number, toID:Number, arrival:Date= null, departure:Date= new Date(), results:Number = 1) {
+export async function crawlDB(fromID:Number, toID:Number, arrival:Date = null, departure:Date = new Date(), results:Number = 1) {
 	const client = createClient(dbProfile, "https://the-routemaster.schuetz-andreas.dev/");
-	const res = await client.journeys(fromID, toID, { results: results, arrival: arrival, departure: departure});
+	let res;
+	
+	if (arrival) {
+		res = await client.journeys(fromID.toString(), toID.toString(), { results: results.valueOf(), arrival: arrival});
+	}else {
+		res = await client.journeys(fromID.toString(), toID.toString(), { results: results.valueOf(), departure: departure});
+	}
+	
 	return await dbStructor(res.journeys);
 }
 
@@ -100,14 +107,4 @@ async function dbStructor(journeys: any):Promise<IDBStruct> {
 	}
 
 	return dbStruct;
-
-	/* const deutscheBahnRoutes: IDeutscheBahnRoutes = await DeutscheBahnRoutes.create({
-		fromID: fromID,
-		from: from,
-		fromLocation: fromLocation,
-		toID: toID,
-		to: to,
-		toLocation: toLocation,
-		routes: dbRoutes,
-	}); */
 }

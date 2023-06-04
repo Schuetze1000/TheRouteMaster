@@ -3,6 +3,11 @@ import { IDBRoutes, IPosition } from "models/deutschebahnInterfaces";
 import objHash from "object-hash";
 
 const DeutscheBahnRoutesSchema: Schema = new Schema({
+	routeId: {
+		type: String,
+		required: [true, "Can't be blank"],
+		unique: true,
+	},
 	fromID: {
 		type: Number,
 		required: [true, "Can't be blank"],
@@ -39,10 +44,14 @@ const DeutscheBahnRoutesSchema: Schema = new Schema({
 	routesHash: {
 		type: String,
 	},
+	wasUpated: {
+		type:Boolean,
+	}
 });
 
 export interface IDeutscheBahnRoutes extends Document {
 	matchHash(routes: string): boolean | PromiseLike<boolean>;
+	routeId: String;
 	fromID: Number;
 	from: String;
 	fromLocation: IPosition;
@@ -51,6 +60,7 @@ export interface IDeutscheBahnRoutes extends Document {
 	toLocation: IPosition;
 	routes: IDBRoutes[];
 	routesHash: String;
+	wasUpated: Boolean;
 }
 
 DeutscheBahnRoutesSchema.pre<IDeutscheBahnRoutes>("save", async function (next: any) {
