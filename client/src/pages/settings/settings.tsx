@@ -9,6 +9,7 @@ import { getAccessToken } from "axios-jwt";
 import React from "react";
 import { axiosInstance } from "../../hooks/jwtAuth";
 import { PopupSave, PopupLoading, PopupPasswordRequired } from "../../components/popups/settings";
+import { PopupSaveFailed } from "../../components/popups/save_failed";
 
 interface HomeaddressStructure {
 	number: string;
@@ -76,6 +77,8 @@ function Settings() {
 	const [savePopupVisible, setSavePopupVisible] = useState(false);
 	const [passwortPopupVisible, setPasswortPopupVisible] = useState(false);
 
+	const [savePopupFailedVisible, setPopupFailedVisible] = useState(false);
+
 	const [passwordShown, setPasswordShown] = useState(false);
 
 	const [pswSVGx, setPswSVGx] = useState<number>(23);
@@ -84,6 +87,7 @@ function Settings() {
     const [pswSVG, setPswSVG] = useState<string>("M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24");
 
 	const togglePasswordVisiblity = () => {
+		//! Bug fixen: Password Toggle wird immer angezeigz, auch an falscher Stell @Leonidas-maker
         setPasswordShown(passwordShown ? false : true);
         if (pswSVGx == 23) {
             setPswSVGx(1);
@@ -216,6 +220,7 @@ function Settings() {
 				};
 				axiosInstance(updateoption2).catch((error) => {
 					if (error.response.status >= 400 && error.response.status < 500 && error.response.status != 418) {
+						setPopupFailedVisible(true);
 						//TODO Save failed animation @Leonidas-maker / @Schuetze1000
 					}
 				});
@@ -224,6 +229,7 @@ function Settings() {
 			})
 			.catch((error) => {
 				if (error.response.status >= 400 && error.response.status < 500 && error.response.status != 418) {
+					setPopupFailedVisible(true);
 					//TODO Save failed animation @Leonidas-maker / @Schuetze1000
 				}
 			});
@@ -273,6 +279,7 @@ function Settings() {
 		};
 		axiosInstance(updateoption).catch((error) => {
 			if (error.response.status >= 400 && error.response.status < 500 && error.response.status != 418) {
+				setPopupFailedVisible(true);
 				//TODO Save failed animation @Leonidas-maker / @Schuetze1000
 			}
 		});
@@ -365,6 +372,10 @@ function Settings() {
 
 	function onClickPopPasswordClose() {
 		setPasswortPopupVisible(false);
+	}
+
+	function onClickPopFailedClose() {
+		setPopupFailedVisible(false);
 	}
 
 	// ---------------------------------------------------------------------------------------------- //
@@ -573,6 +584,10 @@ function Settings() {
 					onBtnBackClick(true);
 				}}
 				onDiscard={() => onBtnBackClick(true)}
+			/>
+			<PopupSaveFailed 
+				isVisable={savePopupFailedVisible} 
+				onClose={() => onClickPopFailedClose()} 
 			/>
 			<PopupPasswordRequired isVisable={passwortPopupVisible} onClose={() => onClickPopPasswordClose()} />
 			<PopupLoading isVisable={isLoading} />
