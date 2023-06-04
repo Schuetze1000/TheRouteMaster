@@ -4,6 +4,8 @@ import { LatLngTuple } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import {Icon} from 'leaflet'
+import L from 'leaflet';
+import 'leaflet-routing-machine';
 
 function SetViewOnClick({ coords }: { coords: LatLngTuple }) {
   const map = useMap();
@@ -11,6 +13,26 @@ function SetViewOnClick({ coords }: { coords: LatLngTuple }) {
 
   return null;
 }
+
+function RoutingMachine({ from, to }: { from: LatLngTuple, to: LatLngTuple }) {
+	const map = useMap();
+  
+	useEffect(() => {
+	  const routingControl = L.Routing.control({
+		waypoints: [
+		  L.latLng(from[0], from[1]),
+		  L.latLng(to[0], to[1])
+		],
+		routeWhileDragging: true,
+	  }).addTo(map);
+  
+	  return () => {
+		map.removeControl(routingControl);
+	  };
+	}, [map, from, to]);
+  
+	return null;
+  }
 
 const Map = () => { 
   	interface LocationState {
@@ -30,6 +52,8 @@ const Map = () => {
 		longitude: 8.53439744049763, // Standardlänge für DHBW
 		error: null,
 	  };
+
+	const defaultLocationTuple: LatLngTuple = [49.473780021177674, 8.53439744049763]; // Standardposition für DHBW
 
 	//TODO: iOS, maybe Android abfrage ob Location nutzen hinzufügen @Leonidas-maker
 	useEffect(() => {
@@ -53,6 +77,19 @@ const Map = () => {
 
 	return (
 		<div style={{ height: "100vh", width: "100%" }}>
+			<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+			<link rel="stylesheet" href="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.css" />
+			<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+			<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
+
+    		<script src="leaflet-routing-machine.js"></script>
+
+			//? Nicht ganz sicher ob das hier noch gebraucht wird, lasse es erstmal drin für maybe später
+			{/* <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    		integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="/>
+			<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     		integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="></script> */}
+
 			<MapContainer style={{ height: "100%", width: "100%" }} center={coords} zoom={13}>
 			<SetViewOnClick coords={coords} />
 			<TileLayer
@@ -64,6 +101,7 @@ const Map = () => {
 					Dein Standort
 				</Popup>
 			</Marker>
+			<RoutingMachine from={defaultLocationTuple} to={coords} />
 			</MapContainer>
 		</div>
 	);
