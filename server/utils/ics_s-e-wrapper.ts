@@ -26,7 +26,12 @@ function parseICALTime(time: string): IDateTime {
 	);
 
 	return {
-		date: output.getFullYear().toString() + "-" + (output.getMonth() + 1).toString().padStart(2, "0") + "-" + output.getDate().toString().padStart(2, "0"),
+		date:
+			output.getFullYear().toString() +
+			"-" +
+			(output.getMonth() + 1).toString().padStart(2, "0") +
+			"-" +
+			output.getDate().toString().padStart(2, "0"),
 		hour: output.getHours(),
 		minutes: output.getMinutes(),
 		seconds: output.getSeconds(),
@@ -44,7 +49,7 @@ function compareTime(DayStart: IDateTime, DayEnd: IDateTime, eventStart: IDateTi
 		DayStart.hour = eventStart.hour;
 		DayStart.minutes = eventStart.minutes;
 		DayStart.seconds = eventStart.seconds;
-	} 
+	}
 	if (DayEnd.hour < eventEnd.hour) {
 		DayEnd.date = eventEnd.date;
 		DayEnd.hour = eventEnd.hour;
@@ -59,8 +64,8 @@ function compareTime(DayStart: IDateTime, DayEnd: IDateTime, eventStart: IDateTi
 	return { DayStart, DayEnd };
 }
 
-async function ICSWrapper(icsUID:Number):Promise<IEvents> {
-    const ics: IICS_Data | null = await ICS.findOne({ uid: icsUID });
+async function ICSWrapper(icsUID: Number): Promise<IEvents> {
+	const ics: IICS_Data | null = await ICS.findOne({ uid: icsUID });
 	let out = ical2json.convert(ics.data).VCALENDAR[0].VEVENT;
 
 	let currentDateTime = new Date();
@@ -107,31 +112,34 @@ async function ICSWrapper(icsUID:Number):Promise<IEvents> {
 	};
 
 	for (let x = 0; x < out.length; x++) {
-		let eventStart = parseICALTime(out[x].DTSTART);
-		let eventEnd = parseICALTime(out[x].DTEND);
+		const location: String = out[x].LOCATION;
+		if (location) {
+			let eventStart = parseICALTime(out[x].DTSTART);
+			let eventEnd = parseICALTime(out[x].DTEND);
 
-		if (currentDate == eventStart.date) {
-			let { DayStart, DayEnd } = compareTime(firstDayStart, firstDayEnd, eventStart, eventEnd);
-			firstDayStart = DayStart;
-			firstDayEnd = DayEnd;
-		} else if (nextDate == eventStart.date) {
-			let { DayStart: DayStart, DayEnd: DayEnd } = compareTime(secondDayStart, secondDayEnd, eventStart, eventEnd);
-			secondDayStart = DayStart;
-			secondDayEnd = DayEnd;
+			if (currentDate == eventStart.date) {
+				let { DayStart, DayEnd } = compareTime(firstDayStart, firstDayEnd, eventStart, eventEnd);
+				firstDayStart = DayStart;
+				firstDayEnd = DayEnd;
+			} else if (nextDate == eventStart.date) {
+				let { DayStart: DayStart, DayEnd: DayEnd } = compareTime(secondDayStart, secondDayEnd, eventStart, eventEnd);
+				secondDayStart = DayStart;
+				secondDayEnd = DayEnd;
+			}
 		}
 	}
 
-	const firstDay:IEventDay = {
+	const firstDay: IEventDay = {
 		startDateTime: firstDayStart,
 		endDateTime: firstDayEnd,
-	}
+	};
 
-	const secondDay:IEventDay = {
+	const secondDay: IEventDay = {
 		startDateTime: secondDayStart,
 		endDateTime: secondDayEnd,
-	}
+	};
 
-	return {firstDay, secondDay}
+	return { firstDay, secondDay };
 }
 
 export default ICSWrapper;
