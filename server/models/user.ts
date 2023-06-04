@@ -42,9 +42,10 @@ const UserSchema: Schema = new Schema({
 
 	configTrain: {
 		maxRoutes: Number,
+		timeOffset: Number,
 		homeTrainStationID: Number,
 		workTrainStationID: Number,
-		dbrouteids: [Number],
+		dbrouteids: [String],
 		active: {
 			type: Boolean,
 			default: false,
@@ -87,13 +88,14 @@ export interface IUser extends Document {
 	};
 
 	configTrain: {
-		maxRoutes:Number,
-		homeTrainStationID: Number,
-		workTrainStationID: Number,
-		dbrouteids: Number[],
-		active: Boolean,
+		maxRoutes:Number;
+		timeOffset: Number;
+		homeTrainStationID: Number;
+		workTrainStationID: Number;
+		dbrouteids: String[];
+		active: Boolean;
 	},
-	ics_uid: Number,
+	ics_uid: Number;
 	active: boolean;
 }
 

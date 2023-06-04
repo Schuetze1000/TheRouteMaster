@@ -2,10 +2,9 @@ import { connectDB } from "../config/db";
 import User, { IUser } from "../models/user";
 import { ErrorResponse } from "../utils/errorResponse";
 import ICSWrapper from "../utils/ics_s-e-wrapper";
-import { IDateTime } from "../models/deutschebahnInterfaces";
 import { crawlDB } from "../utils/db_crawler";
-import { IDBStruct } from "../models/deutschebahnInterfaces";
-import DeutscheBahnRoutes, { IDeutscheBahnRoutes } from "models/deutschebahn";
+import { IDBStruct,IDateTime } from "../models/deutschebahnInterfaces";
+import DeutscheBahnRoutes, { IDeutscheBahnRoutes } from "../models/deutschebahn";
 import objHash from "object-hash";
 
 function convertToDate(dateTime: IDateTime): Date {
@@ -31,54 +30,58 @@ export async function UpdateDeutscheBahnRoutes() {
 					convertToDate(secondDay.endDateTime),
 				];
 
+
 				// ~~~~~~~~~~~~ Process Update ~~~~~~~~~~~ //
 				var routeCount = currentUser.configTrain.maxRoutes.valueOf(); // Max Routes in Database stored
 				const lenDBRouteIDs = currentUser.configTrain.dbrouteids.length;
-				if (routeCount != lenDBRouteIDs) {
+				if (routeCount != lenDBRouteIDs && dates[0].getTime() && dates[1].getTime() && dates[2].getTime() && dates[3].getTime()) {
 					currentUser.configTrain.dbrouteids = [];
 				}
 
 				for (let dateCount = 0; dateCount < dates.length; dateCount++) {
 					if (routeCount != 0) {
-						var deutschbahnID: Number;
-
+						var deutschbahnID: String = "";
 						if (lenDBRouteIDs > 0) {
 							deutschbahnID = currentUser.configTrain.dbrouteids[dateCount];
 						} else {
 							deutschbahnID = null;
 						}
-
+						console.log(deutschbahnID);
 						// ~~~~~ Process only necessary Dates ~~~~ //
 						if (dates[dateCount] > currentDate) {
 							routeCount--;
 
 							// ~~~ Process only the right direction ~~ //
 							const whichDirection = dateCount % 2; // 0: Home to Work; 1: Work to Home
-							var fromID, toID;
-							if (whichDirection === 0) {
+							var fromID: Number, toID: Number, arrival:Date, departure:Date;
+							if (whichDirection == 0) {
 								fromID = currentUser.configTrain.homeTrainStationID;
 								toID = currentUser.configTrain.workTrainStationID;
+								arrival = new Date(dates[dateCount].getTime() - currentUser.configTrain.timeOffset.valueOf());
+								departure = null;
 							} else {
 								toID = currentUser.configTrain.homeTrainStationID;
 								fromID = currentUser.configTrain.workTrainStationID;
+								arrival = null;
+								departure = new Date(dates[dateCount].getTime() + currentUser.configTrain.timeOffset.valueOf());
 							}
 
 							// --------- Main --------- //
 							const uniqueRouteID = makeUnqiueRouteID(currentUser.ics_uid, fromID, toID, dates[dateCount].getDate()); // Create unique RouteID
 							if (!deutschbahnID) {
-								createIfNotExistsDeutscheBahnRoute(currentUser, uniqueRouteID, fromID, toID);
+								await createIfNotExistsDeutscheBahnRoute(currentUser, uniqueRouteID, fromID, toID, arrival, departure);
 							} else {
 								const deutscheBahnRoutesToUpdate: IDeutscheBahnRoutes = await DeutscheBahnRoutes.findOne({ _id: deutschbahnID });
 								if (deutscheBahnRoutesToUpdate.routeId == uniqueRouteID && !deutscheBahnRoutesToUpdate.wasUpated) {
-									const structDB: IDBStruct = await crawlDB(fromID, toID); // Get Train routes
+									const structDB: IDBStruct = await crawlDB(fromID, toID, arrival, departure); // Get Train routes
 									const newRoutesHash = objHash(structDB.routes);
 									if (newRoutesHash != deutscheBahnRoutesToUpdate.routesHash) { // Check if Route has Changed
 										deutscheBahnRoutesToUpdate.routes = structDB.routes;
-										deutscheBahnRoutesToUpdate.wasUpated = true;
-										deutscheBahnRoutesToUpdate.save();
 									}
+									deutscheBahnRoutesToUpdate.wasUpated = true;
+									await deutscheBahnRoutesToUpdate.save();
 								} else {
-									createIfNotExistsDeutscheBahnRoute(currentUser, uniqueRouteID, fromID, toID);
+									await createIfNotExistsDeutscheBahnRoute(currentUser, uniqueRouteID, fromID, toID, arrival, departure);
 								}
 							}
 						}
@@ -88,11 +91,11 @@ export async function UpdateDeutscheBahnRoutes() {
 				} // Dates
 			} else {
 				currentUser.configTrain.active = false;
-				currentUser.save();
+				await currentUser.save();
 				error_users.push(all_users[userCount]);
 			}
 		} // Users
-		clearUnusedDeutscheBahnRoutes();
+		await clearUnusedDeutscheBahnRoutes();
 	} catch (error: any) {
 		console.error(error);
 	}
@@ -105,8 +108,9 @@ async function clearUnusedDeutscheBahnRoutes() {
 	for (let x = 0; x < deutscheBahnRoutesToChange.length; x++) {
 		deutscheBahnRoutesToChange[x].wasUpated = false;	
 		deutscheBahnRoutesToChange[x].save();
+		console.log(deutscheBahnRoutesToChange[x].id);
 	}
-
+	console.log("Finished!")
 }
 
 function makeUnqiueRouteID(icsUID: Number, fromID: Number, toID: Number, day: Number): String {
@@ -117,7 +121,7 @@ function makeUnqiueRouteID(icsUID: Number, fromID: Number, toID: Number, day: Nu
 	return `${outIcsUID}|${outFromID}->${outToID}|${outDay}`;
 }
 
-async function createIfNotExistsDeutscheBahnRoute(user: IUser, uniqueRouteID:String, fromID: Number, toID: Number, index:number= null) {
+async function createIfNotExistsDeutscheBahnRoute(user: IUser, uniqueRouteID:String, fromID: Number, toID: Number, arrival:Date, departure:Date, index:number= null) {
 	const searchExistingRoute: IDeutscheBahnRoutes = await DeutscheBahnRoutes.findOne({ routeId: uniqueRouteID }); // Search for duplicate
 	if (searchExistingRoute) {
 		if (index) {
@@ -127,7 +131,7 @@ async function createIfNotExistsDeutscheBahnRoute(user: IUser, uniqueRouteID:Str
 			user.configTrain.dbrouteids.push(searchExistingRoute.id); // Set only the right RouteID
 		}
 	} else {
-		const structDB: IDBStruct = await crawlDB(fromID, toID); // Get Train routes
+		const structDB: IDBStruct = await crawlDB(fromID, toID, arrival, departure); // Get Train routes
 		const deutscheBahnRoutes: IDeutscheBahnRoutes = await DeutscheBahnRoutes.create({
 			routeId: uniqueRouteID,
 			fromID: fromID,
@@ -141,13 +145,13 @@ async function createIfNotExistsDeutscheBahnRoute(user: IUser, uniqueRouteID:Str
 		}); // Create new Database entry
 		
 		if (index) {
-			user.configTrain.dbrouteids[index] = searchExistingRoute.id; // Change to new Entry Id
+			user.configTrain.dbrouteids[index] = deutscheBahnRoutes.id; // Change to new Entry Id
 		}
 		else {
-			user.configTrain.dbrouteids.push(searchExistingRoute.id); // Add new Entry Id to user
+			user.configTrain.dbrouteids.push(deutscheBahnRoutes.id); // Add new Entry Id to user
 		}
 	}
-	user.save();
+	await user.save();
 }
 
 UpdateDeutscheBahnRoutes();
