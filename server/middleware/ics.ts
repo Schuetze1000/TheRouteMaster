@@ -106,7 +106,6 @@ export async function UpdateActiveICS() {
 	// ---------------- Deactivate all now unused ICS-Files ---------------- //
 	const all_ics: IICS_Data[] | null = await ICS.find({ active: true });
 	const bar2 = await createBar(all_ics.length, "Update de-active ICS", "Entries");
-
 	for (let x = 0; x < all_ics.length; x++) {
 		const str_exists = active_uid_list.indexOf(all_ics[x].uid.toString());
 		if (str_exists == -1) {
