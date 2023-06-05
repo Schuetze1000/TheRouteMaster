@@ -2,6 +2,9 @@ import Navbar_landing from "../../components/navbars/Navbar_landing";
 import DarkMode_switch from "../../components/navbars/buttons/btn_DarkModeSwitch";
 import Weather from "../../components/weather";
 import React from "react";
+import { isLoggedIn } from "axios-jwt";
+
+//TODO Wenn eingeloggt Login Registration Button entfernen und Dashboard Button hinzufügen @Leonidas-maker
 
 function Landing() {
     const LoginButton = () => {

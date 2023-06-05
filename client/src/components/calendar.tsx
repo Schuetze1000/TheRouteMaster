@@ -9,6 +9,17 @@ import { useState, useEffect } from "react";
 import { axiosInstance } from "../hooks/jwtAuth";
 
 function FullCalendarApp() {
+	const [gridMonth, setGridMonth] = useState(true);
+	let rightButton:string = "dayGridMonth prev,today,next";
+
+	const toggleGridButton = () => {
+        if (gridMonth == true) {
+            rightButton = "dayGridMonth prev,today,next";
+        } else {
+            rightButton = "timeGridWeek prev,today,next";
+        }
+    };
+
 	function randomIntFromInterval(min, max) { // min and max included 
 		return Math.floor(Math.random() * (max - min + 1) + min)
 	  }
@@ -66,6 +77,8 @@ function FullCalendarApp() {
 		});
 	}, []);
 
+	//TODO Fix custom button damit bei Klick er zwischen Month und Week wechselt @JStahl42
+	//TODO Function ist oben bereits integriert (toggleGridButton), muss nur noch in die Custom Buttons eingebaut werden.
 	return (
 		<div className="App">
 			<FullCalendar
@@ -84,7 +97,7 @@ function FullCalendarApp() {
 					//Die Toolbar über dem eigentlichen Kalender enthält per Default Knöpfe und Funktionalitäten z.B. zum Umschalten auf Tages- oder Monatsansicht, oder zum Spulen der Wochen
 					center: "title", //Es das Anfangs- und Enddatum der aktuell dargestellten Woche angezeigt
 					left: "kursButton", //Buttons zum Umschalten von Monats- und Wochenansicht
-					right: "dayGridMonth timeGridWeek prev,today,next", //Die Buttons zum Navigieren der Wochen. Trennung durch Leerzeichen statt Komma trennt die Buttons visuell voneinander. Komma und Leerzeichen sorgen für eine whacke Darstellung
+					right: rightButton, //Die Buttons zum Navigieren der Wochen. Trennung durch Leerzeichen statt Komma trennt die Buttons visuell voneinander. Komma und Leerzeichen sorgen für eine whacke Darstellung
 				}}
 				firstDay={1} //Der Montag ist der erste dargestellte Tag
 				slotMinTime={"06:00:00"} //Die frühste Uhrzeit, die dargestellt wird

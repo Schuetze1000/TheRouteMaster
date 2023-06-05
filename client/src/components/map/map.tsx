@@ -101,7 +101,7 @@ const Map = () => {
 					Dein Standort
 				</Popup>
 			</Marker>
-			<RoutingMachine from={defaultLocationTuple} to={coords} />
+			<RoutingMachine from={defaultLocationTuple} to={coords}/>
 			</MapContainer>
 		</div>
 	);
