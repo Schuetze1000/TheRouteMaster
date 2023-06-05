@@ -46,6 +46,7 @@ const UserSchema: Schema = new Schema({
 		homeTrainStationID: Number,
 		workTrainStationID: Number,
 		dbrouteids: [String],
+		sendInfos: Boolean,
 		active: {
 			type: Boolean,
 			default: false,
@@ -93,6 +94,7 @@ export interface IUser extends Document {
 		homeTrainStationID: Number;
 		workTrainStationID: Number;
 		dbrouteids: String[];
+		sendInfos: Boolean,
 		active: Boolean;
 	},
 	ics_uid: Number;
@@ -100,11 +102,25 @@ export interface IUser extends Document {
 }
 
 UserSchema.pre<IUser>("save", async function (next: any) {
+	if (this.isModified("active")) {
+		if (!this.active) {
+			this.configTrain.active = false;
+			this.configTrain.sendInfos = false;
+		}
+	}
+
+	if (this.isModified("configTrain.active")) {
+		if (!this.configTrain.active) {
+			this.configTrain.sendInfos = false;
+		}
+	}
+	
 	if (!this.isModified("password")) {
 		return next();
 	}
 	const salt = bycrypt.genSaltSync(10);
 	this.password = bycrypt.hashSync(this.password, salt);
+	
 	next();
 });
 

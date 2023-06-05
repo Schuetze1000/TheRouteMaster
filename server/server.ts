@@ -2,6 +2,7 @@ import Express, { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db";
 import { ICSUpdateAll } from "./middleware/ics";
+import { UpdateDeutscheBahnRoutes } from "./middleware/deutschebahn";
 import swaggerUi from 'swagger-ui-express';
 import fs from  'fs';
 import path from "path";
@@ -34,11 +35,11 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 
 connectDB().then(() => {
-	ICSUpdateAll();
+	ICSUpdateAll().then(() => UpdateDeutscheBahnRoutes());;
 });
 
 setInterval(() => {
-	ICSUpdateAll();
+	ICSUpdateAll().then(() => UpdateDeutscheBahnRoutes());
   }, 900000);
 
 const swagger = fs.readFileSync('./data/swagger.json');

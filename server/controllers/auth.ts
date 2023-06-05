@@ -5,6 +5,7 @@ import sendEmail from "../utils/emailSender";
 import crypto from "crypto";
 import { sendToken, verifyToken } from "../middleware/auth";
 import axios from "axios";
+import { onError } from "../utils/errorResponse";
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
@@ -26,7 +27,7 @@ exports.login = async (req: Request, res: Response, next: any) => {
 			next(new ErrorResponse("Invalid reCaptcha", 403));
 		}
 
-		var user: IUser | null;
+		let user: IUser | null;
 		if (identifier.includes("@")) {
 			user = await User.findOne({ email: identifier }).select("+password");
 		} else {
@@ -48,7 +49,7 @@ exports.login = async (req: Request, res: Response, next: any) => {
 		res.end();
 		console.log("true");
 	} catch (error: any) {
-		return next(new ErrorResponse(error.message, 400));
+		onError(error, next);
 	}
 };
 
@@ -73,8 +74,8 @@ exports.register = async (req: Request, res: Response, next: any) => {
 
 		sendToken(user, 201, res);
 		res.end();
-	} catch (error: any) {
-		next(error);
+	} catch (error) {
+		onError(error, next, 500);
 	}
 };
 
@@ -128,7 +129,7 @@ exports.forgotPassword = async (req: Request, res: Response, next: any) => {
 			return next(new ErrorResponse("Email could not be sent", 500));
 		}
 	} catch (error) {
-		next(error);
+		onError(error, next, 500);
 	}
 };
 
@@ -158,7 +159,7 @@ exports.resetPassword = async (req: Request, res: Response, next: any) => {
 			})
 			.end();
 	} catch (error) {
-		next(error);
+		onError(error, next, 500);
 	}
 };
 
@@ -170,6 +171,6 @@ exports.refreshToken = async (req: Request, res: Response, next: any) => {
 		sendToken(user, 201, res);
 		res.end();
 	} catch (error) {
-		next(error);
+		onError(error, next);
 	}
 };

@@ -11,7 +11,7 @@ export const sendToken = (user: IUser, status: number, res: Response) => {
 
 export const verifyToken = async (req: Request, res: Response, getUser = true, isRefreshToken = false) => {
 	try {
-		var checked_token:string;
+		let checked_token:string;
 		if (!isRefreshToken){
 			const jwt_token  = (req.headers.authorization).replace("Bearer ","");
 			if (!jwt_token) {

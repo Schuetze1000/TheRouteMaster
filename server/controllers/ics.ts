@@ -1,5 +1,5 @@
 import { Response, Request } from "express";
-import { ErrorResponse } from "../utils/errorResponse";
+import { ErrorResponse, onError } from "../utils/errorResponse";
 import ICS, { IICS_Data } from "../models/ics";
 import User, { IUser } from "../models/user";
 import { verifyToken } from "../middleware/auth";
@@ -16,10 +16,7 @@ exports.getICS = async (req: Request, res: Response, next: any) => {
 		res.status(200).send(JSON.stringify({ name: ics.name, data: ics.data, hash: ics.hash }));
 		res.end();
 	} catch (error) {
-		if (error instanceof ErrorResponse) {
-			return next(new ErrorResponse(error.message, error.statusCode));
-		}
-		return next(new ErrorResponse(error.message, 400));
+		onError(error, next);
 	}
 };
 
@@ -33,10 +30,7 @@ exports.getHash = async (req: Request, res: Response, next: any) => {
 		res.status(200).send(JSON.stringify({ hash: ics.hash }));
 		res.end();
 	} catch (error) {
-		if (error instanceof ErrorResponse) {
-			return next(new ErrorResponse(error.message, error.statusCode));
-		}
-		return next(new ErrorResponse(error.message, 400));
+		onError(error, next);
 	}
 };
 
@@ -48,9 +42,6 @@ exports.getAvailableICS = async (req: Request, res: Response, next: any) => {
 		const data:IICS_Data[] = await ICS_Data.find({}).select("name uid -_id");
 		res.status(200).json(data).end();
 	} catch (error) {
-		if (error instanceof ErrorResponse) {
-			return next(new ErrorResponse(error.message, error.statusCode));
-		}
-		return next(new ErrorResponse(error.message, 400));
+		onError(error, next);
 	}
 };

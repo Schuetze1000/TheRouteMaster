@@ -1,4 +1,3 @@
-import { connectDB } from "../config/db";
 import User, { IUser } from "../models/user";
 import { ErrorResponse } from "../utils/errorResponse";
 import ICSWrapper from "../utils/ics_s-e-wrapper";
@@ -6,16 +5,29 @@ import { crawlDB } from "../utils/db_crawler";
 import { IDBStruct, IDateTime } from "../models/deutschebahnInterfaces";
 import DeutscheBahnRoutes, { IDeutscheBahnRoutes } from "../models/deutschebahn";
 import objHash from "object-hash";
+import { createMultiBar, addBarToMulti, createBar } from "../utils/progressbar";
+import * as colors from "ansi-colors";
 
 function convertToDate(dateTime: IDateTime): Date {
 	return new Date(dateTime.date + " " + dateTime.hour + ":" + dateTime.minutes + ":" + dateTime.seconds);
 }
 
-export async function UpdateDeutscheBahnRoutes() {
+export async function UpdateDeutscheBahnRoutes(withEMail:boolean = false) {
 	try {
-		await connectDB();
+		console.log(
+			colors.red(
+				"\n#####################################################################" +
+					"\n#################### Updating DeutscheBahnRoutes ####################" +
+					"\n#####################################################################"
+			)
+		);
+		const multibar = await createMultiBar("Processing DeutscheBahnRoutes-Update");
 		const all_users: IUser[] | null = await User.find({ "configTrain.active": true });
-
+		const bar1 = addBarToMulti(multibar, all_users.length, "Users");
+		const bar2 = addBarToMulti(multibar, 4, "Dates");
+		const bar3 = addBarToMulti(multibar, 0, "Routes");
+		
+			
 		for (let userCount = 0; userCount < all_users.length; userCount++) {
 			const currentUser: IUser = all_users[userCount];
 			if (currentUser.ics_uid) {
@@ -28,11 +40,12 @@ export async function UpdateDeutscheBahnRoutes() {
 					convertToDate(secondDay.startDateTime),
 					convertToDate(secondDay.endDateTime),
 				];
-
+				
 				// ~~~~~~~~~~~~ Process Update ~~~~~~~~~~~ //
-				var routeCount = 0; // Max Routes in Database stored
+				let routeCount = 0; // Max Routes in Database stored
 				const constRouteCount = currentUser.configTrain.maxRoutes.valueOf();
 				const lenDBRouteIDs = currentUser.configTrain.dbrouteids.length;
+				bar3.setTotal(constRouteCount);
 				if (
 					constRouteCount != lenDBRouteIDs &&
 					dates[0] > currentDate &&
@@ -43,8 +56,9 @@ export async function UpdateDeutscheBahnRoutes() {
 					currentUser.configTrain.dbrouteids = [];
 				}
 				for (let dateCount = 0; dateCount < dates.length; dateCount++) {
+					bar3.update(routeCount);
 					if (routeCount != constRouteCount) {
-						var deutschbahnID: String = "";
+						let deutschbahnID: String = "";
 						if (lenDBRouteIDs > 0) {
 							deutschbahnID = currentUser.configTrain.dbrouteids[routeCount % constRouteCount];
 						} else {
@@ -55,7 +69,7 @@ export async function UpdateDeutscheBahnRoutes() {
 						if (dates[dateCount] > currentDate) {
 							// ~~~ Process only the right direction ~~ //
 							const whichDirection = dateCount % 2; // 0: Home to Work; 1: Work to Home
-							var fromID: Number, toID: Number, arrival: Date, departure: Date;
+							let fromID: Number, toID: Number, arrival: Date, departure: Date;
 							if (whichDirection == 0) {
 								fromID = currentUser.configTrain.homeTrainStationID;
 								toID = currentUser.configTrain.workTrainStationID;
@@ -85,6 +99,7 @@ export async function UpdateDeutscheBahnRoutes() {
 										if (newRoutesHash != deutscheBahnRoutesToUpdate.routesHash) {
 											// Check if Route has Changed
 											deutscheBahnRoutesToUpdate.routes = structDB.routes;
+											currentUser.configTrain.sendInfos = true; // For Info-Mail
 										}
 										deutscheBahnRoutesToUpdate.wasUpated = true;
 										await deutscheBahnRoutesToUpdate.save();
@@ -102,17 +117,25 @@ export async function UpdateDeutscheBahnRoutes() {
 								} // deutscheBahnRoutesToUpdate
 							} // deutschbahnID
 							routeCount += 1;
+							
 						} // dates[dateCount] > currentDate
 					} else {
+						bar2.update(0);
 						break;
 					} // routeCount != constRouteCount
+					bar2.increment();
 				} // Dates
 			} else {
 				currentUser.configTrain.active = false;
 				currentUser.configTrain.dbrouteids = [];
 			} // ics_uid undefiend
 			await currentUser.save();
+			bar1.increment();
 		} // Users
+		multibar.stop();
+		const endBar = createBar(all_users.length, "", "Users");
+		endBar.update(all_users.length);
+		endBar.stop();
 		await clearUnusedDeutscheBahnRoutes();
 	} catch (error) {
 		console.error("[ERROR] UpdateDeutscheBahnRoutes:", error);
@@ -121,13 +144,18 @@ export async function UpdateDeutscheBahnRoutes() {
 
 async function clearUnusedDeutscheBahnRoutes() {
 	try {
+		console.log("\nDeleting unused routes...")
 		await DeutscheBahnRoutes.deleteMany({ wasUpated: false }); // Clear not Updated Routes
-
+		
 		const deutscheBahnRoutesToChange: IDeutscheBahnRoutes[] = await DeutscheBahnRoutes.find({ wasUpated: true });
+		const bar1 = createBar(deutscheBahnRoutesToChange.length,"Change wasUpated to false", "Entries");
+
 		for (let x = 0; x < deutscheBahnRoutesToChange.length; x++) {
 			deutscheBahnRoutesToChange[x].wasUpated = false;
 			deutscheBahnRoutesToChange[x].save();
+			bar1.increment();
 		}
+		bar1.stop();
 	} catch (error) {
 		console.error("[ERROR] clearUnusedDeutscheBahnRoutes:", error);
 	}

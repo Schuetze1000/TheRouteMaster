@@ -6,7 +6,7 @@ import { createBar } from "../utils/progressbar";
 import { getUIDS, getICS_Data } from "../utils/ics_crawler_v2";
 import * as colors from "ansi-colors";
 
-export const getICSfromUser = async (user: IUser) => {
+export async function getICSfromUser (user: IUser) {
 	// ----------------- Get ICS-Model from specified user ----------------- //
 	const uid = user.ics_uid;
 	if (!uid) {
@@ -24,8 +24,8 @@ export const getICSfromUser = async (user: IUser) => {
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 export async function UpdateICS() {
-	var name_list: string[] = [];
-	var uid_list: string[] = [];
+	let name_list: string[] = [];
+	let uid_list: string[] = [];
 
 	try {
 		[name_list, uid_list] = await getUIDS();
@@ -77,7 +77,7 @@ export async function UpdateICS() {
 			}
 			bar2.stop();
 		}
-	} catch (error: any) {
+	} catch (error) {
 		console.error(error);
 	}
 }

@@ -1,4 +1,12 @@
+--Password Forgot Mail
 https://www.flaticon.com/free-icon/double-decker-bus_1085975
 https://www.flaticon.com/free-icon/reset-password_6195699
 https://icons-for-free.com/issue+icon-1320185886729792536/
 https://my.stripo.email/
+
+--InfoMail
+https://www.clipartmax.com/middle/m2i8H7b1G6A0Z5b1_walking-icon/
+https://www.flaticon.com/free-icon/walk_5604658
+https://www.flaticon.com/free-icon/train_1042307
+https://www.flaticon.com/free-icon/tram_2385513
+https://www.flaticon.com/free-icon/bus_1023413
