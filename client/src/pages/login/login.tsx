@@ -9,6 +9,8 @@ import { setAuthTokens, isLoggedIn } from "axios-jwt";
 
 function Login() {
 
+    //TODO Button zum Dashboard hinzufügen falls angemeldet und login/registration weg machen @Leonidas-maker
+
     const [passwordShown, setPasswordShown] = useState(false);
     const navigate = useNavigate();
     let captchaRef;
