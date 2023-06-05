@@ -1,6 +1,10 @@
 import DarkMode_switch from "./buttons/btn_DarkModeSwitch";
 import Back_landing from "./buttons/btn_BackLanding";
 import Imprint from "./buttons/btn_Imprint";
+import Dashboard from "./buttons/btn_Dashboard";
+import { isLoggedIn } from "axios-jwt";
+import Logout from "./buttons/btn_Logout";
+import Settings from "./buttons/btn_settings";
 
 const Navbar_use = () => {
     return (
@@ -10,10 +14,15 @@ const Navbar_use = () => {
             <Divider />
             <DarkMode_switch />
             <Imprint />
+            <Dashboard />
+            <DividerLoggedIn />
+            <Logout />
+            <Settings />
         </div>
     );
 };
 
 const Divider = () => <hr className="navbar-hr" />;
+const DividerLoggedIn = () => <hr className="navbar-hr" style={{visibility: isLoggedIn() ? "visible" : "hidden"}}/>;
 
 export default Navbar_use;

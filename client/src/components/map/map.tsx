@@ -96,6 +96,11 @@ const Map = () => {
 				url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
 				attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
 			/>
+			{/*TitleLayer für RailwayMap*/}
+			{/* <TileLayer
+				url="https://{s}.tiles.openrailwaymap.org/standard/{z}/{x}/{y}.png"
+				attribution='&copy; <a href="https://www.openrailwaymap.org/">OpenRailwayMap</a> contributors'
+			/> */}
 			<Marker position={coords} icon={new Icon({iconUrl: markerIconPng, iconSize: [25, 41], iconAnchor: [12, 41]})}>
 				<Popup>
 					Dein Standort

@@ -16,6 +16,7 @@ function Landing() {
             <button
                 type="button"
                 onClick={Click}
+                style={{visibility: isLoggedIn() ? "hidden" : "visible"}}
                 className="rounded-3xl hover:rounded-xl hover:border-neutral-400 hover:bg-neutral-600 hover:bg-opacity-70 active:border-neutral-600 active:bg-neutral-800 active:duration-100 transition-all duration-300 ease-linear cursor-pointer border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50  dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 shadow-lg">
                 Anmelden
             </button>
@@ -31,8 +32,25 @@ function Landing() {
             <button
                 type="button"
                 onClick={Click}
+                style={{visibility: isLoggedIn() ? "hidden" : "visible"}}
                 className="rounded-3xl hover:rounded-xl hover:border-neutral-400 hover:bg-neutral-600 hover:bg-opacity-70 active:border-neutral-600 active:bg-neutral-800 active:duration-100 transition-all duration-300 ease-linear cursor-pointer border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50  dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 shadow-lg">
                 Registrieren
+            </button>
+        );
+    };
+
+    const DashboardButton = () => {
+        const Click = () => {
+            window.location.href = "/dashboard";
+        }
+    
+        return (
+            <button
+                type="button"
+                onClick={Click}
+                style={{visibility: isLoggedIn() ? "visible" : "hidden"}}
+                className="rounded-3xl hover:rounded-xl hover:border-neutral-400 hover:bg-neutral-600 hover:bg-opacity-70 active:border-neutral-600 active:bg-neutral-800 active:duration-100 transition-all duration-300 ease-linear cursor-pointer border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50  dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 shadow-lg">
+                Zum Dashboard
             </button>
         );
     };
@@ -58,6 +76,8 @@ function Landing() {
                             <div className="space-x-5">
                                 <LoginButton />
                                 <RegistrationButton />
+                                <br />
+                                <DashboardButton />
                             </div>
                         </div>
                     </div>
