@@ -45,9 +45,13 @@ ICS_DataSchema.pre<IICS_Data>("save", async function (next: any) {
 });
 
 ICS_DataSchema.methods.UpdateIcsData = function (ics_data: string) {
-	this.hash = crypto.createHash("sha1").update(ics_data).digest("base64");
-	this.ics = ics_data;
-	return true;
+	const newHash =  crypto.createHash("sha1").update(ics_data).digest("base64");
+	if (this.hash !== newHash) {
+		this.hash = newHash;
+		this.data = ics_data;
+		return true;
+	}
+	return false;
 };
 
 ICS_DataSchema.methods.matchHash = function(ics_match: string) {

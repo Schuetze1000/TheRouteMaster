@@ -73,6 +73,7 @@ export async function UpdateICS() {
 					});
 				} else {
 					ics.UpdateIcsData(data);
+					ics.save();
 				}
 			}
 			bar2.stop();
