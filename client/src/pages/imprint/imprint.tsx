@@ -25,6 +25,31 @@ function Imprint() {
 								<p>Herzlichst,
 									Euer Route Master Team</p>
                             </div>
+							<div className="relative mb-2 md:mb-10">
+								<h1 className="font-bold text-3xl">Informationen</h1>
+								<p>Informationen gemäß § 5 TMG:
+									Ihr Name / Ihre Namen
+									Ihre Anschrift
+									Postleitzahl Stadt
+
+									Kontakt:
+
+									Telefon: Ihre Telefonnummer
+									E-Mail: Ihre E-Mail-Adresse
+
+									Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
+
+									Ihr Name
+									Ihre Anschrift
+									Postleitzahl Stadt
+
+									Datenschutzerklärung
+									Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst und behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.
+
+									Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.
+
+									Wir weisen darauf hin, dass die Datenübertragung im Internet (z.B. bei der Kommunikation per E-Mail) Sicherheitslücken aufweisen kann. Ein lückenloser Schutz der Daten vor dem Zugriff durch Dritte ist nicht möglich.</p>
+							</div>
                             <div className="relative mb-2 md:mb-10">
                                 <h1 className="font-bold text-3xl">Wichtige Informationen</h1>
 								<h2 className="font-bold text-xl">Quellen</h2>

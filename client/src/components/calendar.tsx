@@ -59,7 +59,7 @@ function FullCalendarApp() {
 				ICSString = resAvailableIcs.data.data;
 				const rawEvents = ICSString.split("BEGIN:VEVENT");
 
-				let colors = ['purple', "green", "red", "cyan", "blue"];
+				let colors = ["purple", "green", "red", "cyan", "blue"];
 
 				for (let i = 1; i < rawEvents.length; i++) {
 					var singularEvent = rawEvents[i].split("\n");

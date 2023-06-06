@@ -9,6 +9,8 @@ export const sendToken = (user: IUser, status: number, res: Response) => {
 	res.status(status).send({"token":loginToken, "refreshToken":refreshToken});
 };
 
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
 export const verifyToken = async (req: Request, res: Response, getUser = true, isRefreshToken = false) => {
 	try {
 		let checked_token:string;
@@ -51,6 +53,8 @@ export const verifyToken = async (req: Request, res: Response, getUser = true, i
 		throw new ErrorResponse(error.message, 400);
 	}
 };
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 export const verifyAndMatch = async (req: Request, res: Response, password:string, securepw = true) => {
 	try {
