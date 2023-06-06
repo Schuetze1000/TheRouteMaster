@@ -32,7 +32,7 @@ function Imprint() {
 								<br />
 								<a href="https://www.tailwindtoolbox.com/icons" className="underline">Icons</a>
 								<br />
-								<a href="https://www.flaticon.com/free-icon/reset-password_6195699" className="underline">Reset Password</a>
+								<a href="https://www.flaticon.com/free-icon/reset-password_6195699" className="underline">Reset Password Icon</a>
 								<br />
 								<a href="https://icons-for-free.com/issue+icon-1320185886729792536/" className="underline">Issue Icon</a>
 								<br />
