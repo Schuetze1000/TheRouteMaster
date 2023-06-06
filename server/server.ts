@@ -35,11 +35,11 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 
 connectDB().then(() => {
-	ICSUpdateAll().then(() => UpdateDeutscheBahnRoutes());;
+	ICSUpdateAll();//.then(() => UpdateDeutscheBahnRoutes());;
 });
 
 setInterval(() => {
-	ICSUpdateAll().then(() => UpdateDeutscheBahnRoutes());
+	ICSUpdateAll();//.then(() => UpdateDeutscheBahnRoutes());
   }, 900000);
 
 const swagger = fs.readFileSync('./data/swagger.json');
