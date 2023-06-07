@@ -15,6 +15,8 @@ function Login() {
     const navigate = useNavigate();
     let captchaRef;
 
+    const [identifierError, setIdentifierError] = useState(false);
+
     const [pswSVGx, setPswSVGx] = useState<number>(23);
     const [pswSVGy, setPswSVGy] = useState<number>(23);
     const [pswSVGr, setPswSVGr] = useState<number>(0);
@@ -25,6 +27,10 @@ function Login() {
         email: "",
         password: "",
     };
+
+    function onLoginClick() {
+        setIdentifierError(true);
+    }
 
     const { onChange, onSubmit, values } = useForm(
         loginUserCallback,
@@ -121,7 +127,7 @@ function Login() {
                         <p className="text-center text-black text-3xl">Bitte melde dich mit deiner Email an</p>
                         <div className="relative mb-3">
                             <input
-                                className="peer input"
+                                className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}
                                 name="identifier"
                                 id="identifier"
                                 type="identifier"
@@ -137,7 +143,7 @@ function Login() {
 
                         <div className="relative mb-3">
                             <input
-                                className="peer input"
+                                className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}
                                 name="password"
                                 id="password"
                                 type={passwordShown ? "text" : "password"}
@@ -180,6 +186,7 @@ function Login() {
 
                         <button
                             type="submit"
+                            onClick={onLoginClick}
                             className="standard-button">
                             Login
                         </button>
