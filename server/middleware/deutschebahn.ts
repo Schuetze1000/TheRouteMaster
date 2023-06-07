@@ -19,7 +19,7 @@ function convertToDate(dateTime: IDateTime): Date {
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
-export async function UpdateDeutscheBahnRoutes(withEMail: boolean = false) {
+export async function UpdateDeutscheBahnRoutes() {
 	try {
 		console.log(
 			colors.red(
@@ -86,6 +86,7 @@ export async function UpdateDeutscheBahnRoutes(withEMail: boolean = false) {
 							} else {
 								toID = currentUser.configTrain.homeTrainStationID;
 								fromID = currentUser.configTrain.workTrainStationID;
+								
 								arrival = null;
 								departure = new Date(dates[dateCount].getTime() + currentUser.configTrain.timeOffset.valueOf());
 							}
@@ -132,6 +133,10 @@ export async function UpdateDeutscheBahnRoutes(withEMail: boolean = false) {
 					} // routeCount != constRouteCount
 					bar2.increment();
 				} // Dates
+				
+				if (routeCount == 0) {
+					currentUser.configTrain.dbrouteids = [];
+				}
 			} else {
 				currentUser.configTrain.active = false;
 				currentUser.configTrain.dbrouteids = [];
@@ -229,6 +234,7 @@ async function createIfNotExistsDeutscheBahnRoute(
 				user.configTrain.dbrouteids.push(deutscheBahnRoutes.id); // Add new Entry Id to user
 			}
 		}
+		user.configTrain.sendInfos = true;
 		await user.save();
 	} catch (error) {
 		console.error("[ERROR] createIfNotExistsDeutscheBahnRoute:", error);
@@ -238,68 +244,78 @@ async function createIfNotExistsDeutscheBahnRoute(
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
 
 export async function sendInfoMail() {
-	await connectDB();
-	const all_users: IUser[] | null = await User.find({
-		"configTrain.sendInfos": true,
-	});
-
-	if (!all_users) {
-		return;
-	}
-	for (let userIndex = 0; userIndex < all_users.length; userIndex++) {
-		const currentUser = all_users[userIndex];
-		const header = `Route-Update the-routemaster.schuetz-andreas.dev`;
-		let message = emailHeader(currentUser.username);
-		const deutscheBahnRoutes: IDeutscheBahnRoutes[] | null = await DeutscheBahnRoutes.find({
-			_id: currentUser.configTrain.dbrouteids,
+	try {
+		const all_users: IUser[] | null = await User.find({
+			"configTrain.sendInfos": true,
 		});
-
-		for (let routeIndex = 0; routeIndex < currentUser.configTrain.dbrouteids.length; routeIndex++) {
-			const currentRoute = deutscheBahnRoutes[routeIndex].routes[0].route;
-			let imgs: String[] = [];
-			let froms: String[] = [];
-			let tos: String[] = [];
-			let routesName: String[] = [];
-
-			for (let routesIndex = 0; routesIndex < currentRoute.length; routesIndex++) {
-				if (currentRoute[routesIndex].walk == true) {
-					imgs.push("https://the-routemaster.schuetz-andreas.dev/email/walk");
-					froms.push(currentRoute[routesIndex].types.from);
-					tos.push(currentRoute[routesIndex].types.to);
-					routesName.push("/");
-				} else {
-					const routeTrain: ITrain | IFoot = currentRoute[routesIndex].types;
-					
-					if ("plannedDeparture" in routeTrain) {
-						froms.push(currentRoute[routesIndex].types.from + `\n(${routeTrain.plannedDeparture})`);
-						tos.push(currentRoute[routesIndex].types.to + `\n(${routeTrain.plannedArrival}\n+${routeTrain.arivalDelay})`);
-						routesName.push(routeTrain.name);
-						if (routeTrain.types.includes("tram")) {
-							imgs.push("https://the-routemaster.schuetz-andreas.dev/email/tram");
-						}else if (routeTrain.types.includes("bus")) {
-							imgs.push("https://the-routemaster.schuetz-andreas.dev/email/bus");
-						} else {
-							imgs.push("https://the-routemaster.schuetz-andreas.dev/email/train");
+	
+		if (!all_users) {
+			return;
+		}
+	
+		const bar = createBar(all_users.length, "Sending E-Mails:", "Users");
+	
+		for (let userIndex = 0; userIndex < all_users.length; userIndex++) {
+			const currentUser = all_users[userIndex];
+			const header = `Route-Update the-routemaster.schuetz-andreas.dev`;
+			let message = emailHeader(currentUser.username);
+			const deutscheBahnRoutes: IDeutscheBahnRoutes[] | null = await DeutscheBahnRoutes.find({
+				_id: currentUser.configTrain.dbrouteids,
+			});
+	
+			for (let routeIndex = 0; routeIndex < currentUser.configTrain.dbrouteids.length; routeIndex++) {
+				const currentRoute = deutscheBahnRoutes[routeIndex].routes[0].route;
+				let imgs: String[] = [];
+				let froms: String[] = [];
+				let tos: String[] = [];
+				let routesName: String[] = [];
+	
+				for (let routesIndex = 0; routesIndex < currentRoute.length; routesIndex++) {
+					if (currentRoute[routesIndex].walk == true) {
+						imgs.push("https://the-routemaster.schuetz-andreas.dev/api/email/walk");
+						froms.push(currentRoute[routesIndex].types.from);
+						tos.push(currentRoute[routesIndex].types.to);
+						routesName.push("/");
+					} else {
+						const routeTrain: ITrain | IFoot = currentRoute[routesIndex].types;
+						
+						if ("plannedDeparture" in routeTrain) {
+							froms.push(currentRoute[routesIndex].types.from + `\n(${routeTrain.plannedDeparture})`);
+							tos.push(currentRoute[routesIndex].types.to + `\n(${routeTrain.plannedArrival}\n+${routeTrain.arivalDelay})`);
+							routesName.push(routeTrain.name);
+							if (routeTrain.types.includes("tram")) {
+								imgs.push("https://the-routemaster.schuetz-andreas.dev/api/email/tram");
+							}else if (routeTrain.types.includes("bus")) {
+								imgs.push("https://the-routemaster.schuetz-andreas.dev/api/email/bus");
+							} else {
+								imgs.push("https://the-routemaster.schuetz-andreas.dev/api/email/train");
+							}
 						}
 					}
 				}
+				message += emailRouteElement(
+					(routeIndex + 1).toString(),
+					imgs,
+					froms,
+					tos,
+					routesName,
+					`${deutscheBahnRoutes[routeIndex].routes[0].price.amount} ${deutscheBahnRoutes[routeIndex].routes[0].price.currency}`
+				);
 			}
-			message += emailRouteElement(
-				routeIndex.toString(),
-				imgs,
-				froms,
-				tos,
-				routesName,
-				`${deutscheBahnRoutes[routeIndex].routes[0].price.amount} ${deutscheBahnRoutes[routeIndex].routes[0].price.currency}`
-			);
+			message += emailFooter();
+	
+			await sendEmail({
+				to: "currentUser.email",
+				text: message,
+				subject: header,
+			});
+	
+			currentUser.configTrain.sendInfos = false;
+			await currentUser.save();
+			bar.increment();
 		}
-		
-		message += emailFooter();
-
-		/* 	await sendEmail({
-			to: currentUser.email,
-			text: message,
-			subject: header,
-		}); */
+		bar.stop();
+	} catch (error) {
+		console.error("[ERROR] sendInfoMail:" +  error);
 	}
 }

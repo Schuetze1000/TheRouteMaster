@@ -12,124 +12,148 @@ export function header(username: String) {
     <link href="https://fonts.googleapis.com/css?family=Montserrat" rel="stylesheet" type="text/css" />
     <!--<![endif]-->
     <style>
-        * {
-            box-sizing: border-box;
-        }
+    * {
+    box-sizing: border-box;
+}
 
-        body {
-            margin: 0;
-            padding: 0;
-        }
+body {
+    margin: 0;
+    padding: 0;
+}
 
-        a[x-apple-data-detectors] {
-            color: inherit !important;
-            text-decoration: inherit !important;
-        }
+a[x-apple-data-detectors] {
+    color: inherit !important;
+    text-decoration: inherit !important;
+}
 
-        #MessageViewBody a {
-            color: inherit;
-            text-decoration: none;
-        }
+#MessageViewBody a {
+    color: inherit;
+    text-decoration: none;
+}
 
-        p {
-            line-height: inherit;
-        }
+p {
+    line-height: inherit
+}
 
-        .desktop_hide,
-        .desktop_hide table {
-            mso-hide: all;
-            display: none;
-            max-height: 0px;
-            overflow: hidden;
-        }
+.desktop_hide,
+.desktop_hide table {
+    mso-hide: all;
+    display: none;
+    max-height: 0px;
+    overflow: hidden;
+}
 
-        .image_block img + div {
-            display: none;
-        }
+.image_block img+div {
+    display: none;
+}
 
-        @media (max-width: 700px) {
-            .desktop_hide table.icons-inner,
-            .social_block.desktop_hide .social-table {
-                display: inline-block !important;
-            }
+@media (max-width:700px) {
 
-            .icons-inner {
-                text-align: center;
-            }
+    .desktop_hide table.icons-inner,
+    .row-1 .column-1 .block-1.image_block img,
+    .row-4 .column-1 .block-2.image_block img,
+    .row-7 .column-1 .block-2.social_block .alignment table,
+    .row-7 .column-1 .block-4.image_block img,
+    .row-8 .column-1 .block-1.image_block img,
+    .social_block.desktop_hide .social-table {
+        display: inline-block !important;
+    }
 
-            .icons-inner td {
-                margin: 0 auto;
-            }
+    .icons-inner {
+        text-align: center;
+    }
 
-            .row-content {
-                width: 100% !important;
-            }
+    .icons-inner td {
+        margin: 0 auto;
+    }
 
-            .mobile_hide {
-                display: none;
-            }
+    .row-content {
+        width: 100% !important;
+    }
 
-            .stack .column {
-                width: 100%;
-                display: block;
-            }
+    .mobile_hide {
+        display: none;
+    }
 
-            .mobile_hide {
-                min-height: 0;
-                max-height: 0;
-                max-width: 0;
-                overflow: hidden;
-                font-size: 0px;
-            }
+    .stack .column {
+        width: 100%;
+        display: block;
+    }
 
-            .desktop_hide,
-            .desktop_hide table {
-                display: table !important;
-                max-height: none !important;
-            }
+    .mobile_hide {
+        min-height: 0;
+        max-height: 0;
+        max-width: 0;
+        overflow: hidden;
+        font-size: 0px;
+    }
 
-            .row-4 .column-1 .block-1.text_block td.pad {
-                padding: 15px 15px 10px !important;
-            }
+    .desktop_hide,
+    .desktop_hide table {
+        display: table !important;
+        max-height: none !important;
+    }
 
-            .row-1 .column-1 .block-2.heading_block h3 {
-                text-align: center !important;
-            }
+    .row-1 .column-1 .block-1.image_block .alignment,
+    .row-1 .column-1 .block-2.heading_block h3,
+    .row-4 .column-1 .block-2.image_block .alignment,
+    .row-7 .column-1 .block-2.social_block .alignment,
+    .row-7 .column-1 .block-4.image_block .alignment,
+    .row-8 .column-1 .block-1.image_block .alignment {
+        text-align: center !important;
+    }
 
-            .row-1 .column-1 .block-4.text_block td.pad,
-            .row-6 .column-2 .block-1.text_block td.pad,
-            .row-6 .column-3 .block-1.text_block td.pad {
-                padding: 10px 15px !important;
-            }
+    .row-1 .column-1 .block-4.text_block td.pad,
+    .row-6 .column-2 .block-1.text_block td.pad,
+    .row-6 .column-3 .block-1.text_block td.pad {
+        padding: 10px 15px !important;
+    }
 
-            .row-4 .column-2 .block-2.text_block td.pad {
-                padding: 0 5px 10px !important;
-            }
+    .row-4 .column-1 .block-1.text_block td.pad {
+        padding: 15px 15px 10px !important;
+    }
 
-            .row-4 .column-2 .block-1.text_block td.pad,
-            .row-4 .column-3 .block-1.text_block td.pad,
-            .row-4 .column-4 .block-1.text_block td.pad {
-                padding: 10px !important;
-            }
+    .row-4 .column-2 .block-1.text_block td.pad,
+    .row-4 .column-3 .block-1.text_block td.pad,
+    .row-4 .column-4 .block-1.text_block td.pad {
+        padding: 10px !important;
+    }
 
-            .row-4 .column-3 .block-2.text_block td.pad,
-            .row-4 .column-4 .block-2.text_block td.pad {
-                padding: 0 15px 10px !important;
-            }
+    .row-4 .column-2 .block-2.text_block td.pad,
+    .row-8 .column-2 .block-1.text_block td.pad {
+        padding: 0 5px 10px !important;
+    }
 
-            .row-7 .column-1 .block-3.divider_block td.pad {
-                padding: 10px 0 !important;
-            }
+    .row-4 .column-3 .block-2.text_block td.pad,
+    .row-4 .column-4 .block-2.text_block td.pad,
+    .row-8 .column-3 .block-1.text_block td.pad,
+    .row-8 .column-4 .block-1.text_block td.pad {
+        padding: 0 15px 10px !important;
+    }
 
-            .row-7 .column-1 .block-3.divider_block .alignment table {
-                display: inline-table;
-            }
+    .row-1 .column-1,
+    .row-4 .column-1,
+    .row-4 .column-4,
+    .row-7 .column-1,
+    .row-7 .column-1 .block-2.social_block td.pad,
+    .row-8 .column-1,
+    .row-8 .column-4 {
+        padding: 0 !important;
+    }
 
-            .row-4 .column-1,
-            .row-7 .column-1 .block-2.social_block td.pad {
-                padding: 0 !important;
-            }
-        }
+    .row-7 .column-1 .block-3.divider_block td.pad {
+        padding: 10px 0 !important;
+    }
+
+    .row-7 .column-1 .block-3.divider_block .alignment table {
+        display: inline-table;
+    }
+
+    .row-7 .column-1 .block-3.divider_block .alignment {
+        text-align: center !important;
+        font-size: 1px;
+    }
+}
     </style>
 </head>
 <body style="background-color: #340a13; margin: 0; padding: 0; -webkit-text-size-adjust: none; text-size-adjust: none">
@@ -171,6 +195,7 @@ export function header(username: String) {
                                         <tbody>
                                             <tr>
                                                 <td
+                                                    
                                                     class="column column-1"
                                                     style="
                                                         mso-table-lspace: 0pt;
@@ -412,10 +437,10 @@ export function footer() {
                                             <div align="center" class="alignment" style="line-height: 10px">
                                                 <a href="https://the-routemaster.schuetz-andreas.dev/" style="outline: none" tabindex="-1" target="_blank"
                                                     ><img
-                                                        alt="Your Logo Placeholder"
+                                        
                                                         src="https://the-routemaster.schuetz-andreas.dev/api/email/footerLogo"
                                                         style="display: block; height: auto; border: 0; width: 45px; max-width: 100%"
-                                                        title="Your Logo Placeholder"
+                                        
                                                         width="45"
                                                 /></a>
                                             </div>

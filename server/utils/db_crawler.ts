@@ -16,10 +16,10 @@ export async function crawlDB(fromID:Number, toID:Number, arrival:Date = null, d
 		res = await client.journeys(fromID.toString(), toID.toString(), { results: results.valueOf(), departure: departure});
 	}
 	
-	return await dbStructor(res.journeys);
+	return await dbStructor(res.journeys, fromID, toID);
 }
 
-async function dbStructor(journeys: any):Promise<IDBStruct> {
+async function dbStructor(journeys: any, fromID:Number, toID:Number):Promise<IDBStruct> {
 	const dbRoutes: IDBRoutes[] = [];
 	for (let indexJourneys = 0; indexJourneys < journeys.length; indexJourneys++) {
 		let routes: ISwitch[] = [];
@@ -93,8 +93,6 @@ async function dbStructor(journeys: any):Promise<IDBStruct> {
 	const fromLocation = dbRoutes[0].route[0].types.fromLocation;
 	const to = dbRoutes[0].route[dbRoutes[0].route.length - 1].types.to;
 	const toLocation = dbRoutes[0].route[dbRoutes[0].route.length - 1].types.toLocation;
-	const fromID = 508709;
-	const toID = 8000105;
 
 	const dbStruct:IDBStruct = {
 		fromID: fromID,
