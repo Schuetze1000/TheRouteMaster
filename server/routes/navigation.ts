@@ -4,7 +4,7 @@ const { getRoutesHash, getAllRoutes, getRoute } = require("../controllers/deutsc
 
 //routes
 router.route("/getrouteshash").get(getRoutesHash);
-router.route("/getalltoutes").get(getAllRoutes);
+router.route("/getallroutes").get(getAllRoutes);
 router.route("/getroute").get(getRoute);
 
 module.exports = router;
