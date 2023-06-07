@@ -6,7 +6,10 @@ import deLocale from "@fullcalendar/core/locales/de";
 import { Calendar } from "fullcalendar";
 import { Interface } from "readline";
 import { useState, useEffect } from "react";
-import { axiosInstance } from "../hooks/jwtAuth";
+import { axiosInstance } from "../../hooks/jwtAuth";
+
+//! Use deutschebahnInterfaces as refernce for backend-api-response
+
 
 function FullCalendarApp() {
 	const [gridMonth, setGridMonth] = useState(true);

@@ -6,7 +6,7 @@ import Imprint from './pages/imprint/imprint';
 import Settings from './pages/settings/settings';
 import ChangePassword from './pages/settings/settings_changePassword';
 import Registration from './pages/registration/registration';
-import Calendar from './components/calendar';
+import Calendar from './components/calendar/calendar';
 import Forgot_password from './pages/forgot_password/forgot_password';
 import Map from './components/map/map';
 import ErrorPage from './pages/404/errorPage';

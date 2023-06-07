@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import Navbar_dashboard from "../../components/navbars/Navbar_dashboard";
 import Map from "../../components/map/map";
-import FullCalendarApp from "../../components/calendar";
+import FullCalendarApp from "../../components/calendar/calendar";
 import Weather from "../../components/weather";
 import { isLoggedIn } from "axios-jwt";
 
