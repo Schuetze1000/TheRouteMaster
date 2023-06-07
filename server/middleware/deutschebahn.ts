@@ -11,6 +11,8 @@ import sendEmail from "../utils/emailSender";
 import { connectDB } from "../config/db";
 import { routeElement as emailRouteElement, header as emailHeader, footer as emailFooter } from "../data/email/routeInformation/infoMailData";
 
+import fs from "fs";
+
 function convertToDate(dateTime: IDateTime): Date {
 	return new Date(dateTime.date + " " + dateTime.hour + ":" + dateTime.minutes + ":" + dateTime.seconds);
 }
@@ -261,17 +263,24 @@ export async function sendInfoMail() {
 
 			for (let routesIndex = 0; routesIndex < currentRoute.length; routesIndex++) {
 				if (currentRoute[routesIndex].walk == true) {
-					imgs.push(""); //TODO Add Walk-Img path @Schuetze1000
+					imgs.push("https://the-routemaster.schuetz-andreas.dev/email/walk");
 					froms.push(currentRoute[routesIndex].types.from);
 					tos.push(currentRoute[routesIndex].types.to);
+					routesName.push("/");
 				} else {
 					const routeTrain: ITrain | IFoot = currentRoute[routesIndex].types;
-					imgs.push(""); //TODO Add Train-Img path @Schuetze1000
-					tos.push(currentRoute[routesIndex].types.to + `(${routeTrain.plannedArrival} + ${routeTrain.arivalDelay})`);
-
+					
 					if ("plannedDeparture" in routeTrain) {
-						froms.push(currentRoute[routesIndex].types.from + `(${routeTrain.plannedDeparture})`);
+						froms.push(currentRoute[routesIndex].types.from + `\n(${routeTrain.plannedDeparture})`);
+						tos.push(currentRoute[routesIndex].types.to + `\n(${routeTrain.plannedArrival}\n+${routeTrain.arivalDelay})`);
 						routesName.push(routeTrain.name);
+						if (routeTrain.types.includes("tram")) {
+							imgs.push("https://the-routemaster.schuetz-andreas.dev/email/tram");
+						}else if (routeTrain.types.includes("bus")) {
+							imgs.push("https://the-routemaster.schuetz-andreas.dev/email/bus");
+						} else {
+							imgs.push("https://the-routemaster.schuetz-andreas.dev/email/train");
+						}
 					}
 				}
 			}
@@ -281,9 +290,13 @@ export async function sendInfoMail() {
 				froms,
 				tos,
 				routesName,
-				`${deutscheBahnRoutes[routeIndex].routes[0].price.amount}${deutscheBahnRoutes[routeIndex].routes[0].price.currency}`
+				`${deutscheBahnRoutes[routeIndex].routes[0].price.amount} ${deutscheBahnRoutes[routeIndex].routes[0].price.currency}`
 			);
 		}
+
+		message += emailFooter();
+
+		fs.writeFileSync("./test2.html", message);
 
 		/* 	await sendEmail({
 			to: currentUser.email,

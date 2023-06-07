@@ -198,7 +198,7 @@ export function header(username: String) {
                                                             <td class="pad" style="width: 100%; padding-right: 0px; padding-left: 0px">
                                                                 <div align="center" class="alignment" style="line-height: 10px">
                                                                     <img
-                                                                        src="images/headerLogo.png"
+                                                                        src="https://the-routemaster.schuetz-andreas.dev/api/email/headerlogo"
                                                                         style="display: block; height: auto; border: 0; width: 50px; max-width: 100%"
                                                                         width="50"
                                                                     />
@@ -356,7 +356,7 @@ export function footer() {
                                                                 ><img
                                                                     alt="Github"
                                                                     height="32"
-                                                                    src="images/github-logo-black.png"
+                                                                    src="https://the-routemaster.schuetz-andreas.dev/api/email/githublogo"
                                                                     style="display: block; height: auto; border: 0"
                                                                     title="Github"
                                                                     width="32"
@@ -413,7 +413,7 @@ export function footer() {
                                                 <a href="https://the-routemaster.schuetz-andreas.dev/" style="outline: none" tabindex="-1" target="_blank"
                                                     ><img
                                                         alt="Your Logo Placeholder"
-                                                        src="images/footerLogo.png"
+                                                        src="https://the-routemaster.schuetz-andreas.dev/api/email/footerLogo"
                                                         style="display: block; height: auto; border: 0; width: 45px; max-width: 100%"
                                                         title="Your Logo Placeholder"
                                                         width="45"
@@ -598,85 +598,11 @@ function routeElementHeader(routeHeader: String) {
 			</tr>
 		</tbody>
 	</table>
-	<table
-		align="center"
-		border="0"
-		cellpadding="0"
-		cellspacing="0"
-		class="row row-4"
-		role="presentation"
-		style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-size: auto"
-		width="100%"
-	>
-		<tbody>
-			<tr>
-				<td>
-					<table
-						align="center"
-						border="0"
-						cellpadding="0"
-						cellspacing="0"
-						class="row-content"
-						role="presentation"
-						style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #2a060e; background-size: auto; color: #000000; width: 680px"
-						width="680"
-					>
-						<tbody>
-							<tr>
-								<td
-									class="column column-1"
-									style="
-										mso-table-lspace: 0pt;
-										mso-table-rspace: 0pt;
-										font-weight: 400;
-										text-align: left;
-										vertical-align: top;
-										border-top: 0px;
-										border-right: 0px;
-										border-bottom: 0px;
-										border-left: 0px;
-									"
-									width="25%"
-								>
-									<table
-										border="0"
-										cellpadding="0"
-										cellspacing="0"
-										class="text_block block-1"
-										role="presentation"
-										style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
-										width="100%"
-									>
-										<tr>
-											<td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px; padding-top: 15px">
-												<div style="font-family: sans-serif">
-													<div
-														class=""
-														style="
-															font-size: 12px;
-															font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
-															mso-line-height-alt: 18px;
-															color: #ffffff;
-															line-height: 1.5;
-														"
-													>
-														<p style="margin: 0; font-size: 12px; mso-line-height-alt: 18px"> </p>
-													</div>
-												</div>
-											</td>
-										</tr>
-									</table>`;
+	`;
 }
 
 function routeElementFooter(price: String) {
-	return `</td>
-    </tr>
-</tbody>
-</table>
-</td>
-</tr>
-</tbody>
-</table>
+	return `
 <table
 align="center"
 border="0"
@@ -835,7 +761,7 @@ width="680"
                                 "
                             >
                                 <p style="margin: 0; mso-line-height-alt: 21px; letter-spacing: normal">
-                                    <span style="font-size: 14px">Preis</span>
+                                    <span style="font-size: 12px">Preis</span>
                                 </p>
                             </div>
                         </div>
@@ -881,7 +807,7 @@ width="680"
                                 "
                             >
                                 <p style="margin: 0; mso-line-height-alt: 21px">
-                                    <span style="font-size: 14px"
+                                    <span style="font-size: 12px"
                                         ><strong><span style="">${price}</span></strong></span
                                     >
                                 </p>
@@ -902,226 +828,406 @@ width="680"
 `;
 }
 
-function routeElementImg(imgURL: String) {
+function routeElementBegin(imgURL: String, to: String, from: String, routeName: String) {
 	return `<table
-    border="0"
-    cellpadding="0"
-    cellspacing="0"
-    class="image_block block-2"
-    role="presentation"
-    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt"
-    width="100%"
-  >
-    <tr>
-      <td class="pad" style="width: 100%; padding-right: 0px; padding-left: 0px">
-        <div align="center" class="alignment" style="line-height: 10px">
-          <img
-            src="${imgURL}"
-            style="
-              display: block;
-              height: auto;
-              border: 0;
-              width: 25px;
-              max-width: 100%;
-            "
-            width="25"
-          />
-        </div>
-      </td>
-    </tr>
-  </table>`;
+	align="center"
+	border="0"
+	cellpadding="0"
+	cellspacing="0"
+	class="row row-4"
+	role="presentation"
+	style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-size: auto"
+	width="100%"
+>
+	<tbody>
+		<tr>
+			<td>
+				<table
+					align="center"
+					border="0"
+					cellpadding="0"
+					cellspacing="0"
+					class="row-content"
+					role="presentation"
+					style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #2a060e; background-size: auto; color: #000000; width: 680px"
+					width="680"
+				>
+					<tbody>
+						<tr>
+							<td
+								class="column column-1"
+								style="
+									mso-table-lspace: 0pt;
+									mso-table-rspace: 0pt;
+									font-weight: 400;
+									text-align: left;
+									vertical-align: top;
+									border-top: 0px;
+									border-right: 0px;
+									border-bottom: 0px;
+									border-left: 0px;
+								"
+								width="25%"
+							>
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									class="text_block block-1"
+									role="presentation"
+									style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
+									width="100%"
+								>
+									<tr>
+										<td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px; padding-top: 15px">
+											<div style="font-family: sans-serif">
+												<div
+													class=""
+													style="
+														font-size: 12px;
+														font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
+														mso-line-height-alt: 18px;
+														color: #ffffff;
+														line-height: 1.5;
+													"
+												>
+													<p style="margin: 0; font-size: 12px; mso-line-height-alt: 18px"> </p>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									class="image_block block-2"
+									role="presentation"
+									style="mso-table-lspace: 0pt; mso-table-rspace: 0pt"
+									width="100%"
+								>
+									<tr>
+										<td class="pad" style="width: 100%; padding-right: 0px; padding-left: 0px">
+											<div align="center" class="alignment" style="line-height: 10px">
+												<img src="${imgURL}" style="display: block; height: auto; border: 0; width: 34px; max-width: 100%" width="25" />
+											</div>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td
+								class="column column-2"
+								style="
+									mso-table-lspace: 0pt;
+									mso-table-rspace: 0pt;
+									font-weight: 400;
+									text-align: left;
+									vertical-align: top;
+									border-top: 0px;
+									border-right: 0px;
+									border-bottom: 0px;
+									border-left: 0px;
+								"
+								width="25%"
+							>
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									class="text_block block-1"
+									role="presentation"
+									style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
+									width="100%"
+								>
+									<tr>
+										<td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px; padding-top: 10px">
+											<div style="font-family: sans-serif">
+												<div
+													class=""
+													style="
+														font-size: 12px;
+														font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
+														mso-line-height-alt: 18px;
+														color: #ffffff;
+														line-height: 1.5;
+													"
+												>
+													<p style="margin: 0; mso-line-height-alt: 21px">
+														<span style="font-size: 12px"
+															><em><span style="">Von</span></em></span
+														>
+													</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									class="text_block block-2"
+									role="presentation"
+									style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
+									width="100%"
+								>
+									<tr>
+										<td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px">
+											<div style="font-family: sans-serif">
+												<div
+													class=""
+													style="
+														font-size: 12px;
+														font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
+														mso-line-height-alt: 18px;
+														color: #ffffff;
+														line-height: 1.5;
+													"
+												>
+													<p style="margin: 0; mso-line-height-alt: 21px">
+														<span style="font-size: 12px"
+															><strong><span style="">${from}</span></strong></span
+														>
+													</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td
+								class="column column-3"
+								style="
+									mso-table-lspace: 0pt;
+									mso-table-rspace: 0pt;
+									font-weight: 400;
+									text-align: left;
+									vertical-align: top;
+									border-top: 0px;
+									border-right: 0px;
+									border-bottom: 0px;
+									border-left: 0px;
+								"
+								width="25%"
+							>
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									class="text_block block-1"
+									role="presentation"
+									style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
+									width="100%"
+								>
+									<tr>
+										<td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px; padding-top: 10px">
+											<div style="font-family: sans-serif">
+												<div
+													class=""
+													style="
+														font-size: 12px;
+														font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
+														mso-line-height-alt: 18px;
+														color: #ffffff;
+														line-height: 1.5;
+													"
+												>
+													<p style="margin: 0; mso-line-height-alt: 21px">
+														<span style="font-size: 12px"
+															><em><span style="">Zu</span></em></span
+														>
+													</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									class="text_block block-2"
+									role="presentation"
+									style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
+									width="100%"
+								>
+									<tr>
+										<td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px">
+											<div style="font-family: sans-serif">
+												<div
+													class=""
+													style="
+														font-size: 12px;
+														font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
+														mso-line-height-alt: 18px;
+														color: #ffffff;
+														line-height: 1.5;
+													"
+												>
+													<p style="margin: 0; mso-line-height-alt: 21px">
+														<span style="font-size: 12px"
+															><strong><span style="">${to}</span></strong></span
+														>
+													</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td
+								class="column column-4"
+								style="
+									mso-table-lspace: 0pt;
+									mso-table-rspace: 0pt;
+									font-weight: 400;
+									text-align: left;
+									vertical-align: top;
+									border-top: 0px;
+									border-right: 0px;
+									border-bottom: 0px;
+									border-left: 0px;
+								"
+								width="25%"
+							>
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									class="text_block block-1"
+									role="presentation"
+									style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
+									width="100%"
+								>
+									<tr>
+										<td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px; padding-top: 10px">
+											<div style="font-family: sans-serif">
+												<div
+													class=""
+													style="
+														font-size: 12px;
+														font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
+														mso-line-height-alt: 18px;
+														color: #ffffff;
+														line-height: 1.5;
+													"
+												>
+													<p style="margin: 0; mso-line-height-alt: 21px">
+														<span style="font-size: 12px"
+															><em><span style="">Nr.</span></em></span
+														>
+													</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+								<table
+									border="0"
+									cellpadding="0"
+									cellspacing="0"
+									class="text_block block-2"
+									role="presentation"
+									style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
+									width="100%"
+								>
+									<tr>
+										<td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px">
+											<div style="font-family: sans-serif">
+												<div
+													class=""
+													style="
+														font-size: 12px;
+														font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
+														mso-line-height-alt: 18px;
+														color: #ffffff;
+														line-height: 1.5;
+													"
+												>
+													<p style="margin: 0; mso-line-height-alt: 21px">
+														<span style="font-size: 12px"
+															><strong><span style="">${routeName}</span></strong></span
+														>
+													</p>
+												</div>
+											</div>
+										</td>
+									</tr>
+								</table>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</td>
+		</tr>
+	</tbody>
+</table>
+`;
 }
 
-function routeElementImgFrom() {
-	return `</td>
-    <td
-        class="column column-2"
-        style="
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-            font-weight: 400;
-            text-align: left;
-            vertical-align: top;
-            border-top: 0px;
-            border-right: 0px;
-            border-bottom: 0px;
-            border-left: 0px;
-        "
-        width="25%"
-    >
-        <table
-            border="0"
-            cellpadding="0"
-            cellspacing="0"
-            class="text_block block-1"
-            role="presentation"
-            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
-            width="100%"
-        >
-            <tr>
-                <td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px; padding-top: 10px">
-                    <div style="font-family: sans-serif">
-                        <div
-                            class=""
-                            style="
-                                font-size: 12px;
-                                font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
-                                mso-line-height-alt: 18px;
-                                color: #ffffff;
-                                line-height: 1.5;
-                            "
-                        >
-                            <p style="margin: 0; mso-line-height-alt: 21px">
-                                <span style="font-size: 14px"
-                                    ><em><span style="">Von</span></em></span
-                                >
-                            </p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>`;
-}
-
-function routeElementFromTo() {
-	return `</td>
-    <td
-        class="column column-3"
-        style="
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-            font-weight: 400;
-            text-align: left;
-            vertical-align: top;
-            border-top: 0px;
-            border-right: 0px;
-            border-bottom: 0px;
-            border-left: 0px;
-        "
-        width="25%"
-    >
-        <table
-            border="0"
-            cellpadding="0"
-            cellspacing="0"
-            class="text_block block-1"
-            role="presentation"
-            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
-            width="100%"
-        >
-            <tr>
-                <td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px; padding-top: 10px">
-                    <div style="font-family: sans-serif">
-                        <div
-                            class=""
-                            style="
-                                font-size: 12px;
-                                font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
-                                mso-line-height-alt: 18px;
-                                color: #ffffff;
-                                line-height: 1.5;
-                            "
-                        >
-                            <p style="margin: 0; mso-line-height-alt: 21px">
-                                <span style="font-size: 14px"
-                                    ><em><span style="">Zu</span></em></span
-                                >
-                            </p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>`;
-}
-
-function routeElementToRouteName() {
-	return `</td>
-    <td
-        class="column column-4"
-        style="
-            mso-table-lspace: 0pt;
-            mso-table-rspace: 0pt;
-            font-weight: 400;
-            text-align: left;
-            vertical-align: top;
-            border-top: 0px;
-            border-right: 0px;
-            border-bottom: 0px;
-            border-left: 0px;
-        "
-        width="25%"
-    >
-        <table
-            border="0"
-            cellpadding="0"
-            cellspacing="0"
-            class="text_block block-1"
-            role="presentation"
-            style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
-            width="100%"
-        >
-            <tr>
-                <td class="pad" style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px; padding-top: 10px">
-                    <div style="font-family: sans-serif">
-                        <div
-                            class=""
-                            style="
-                                font-size: 12px;
-                                font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
-                                mso-line-height-alt: 18px;
-                                color: #ffffff;
-                                line-height: 1.5;
-                            "
-                        >
-                            <p style="margin: 0; mso-line-height-alt: 21px">
-                                <span style="font-size: 14px"
-                                    ><em><span style="">Nr.</span></em></span
-                                >
-                            </p>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-        </table>`;
-}
-
-function routeElementTxt(txt: String) {
-	return `<table
-    border="0"
-    cellpadding="0"
-    cellspacing="0"
-    class="text_block block-2"
-    role="presentation"
-    style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word"
-    width="100%"
-  >
-    <tr>
-      <td
-        class="pad"
-        style="padding-bottom: 10px; padding-left: 25px; padding-right: 25px"
-      >
-        <div style="font-family: sans-serif">
-          <div
-            class=""
-            style="
-              font-size: 12px;
-              font-family: Montserrat, Trebuchet MS, Lucida Grande,
-                Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif;
-              mso-line-height-alt: 18px;
-              color: #ffffff;
-              line-height: 1.5;
-            "
-          >
-            <p style="margin: 0; mso-line-height-alt: 21px">
-              <span style="font-size: 14px"
-                ><strong><span style="">${txt}</span></strong></span
-              >
-            </p>
-          </div>
-        </div>
-      </td>
-    </tr>
-  </table>`;
+function routeElementFollowing(imgURL: String, to: String, from: String, routeName: String) {
+	return `<table class="row row-8" align="center" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-size: auto;">
+    <tbody>
+        <tr>
+            <td>
+                <table class="row-content" align="center" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; background-color: #2a060e; background-size: auto; color: #000000; width: 680px;" width="680">
+                    <tbody>
+                        <tr>
+                            <td class="column column-1" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
+                                <table class="image_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt;">
+                                    <tr>
+                                        <td class="pad" style="width:100%;padding-right:0px;padding-left:0px;">
+                                            <div class="alignment" align="center" style="line-height:10px"><img src="${imgURL}" style="display: block; height: auto; border: 0; width: 34px; max-width: 100%;" width="34"></div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="column column-2" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
+                                <table class="text_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+                                    <tr>
+                                        <td class="pad" style="padding-bottom:10px;padding-left:25px;padding-right:25px;">
+                                            <div style="font-family: sans-serif">
+                                                <div class style="font-size: 12px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5;">
+                                                    <p style="margin: 0; mso-line-height-alt: 18px;"><span style="font-size:12px;"><strong><span style>${from}</span></strong></span></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="column column-3" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
+                                <table class="text_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+                                    <tr>
+                                        <td class="pad" style="padding-bottom:10px;padding-left:25px;padding-right:25px;">
+                                            <div style="font-family: sans-serif">
+                                                <div class style="font-size: 12px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5;">
+                                                    <p style="margin: 0; mso-line-height-alt: 18px;"><span style="font-size:12px;"><strong><span style>${to}</span></strong></span></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                            <td class="column column-4" width="25%" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; font-weight: 400; text-align: left; vertical-align: top; border-top: 0px; border-right: 0px; border-bottom: 0px; border-left: 0px;">
+                                <table class="text_block block-1" width="100%" border="0" cellpadding="0" cellspacing="0" role="presentation" style="mso-table-lspace: 0pt; mso-table-rspace: 0pt; word-break: break-word;">
+                                    <tr>
+                                        <td class="pad" style="padding-bottom:10px;padding-left:25px;padding-right:25px;">
+                                            <div style="font-family: sans-serif">
+                                                <div class style="font-size: 12px; font-family: Montserrat, Trebuchet MS, Lucida Grande, Lucida Sans Unicode, Lucida Sans, Tahoma, sans-serif; mso-line-height-alt: 18px; color: #ffffff; line-height: 1.5;">
+                                                    <p style="margin: 0; mso-line-height-alt: 19.5px;"><span style="font-size:13px;"><strong><span style>${routeName}</span></strong></span></p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr>
+    </tbody>
+</table>`;
 }
 
 export function routeElement(routeHeader: String, imgURLs: String[], froms: String[], tos: String[], routeNames: String[], price: String) {
@@ -1131,26 +1237,10 @@ export function routeElement(routeHeader: String, imgURLs: String[], froms: Stri
 		return "";
 	}
 
-	for (let x = 0; x < len; x++) {
-		output += routeElementImg(imgURLs[x]);
-	}
+	output += routeElementBegin(imgURLs[0], tos[0], froms[0], routeNames[0]);
 
-	output += routeElementImgFrom();
-
-	for (let x = 0; x < len; x++) {
-		output += routeElementTxt(froms[x]);
-	}
-
-	output += routeElementFromTo();
-
-	for (let x = 0; x < len; x++) {
-		output += routeElementTxt(tos[x]);
-	}
-
-	output += routeElementToRouteName();
-
-	for (let x = 0; x < len; x++) {
-		output += routeElementTxt(routeNames[x]);
+	for (let x = 1; x < len; x++) {
+		output += routeElementFollowing(imgURLs[x], tos[x], froms[x], routeNames[x]);
 	}
 
 	output += routeElementFooter(price);
