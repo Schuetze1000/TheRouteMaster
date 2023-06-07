@@ -293,10 +293,8 @@ export async function sendInfoMail() {
 				`${deutscheBahnRoutes[routeIndex].routes[0].price.amount} ${deutscheBahnRoutes[routeIndex].routes[0].price.currency}`
 			);
 		}
-
+		
 		message += emailFooter();
-
-		fs.writeFileSync("./test2.html", message);
 
 		/* 	await sendEmail({
 			to: currentUser.email,
@@ -305,5 +303,3 @@ export async function sendInfoMail() {
 		}); */
 	}
 }
-
-sendInfoMail();
