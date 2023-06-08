@@ -6,16 +6,16 @@ import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useEffect } from "react";
 import { useHref, useNavigate } from 'react-router-dom';
 import { setAuthTokens, isLoggedIn } from "axios-jwt";
+import { PopupFalseCred } from "../../components/popups/credentials_false";
 
 function Login() {
-
-    //TODO Button zum Dashboard hinzufügen falls angemeldet und login/registration weg machen @Leonidas-maker
 
     const [passwordShown, setPasswordShown] = useState(false);
     const navigate = useNavigate();
     let captchaRef;
 
     const [identifierError, setIdentifierError] = useState(false);
+    const [CredError, setCredError] = useState(false);
 
     const [pswSVGx, setPswSVGx] = useState<number>(23);
     const [pswSVGy, setPswSVGy] = useState<number>(23);
@@ -30,6 +30,11 @@ function Login() {
 
     function onLoginClick() {
         setIdentifierError(true);
+    }
+
+    function onCredClick() {
+        setCredError(false);
+        window.location.href = "/login";
     }
 
     const { onChange, onSubmit, values } = useForm(
@@ -72,7 +77,7 @@ function Login() {
               navigate("/dashboard");
         }).catch((error) => {
             if (error.response.status >= 400 && error.response.status < 500) {
-                console.log(error);
+                setCredError(true);
             }
         });
     };
@@ -202,6 +207,9 @@ function Login() {
             </form>
             </div>
             </div>
+            <PopupFalseCred 
+                isVisable={CredError} 
+                onClose={onCredClick} />
         </body>
     );
 }
