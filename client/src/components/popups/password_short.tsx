@@ -1,5 +1,3 @@
-import { useNavigate } from "react-router";
-
 export function PopupShort({ isVisable = false, onClose }) {
 	let funUsernames = ["admin","root","superuser","NullPointerException", "CaffeinatedCoder", "InfiniteLoop", "ByteMe", 
 	"FunktionsFehler", "OptimizedOtaku", "BetriebssystemBoss", "SyntaxSamurai", "CodeKomiker", "QuarantäneQuellcode", 
@@ -7,8 +5,6 @@ export function PopupShort({ isVisable = false, onClose }) {
 	"VariableVagabund", "JavaJedi", "PythonPartisan", "AlgorithmenAnarchist", "KommandozeilenKomiker", "TuringTestTyrann", 
 	"SoftwareSpartaner", "DatenbankDraufgänger", "HashmapHeld", "BitBoss", "DebuggerDraufgänger", "RamRaider", "KapselungsKapitän", 
 	"VererbungsVirtuose"];
-
-	const navigate = useNavigate();
 
 	function randomIntFromInterval(min, max) { // min and max included 
 		return Math.floor(Math.random() * (max - min + 1) + min)

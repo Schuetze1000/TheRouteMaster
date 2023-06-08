@@ -72,7 +72,7 @@ function Login() {
     };
 
     const onGithubClick = () => {
-        window.open("https://github.com/Schuetze1000/TheRouteMaster");
+        window.open("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
     }
 
     const RegistrationButton = () => {
