@@ -1,13 +1,11 @@
-import { useNavigate } from "react-router-dom";
 import { clearAuthTokens } from "axios-jwt";
 import { isLoggedIn } from "axios-jwt";
 
 const Logout = ({ text = "Abmelden" }) => {
-    const navigate = useNavigate();
 
     function handleClickLogout () {
         clearAuthTokens();
-        navigate("/");
+        window.location.href = "/";
 	}
 
     return (
