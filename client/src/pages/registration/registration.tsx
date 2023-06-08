@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { isLoggedIn } from "axios-jwt";
 import { useNavigate } from "react-router";
 import { PopupShort } from "../../components/popups/password_short";
+import { PopupNotEqual } from "../../components/popups/password_not_same";
 
 let captchaRef;
 let captchaReset = false;
@@ -14,6 +15,7 @@ function Registration() {
     const [passwordShown, setPasswordShown] = useState(false);
 
     const [shortPopupVisible, setShortPopupVisible] = useState(false);
+    const [eualPopupVisible, setEqualPopupVisible] = useState(false);
 
     const navigate = useNavigate();
 
@@ -42,6 +44,11 @@ function Registration() {
         setShortPopupVisible(false);
 		window.location.href = "/registration";
 	}
+
+    function onClickPopEqualClose() {
+        setEqualPopupVisible(false);
+        window.location.href = "/registration";
+    }
 
     useEffect(() => {
         if (isLoggedIn()) {
@@ -90,7 +97,7 @@ function Registration() {
             }
         }
         else {
-            //! Password are not the same error
+            setEqualPopupVisible(true);
         }
     };
 
@@ -256,6 +263,9 @@ function Registration() {
             <PopupShort 
                 isVisable={shortPopupVisible}
                 onClose={() => onClickPopSaveClose()}/>
+            <PopupNotEqual 
+                isVisable={eualPopupVisible}
+                onClose={() => onClickPopEqualClose()}/>
         </body>
     );
 }
