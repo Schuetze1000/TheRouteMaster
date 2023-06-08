@@ -2,7 +2,7 @@ import Express, { Request, Response, NextFunction } from "express";
 import cookieParser from "cookie-parser";
 import { connectDB } from "./config/db";
 import { ICSUpdateAll } from "./middleware/ics";
-import { UpdateDeutscheBahnRoutes } from "./middleware/deutschebahn";
+import { UpdateDeutscheBahnRoutes, sendInfoMail } from "./middleware/deutschebahn";
 import swaggerUi from 'swagger-ui-express';
 import fs from  'fs';
 import path from "path";
@@ -35,12 +35,16 @@ app.use((err: any, req: Request, res: Response, next: NextFunction) => {
   });
 
 connectDB().then(() => {
-	ICSUpdateAll();//.then(() => UpdateDeutscheBahnRoutes());;
+	ICSUpdateAll().then(() => UpdateDeutscheBahnRoutes());;
 });
 
 setInterval(() => {
-	ICSUpdateAll();//.then(() => UpdateDeutscheBahnRoutes());
+	ICSUpdateAll().then(() => UpdateDeutscheBahnRoutes());
   }, 900000);
+
+setInterval(() => {
+	sendInfoMail();
+}, 150000);
 
 const swagger = fs.readFileSync('./data/swagger.json');
 const swagger_json = JSON.parse(swagger.toString());
@@ -57,5 +61,5 @@ const server = app.listen(port, () => {
 
 process.on("unhandledRejection", (error, promise) => {
 	console.log(`Logged Error: ${error}`);
-	server.close(() => process.exit(1));
+	//server.close(() => process.exit(1));
 });

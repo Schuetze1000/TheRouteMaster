@@ -18,7 +18,7 @@ function RoutingMachine({ from, to }: { from: LatLngTuple, to: LatLngTuple }) {
 	const map = useMap();
   
 	useEffect(() => {
-	  const routingControl = L.Routing.control({
+	  	const routingControl = L.Routing.control({
 		waypoints: [
 		  L.latLng(from[0], from[1]),
 		  L.latLng(to[0], to[1])
@@ -83,6 +83,8 @@ const Map = () => {
 			<script src="https://unpkg.com/leaflet-routing-machine@latest/dist/leaflet-routing-machine.js"></script>
 
     		<script src="leaflet-routing-machine.js"></script>
+			<script src="Control.Geocoder.js"></script>
+			<link rel="stylesheet" href="Control.Geocoder.css" />
 
 			{/*  Nicht ganz sicher ob das hier noch gebraucht wird, lasse es erstmal drin für maybe später */}
 			<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -106,7 +108,7 @@ const Map = () => {
 					Dein Standort
 				</Popup>
 			</Marker>
-			<RoutingMachine from={defaultLocationTuple} to={coords}/>
+			<RoutingMachine from={defaultLocationTuple} to={coords} />
 			</MapContainer>
 		</div>
 	);

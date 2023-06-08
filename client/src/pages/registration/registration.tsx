@@ -16,12 +16,17 @@ function Registration() {
     const [shortPopupVisible, setShortPopupVisible] = useState(false);
 
     const navigate = useNavigate();
+
+    const [identifierError, setIdentifierError] = useState(false);
     
     const [pswSVGx, setPswSVGx] = useState<number>(23);
     const [pswSVGy, setPswSVGy] = useState<number>(23);
     const [pswSVGr, setPswSVGr] = useState<number>(0);
     const [pswSVG, setPswSVG] = useState<string>("M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24");
 
+    function onLoginClick() {
+        setIdentifierError(true);
+    }
 
     const initialState = {
         email: "",
@@ -123,7 +128,7 @@ function Registration() {
                         <p className="text-center text-black text-3xl">Registration</p>
                         <div className="relative mb-3">
                             <input
-                                className="peer input"
+                                className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}
                                 name="username"
                                 id="username"
                                 type="username"
@@ -139,7 +144,7 @@ function Registration() {
 
                         <div className="relative mb-3">
                             <input
-                                className="peer input"
+                                className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}
                                 name="email"
                                 id="email"
                                 type="email"
@@ -155,7 +160,7 @@ function Registration() {
 
                         <div className="relative mb-3">
                             <input
-                                className="peer input"
+                                className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}
                                 name="password"
                                 id="password"
                                 type={passwordShown ? "text" : "password"}
@@ -190,7 +195,7 @@ function Registration() {
                         
                         <div className="relative mb-3">
                             <input
-                                className="peer input"
+                                className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}
                                 name="repeat_password"
                                 id="repeat_password"
                                 type={passwordShown ? "text" : "password"}
@@ -232,7 +237,8 @@ function Registration() {
                         />
                         <button
                             type="submit"
-                            className="standard-button">
+                            className="standard-button"
+                            onClick={onLoginClick}>
                             Registrieren
                         </button>
                         <p className="text-center text-blacm">Oder registriere dich mit deinem Github Account</p>
