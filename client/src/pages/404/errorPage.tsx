@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 function ErrorPage() {
     const navigate = useNavigate();
+    const { t } = useTranslation();
 
     return (
         <body className="h-screen">
