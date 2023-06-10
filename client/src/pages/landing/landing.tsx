@@ -3,10 +3,13 @@ import DarkMode_switch from "../../components/navbars/buttons/btn_DarkModeSwitch
 import Weather from "../../components/weather";
 import React from "react";
 import { isLoggedIn } from "axios-jwt";
+import { useTranslation } from "react-i18next";
 
 //TODO Wenn eingeloggt Login Registration Button entfernen und Dashboard Button hinzufügen @Leonidas-maker
 
 function Landing() {
+    const { t } = useTranslation();
+
     const LoginButton = () => {
         const Click = () => {
             window.location.href = "/login";
@@ -18,7 +21,7 @@ function Landing() {
                 onClick={Click}
                 style={{visibility: isLoggedIn() ? "hidden" : "visible"}}
                 className="rounded-3xl hover:rounded-xl hover:border-neutral-400 hover:bg-neutral-600 hover:bg-opacity-70 active:border-neutral-600 active:bg-neutral-800 active:duration-100 transition-all duration-300 ease-linear cursor-pointer border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50  dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 shadow-lg">
-                Anmelden
+                {t('login')}
             </button>
         );
     };

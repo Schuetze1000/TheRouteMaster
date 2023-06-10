@@ -5,12 +5,14 @@ import Imprint from "./buttons/btn_Imprint";
 import { isLoggedIn } from "axios-jwt";
 import Settings from "./buttons/btn_settings";
 import Logout from "./buttons/btn_Logout";
+import ChangeLng from "./buttons/btn_changeLng";
 
 const Navbar_landing = () => {
     return (
         <div className="fixed top-0 h-full w-16 m-0 flex flex-col opacity-100 text-white z-50">
             
             <DarkMode_switch />
+            <ChangeLng />
             <DividerLoggedIn />
             <HowToUse />
             <Imprint />
