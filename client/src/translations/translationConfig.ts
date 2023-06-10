@@ -4,6 +4,8 @@ import { initReactI18next } from "react-i18next";
 import de from "./de.json";
 import en from "./en.json";
 
+//! Übersetzungen fehlen überall! @Leonidas-maker @Schuetze1000
+
 const resources = {
     en: {
         translation: en
