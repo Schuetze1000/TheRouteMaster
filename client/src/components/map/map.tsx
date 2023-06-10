@@ -18,12 +18,18 @@ function RoutingMachine({ from, to }: { from: LatLngTuple, to: LatLngTuple }) {
 	const map = useMap();
   
 	useEffect(() => {
-	  	const routingControl = L.Routing.control({
-		waypoints: [
-		  L.latLng(from[0], from[1]),
-		  L.latLng(to[0], to[1])
-		],
-		routeWhileDragging: true,
+		const routingControl = L.Routing.control({
+			waypoints: [
+				L.latLng(from[0], from[1]),
+				L.latLng(to[0], to[1])
+			],
+			routeWhileDragging: true,
+			/* Customize Route
+			lineOptions: {
+				styles: [{ color: 'red', opacity: 1, weight: 5 }],
+				extendToWaypoints: false,
+				missingRouteTolerance: 0,
+			  }, */
 	  }).addTo(map);
   
 	  return () => {

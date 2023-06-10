@@ -11,6 +11,7 @@ import { axiosInstance } from "../../hooks/jwtAuth";
 import { PopupSave, PopupLoading, PopupPasswordRequired } from "../../components/popups/settings";
 import { PopupSaveFailed } from "../../components/popups/save_failed";
 
+
 //! Fixe Navbar Button zu Dashboard (Save Popup) @Leonidas-maker / @Schuetze1000
 
 interface HomeaddressStructure {
@@ -381,6 +382,23 @@ function Settings() {
 	}
 
 	// ---------------------------------------------------------------------------------------------- //
+	// ------------------------------------- Get nearby stations ------------------------------------ //
+	// ---------------------------------------------------------------------------------------------- //
+
+	
+
+	/* const userAgent = 'the-routemaster.schuetz-andreas.dev'
+	const client = createClient(dbProfile, userAgent)
+
+	client.nearby({
+		type: 'location',
+		latitude: 52.5137344,
+		longitude: 13.4744798
+	}, {distance: 400})
+	.then(console.log)
+	.catch(console.error) */
+
+	// ---------------------------------------------------------------------------------------------- //
 	// -------------------------------------- Return Functions -------------------------------------- //
 	// ---------------------------------------------------------------------------------------------- //
 	if (isLoading) {
@@ -469,10 +487,18 @@ function Settings() {
 								isDisabled={inSurnameisDisabled}
 								Click={onClickSurname}
 							/>
+							<button
+								onClick={() => navigate("/settings/changepassword")}
+								type="submit"
+								className="inline-flex justify-center rounded-md bg-orange-600 px-5 py-2 text-sm \
+								font-semibold text-white shadow-sm hover:bg-orange-500"
+							>
+								Passwort ändern?
+							</button>
 
 							
 
-							<h1 className="font-bold text-xl dark:text-white ">Standardeinstellungen</h1>
+							<h1 className="font-bold text-xl dark:text-white py-3">Standardeinstellungen</h1>
 							<h2 className="dark:text-white ">Wohnort ändern:</h2>
 							<div className=" grid grid-cols-2 md:grid-cols-4 gap-x-6">
 								<Input_Settings
@@ -558,14 +584,30 @@ function Settings() {
 									}}
 								/>
 							</div>
-							<button
-								onClick={() => navigate("/settings/changepassword")}
-								type="submit"
-								className="inline-flex justify-center rounded-md bg-orange-600 px-5 py-2 text-sm \
-								font-semibold text-white shadow-sm hover:bg-orange-500"
-							>
-								Passwort ändern?
-							</button>
+							<div className="relative mb-2 md:mb-5">
+								<h2>Standard Haltestelle in deiner nähe:</h2>
+								<Select
+									primaryColor={"blue"} // Not Working
+									placeholder={icsNameList.find((o) => o.value == userInf.ics_uid)?.label}
+									isSearchable={true}
+									value={selectedICS}
+									onChange={handleChangeICS}
+									options={icsNameList}
+									loading={isLoading}
+									classNames={{
+										menuButton: () =>
+											"flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 \
+												dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 \
+												dark:focus:border-blue-500",
+										menu: "absolute z-10 w-full bg-gray-50 shadow-lg border rounded-lg border-gray-300 text-gray-900 focus:ring-blue-500 \
+												focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:focus:ring-blue-500 \
+												dark:focus:border-blue-500",
+										searchBox:
+											"pl-8 bg-gray-50 w-full border border-gray-300 text-gray-900 rounded-lg p-2 dark:bg-gray-700 dark:border-gray-600 \
+												dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+									}}
+								/>
+							</div>
 						</div>
 					</div>
 					<div className="flex justify-center space-x-10 pb-4 md:pb-8">

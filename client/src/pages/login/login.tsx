@@ -179,7 +179,7 @@ function Login() {
                                     <circle cx="12" cy="12" r={pswSVGr} />
                                 </svg>
                             </button>
-                        <a href="/forgot-password" className="underline">Passwort vergessen</a>
+                        <a href="/forgot-password" className="hover:underline hover:text-gray-700 active:text-gray-500">Passwort vergessen</a>
                         </div>
                         <ReCAPTCHA 
                             sitekey={process.env.REACT_APP_SITE_KEY} 
