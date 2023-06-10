@@ -15,7 +15,6 @@ export async function crawlDB(fromID:Number, toID:Number, arrival:Date = null, d
 	}else {
 		res = await client.journeys(fromID.toString(), toID.toString(), { results: results.valueOf(), departure: departure});
 	}
-	
 	return await dbStructor(res.journeys, fromID, toID);
 }
 

@@ -19,7 +19,6 @@
     "axios": "^1.4.0",
     "axios-jwt": "^3.0.0",
     "fullcalendar": "^6.1.8",
-    "hafas-client": "^6.0.5",
     "leaflet": "^1.9.4",
     "leaflet-control-geocoder": "^2.4.0",
     "leaflet-routing-machine": "^3.2.12",

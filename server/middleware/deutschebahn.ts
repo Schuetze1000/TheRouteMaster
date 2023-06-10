@@ -136,9 +136,11 @@ export async function UpdateDeutscheBahnRoutes() {
 				
 				if (routeCount == 0) {
 					currentUser.configTrain.dbrouteids = [];
+					currentUser.configTrain.sendInfos = false;
 				}
 			} else {
 				currentUser.configTrain.active = false;
+				currentUser.configTrain.sendInfos = false;
 				currentUser.configTrain.dbrouteids = [];
 			} // ics_uid undefiend
 			await currentUser.save();

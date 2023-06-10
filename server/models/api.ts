@@ -22,3 +22,11 @@ export interface UserStructure {
 	ics_uid:string;
 	profile: ProfileStructure;
 }
+
+export interface ConfigTrainStructure {
+	maxRoutes: number;
+	timeOffset: number;
+	homeTrainStationID: number;
+	workTrainStationID: number;
+	active: boolean;
+}

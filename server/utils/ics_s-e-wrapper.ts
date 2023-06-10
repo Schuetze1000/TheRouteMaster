@@ -75,7 +75,7 @@ async function ICSWrapper(icsUID: Number): Promise<IEvents> {
 		(currentDateTime.getMonth() + 1).toString().padStart(2, "0") +
 		"-" +
 		currentDateTime.getDate().toString().padStart(2, "0");
-	currentDateTime.setTime(currentDateTime.getTime() + 86400000);
+	currentDateTime.setTime(currentDateTime.getTime() + 86400000 * 1.5); //! Only for Debugg @Schuetze1000
 	const nextDate =
 		currentDateTime.getFullYear().toString() +
 		"-" +
