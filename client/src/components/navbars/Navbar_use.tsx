@@ -5,6 +5,7 @@ import Dashboard from "./buttons/btn_Dashboard";
 import { isLoggedIn } from "axios-jwt";
 import Logout from "./buttons/btn_Logout";
 import Settings from "./buttons/btn_settings";
+import ChangeLng from "./buttons/btn_changeLng";
 
 const Navbar_use = () => {
     return (
@@ -13,6 +14,7 @@ const Navbar_use = () => {
             <Back_landing />
             <Divider />
             <DarkMode_switch />
+            <ChangeLng />
             <Imprint />
             <Dashboard />
             <DividerLoggedIn />

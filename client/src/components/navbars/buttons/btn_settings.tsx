@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { isLoggedIn } from "axios-jwt";
+import { useTranslation } from "react-i18next";
 
-const Settings = ({ text = "Einstellungen" }) => {
+const Settings: React.FC<{ text?: string }> = ({ text }) => {
     const navigate = useNavigate();
     const handleClickAccount = () => navigate("/settings");
+    const { t } = useTranslation();
+    text = text || t('settings_nav') || 'Fehler beim Laden der Sprache';
 
     return (
         <div className="navbar-icon-bottom group" onClick={handleClickAccount} style={{visibility: isLoggedIn() ? "visible" : "hidden"}}>

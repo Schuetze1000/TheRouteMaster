@@ -2,6 +2,7 @@ import DarkMode_switch from "./buttons/btn_DarkModeSwitch";
 import Back_landing from "./buttons/btn_BackLanding";
 import Imprint from "./buttons/btn_Imprint";
 import HowToUse from "./buttons/btn_HowToUse";
+import ChangeLng from "./buttons/btn_changeLng";
 
 const Navbar_credentials = () => {
     return (
@@ -10,6 +11,7 @@ const Navbar_credentials = () => {
             <Back_landing />
             <Divider />
             <DarkMode_switch />
+            <ChangeLng />
             <HowToUse />
             <Imprint />
         </div>

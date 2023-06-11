@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-const Imprint = ({ text = "Impressum" }) => {
+const Imprint: React.FC<{ text?: string }> = ({ text }) => {
     const navigate = useNavigate();
     const handleClick = () => navigate("/imprint");
+    const { t } = useTranslation();
+    text = text || t('imprint_nav') || 'Fehler beim Laden der Sprache';
 
     return (
         <div className="landing-button group" onClick={handleClick}>

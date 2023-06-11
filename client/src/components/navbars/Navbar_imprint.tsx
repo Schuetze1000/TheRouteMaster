@@ -5,6 +5,7 @@ import { isLoggedIn } from "axios-jwt";
 import Settings from "./buttons/btn_settings";
 import Logout from "./buttons/btn_Logout";
 import Dashboard from "./buttons/btn_Dashboard";
+import ChangeLng from "./buttons/btn_changeLng";
 
 const Navbar_imprint = () => {
     return (
@@ -13,6 +14,7 @@ const Navbar_imprint = () => {
             <Back_landing />
             <Divider />
             <DarkMode_switch />
+            <ChangeLng />
             <HowToUse />
             <Dashboard />
             <DividerLoggedIn />

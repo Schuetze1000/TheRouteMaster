@@ -1,4 +1,11 @@
 {
     "changeLanguage": "Change language",
-    "login": "Login"
+    "login": "Login",
+    "back_nav": "Back",
+    "changeMode": "Change mode",
+    "dashboard_nav": "Dashboard",
+    "use_nav": "How to use",
+    "imprint_nav": "Imprint",
+    "logout_nav": "Logout",
+    "settings_nav": "Settings"
 }

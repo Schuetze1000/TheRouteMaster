@@ -4,6 +4,7 @@ import Dashboard from "./buttons/btn_Dashboard";
 import Imprint from "./buttons/btn_Imprint";
 import Account from "./buttons/btn_Logout";
 import Settings from "./buttons/btn_settings";
+import ChangeLng from "./buttons/btn_changeLng";
 
 const Navbar = () => {
     return (
@@ -16,6 +17,7 @@ const Navbar = () => {
             <Imprint />
             <Divider />
             <DarkMode_switch />
+            <ChangeLng />
             <Divider />
             <Settings />
         </div>

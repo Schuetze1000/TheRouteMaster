@@ -1,4 +1,11 @@
 {
     "changeLanguage": "Sprache ändern",
-    "login": "Anmelden"
+    "login": "Anmelden",
+    "back_nav": "Zurück",
+    "changeMode": "Modus wechseln",
+    "dashboard_nav": "Dashboard",
+    "use_nav": "How to use",
+    "imprint_nav": "Impressum",
+    "logout_nav": "Abmelden",
+    "settings_nav": "Einstellungen"
 }

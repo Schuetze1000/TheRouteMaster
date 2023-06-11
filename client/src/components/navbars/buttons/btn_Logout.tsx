@@ -1,12 +1,16 @@
 import { clearAuthTokens } from "axios-jwt";
 import { isLoggedIn } from "axios-jwt";
+import { useTranslation } from "react-i18next";
 
-const Logout = ({ text = "Abmelden" }) => {
+const Logout: React.FC<{ text?: string }> = ({ text }) => {
 
     function handleClickLogout () {
         clearAuthTokens();
         window.location.href = "/";
 	}
+
+    const { t } = useTranslation();
+    text = text || t('logout_nav') || 'Fehler beim Laden der Sprache';
 
     return (
         <div className="landing-button group" onClick={handleClickLogout} style={{visibility: isLoggedIn() ? "visible" : "hidden"}}>

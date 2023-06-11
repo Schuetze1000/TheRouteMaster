@@ -1,9 +1,12 @@
 import { useNavigate } from "react-router-dom";
 import { isLoggedIn } from "axios-jwt";
+import { useTranslation } from "react-i18next";
 
-const Dashboard = ({ text = "Dashboard" }) => {
+const Dashboard: React.FC<{ text?: string }> = ({ text }) => {
     const navigate = useNavigate();
     const handleClickAccount = () => navigate("/dashboard");
+    const { t } = useTranslation();
+    text = text || t('dashboard_nav') || 'Fehler beim Laden der Sprache';
 
     return (
         <div className="landing-button group" onClick={handleClickAccount} style={{visibility: isLoggedIn() ? "visible" : "hidden"}}>

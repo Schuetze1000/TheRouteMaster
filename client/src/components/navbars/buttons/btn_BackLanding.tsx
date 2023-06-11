@@ -1,4 +1,5 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const Back_landing = () => {
     return (
@@ -8,9 +9,11 @@ const Back_landing = () => {
     );
 }
 
-const Back = ({ text = "Zurück" }) => {
+const Back: React.FC<{ text?: string }> = ({ text }) => {
     const navigate = useNavigate();
     const handleClickAccount = () => navigate("/");
+    const { t } = useTranslation();
+    text = text || t('back_nav') || 'Fehler beim Laden der Sprache';
 
     return (
         <div className="landing-button group" onClick={handleClickAccount}>

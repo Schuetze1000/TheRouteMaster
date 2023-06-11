@@ -1,4 +1,5 @@
 import useColorMode from "../../../hooks/useColorMode";
+import { useTranslation } from "react-i18next";
 
 const DarkMode_switch = () => {
 
@@ -9,8 +10,10 @@ const DarkMode_switch = () => {
     );
 };
 
-const DarkMode = ({ text = "Modus wechseln" }) => {
+const DarkMode: React.FC<{ text?: string }> = ({ text }) => {
     const [colorMode, setColorMode] = useColorMode();
+    const { t } = useTranslation();
+    text = text || t('changeMode') || 'Fehler beim Laden der Sprache';
 
     return (
         <div className="landing-icon group" onClick={() => setColorMode(colorMode === "light" ? "dark" : "light")}>

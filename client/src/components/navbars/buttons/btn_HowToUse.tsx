@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
-const HowToUse = ({ text = "How to use" }) => {
+const HowToUse: React.FC<{ text?: string }> = ({ text }) => {
     const navigate = useNavigate();
     const handleClickAccount = () => navigate("/howtouse");
+    const { t } = useTranslation();
+    text = text || t('use_nav') || 'Fehler beim Laden der Sprache';
 
     return (
         <div className="landing-button group" onClick={handleClickAccount}>
