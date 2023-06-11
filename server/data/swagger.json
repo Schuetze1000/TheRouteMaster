@@ -9,7 +9,7 @@
       "name": "GPL-3.0",
       "url": "https://www.gnu.org/licenses/gpl-3.0.en.html"
     },
-    "version": "1.0.1"
+    "version": "1.0.2"
   },
   "externalDocs": {
     "description": "Github Repository",
@@ -67,7 +67,14 @@
         },
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponseBody"
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid Token / Error occurred"
@@ -78,7 +85,93 @@
         },
         "security": [
           {
-            "cookieAuth": []
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/updateconfigtrain": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update User-Train config",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "User_UpdateConfigTrain",
+        "requestBody": {
+          "description": "Updated user-configTrain",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserConfigTrain"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponseBody"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token / Error occurred"
+          },
+          "401": {
+            "description": "Invalid Credentials"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/user/updatepassword": {
+      "put": {
+        "tags": [
+          "user"
+        ],
+        "summary": "Update User-Password",
+        "description": "This can only be done by the logged in user.",
+        "operationId": "User_UpdatePassword",
+        "requestBody": {
+          "description": "Updated user Password",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserChangePassword"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponseBody"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token / Error occurred"
+          },
+          "401": {
+            "description": "Invalid Credentials"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
           }
         ]
       }
@@ -111,7 +204,7 @@
         },
         "security": [
           {
-            "cookieAuth": []
+            "bearerAuth": []
           }
         ]
       }
@@ -126,7 +219,14 @@
         "operationId": "User_Deactivate",
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponseBody"
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid Token / Error occurred"
@@ -137,7 +237,7 @@
         },
         "security": [
           {
-            "cookieAuth": []
+            "bearerAuth": []
           }
         ]
       }
@@ -151,7 +251,14 @@
         "operationId": "User_Delete",
         "responses": {
           "200": {
-            "description": "Successful operation"
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponseBody"
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid Token / Error occurred"
@@ -159,7 +266,12 @@
           "401": {
             "description": "Invalid Credentials"
           }
-        }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
       }
     },
     "/ics/getics": {
@@ -189,7 +301,7 @@
         },
         "security": [
           {
-            "cookieAuth": []
+            "bearerAuth": []
           }
         ]
       }
@@ -201,17 +313,6 @@
         ],
         "summary": "Get Hash-Value of ICS-File",
         "operationId": "ICS_getHash",
-        "parameters": [
-          {
-            "name": "token",
-            "in": "cookie",
-            "description": "Valid JsonWebToken from /auth/login",
-            "required": true,
-            "schema": {
-              "type": "string"
-            }
-          }
-        ],
         "responses": {
           "200": {
             "description": "Successful operation",
@@ -232,7 +333,7 @@
         },
         "security": [
           {
-            "cookieAuth": []
+            "bearerAuth": []
           }
         ]
       }
@@ -264,7 +365,161 @@
         },
         "security": [
           {
-            "cookieAuth": []
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/navigation/getrouteshash": {
+      "get": {
+        "tags": [
+          "navigation"
+        ],
+        "summary": "Get Hash-Value of all specified Routes",
+        "operationId": "Navigation_getRoutesHash",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/RoutesHash"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token / Users configTrain.active = false!"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/navigation/getroute": {
+      "get": {
+        "tags": [
+          "navigation"
+        ],
+        "summary": "Get specific Routes by routeId",
+        "operationId": "Navigation_getRoute",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "routeId",
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique RouteId of the route"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Route"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token / Please provide a valid RouteId! / Users configTrain.active = false!"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/navigation/getroutes": {
+      "get": {
+        "tags": [
+          "navigation"
+        ],
+        "summary": "Get all Routes specified from the User",
+        "operationId": "Navigation_getRoutes",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Routes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token / Users configTrain.active = false!"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
+          }
+        ]
+      }
+    },
+    "/navigation/getneabystations": {
+      "get": {
+        "tags": [
+          "navigation"
+        ],
+        "summary": "Get all neaby Stations from longitude and latitude",
+        "operationId": "Navigation_getNeabyStations",
+        "parameters": [
+          {
+            "in": "query",
+            "name": "latitude",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Latitude of the location"
+          },
+          {
+            "in": "query",
+            "name": "longitude",
+            "schema": {
+              "type": "number"
+            },
+            "description": "Longitude of the location"
+          },
+          {
+            "in": "query",
+            "name": "distance",
+            "schema": {
+              "type": "number",
+              "minimum": 300,
+              "maximum": 2000
+            },
+            "description": "Distance to search. Min: 300 | Max: 2000"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Stations"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid Token / Please provide a valid Query!"
+          }
+        },
+        "security": [
+          {
+            "bearerAuth": []
           }
         ]
       }
@@ -289,11 +544,10 @@
         "responses": {
           "200": {
             "description": "Successful operation",
-            "headers": {
-              "Set-Cookie": {
-                "description": "Contains the session cookie named `token`. Pass this cookie back in subsequent requests.\n",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Auth_Tokens"
                 }
               }
             }
@@ -325,11 +579,10 @@
         "responses": {
           "201": {
             "description": "successful operation",
-            "headers": {
-              "Set-Cookie": {
-                "description": "Contains the session cookie named `token`. Pass this cookie back in subsequent requests.\n",
+            "content": {
+              "application/json": {
                 "schema": {
-                  "type": "string"
+                  "$ref": "#/components/schemas/Auth_Tokens"
                 }
               }
             }
@@ -360,7 +613,14 @@
         },
         "responses": {
           "200": {
-            "description": "successful operation"
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponseBody"
+                }
+              }
+            }
           },
           "400": {
             "description": "Invalid email supplied"
@@ -399,10 +659,52 @@
         },
         "responses": {
           "200": {
-            "description": "successful operation"
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BasicResponseBody"
+                }
+              }
+            }
           },
           "400": {
             "description": "Error occurred"
+          }
+        }
+      }
+    },
+    "/auth/refreshtoken": {
+      "post": {
+        "tags": [
+          "auth"
+        ],
+        "summary": "Authentication must include the refresh token",
+        "description": "",
+        "operationId": "Auth_RefreshToken",
+        "requestBody": {
+          "description": "Authentication Token + Refresh Token",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Auth_Token"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Auth_Tokens"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid refresh-token!"
           }
         }
       }
@@ -452,6 +754,31 @@
                 "example": "Germany"
               }
             }
+          }
+        }
+      },
+      "UserConfigTrain": {
+        "type": "object",
+        "properties": {
+          "maxRoutes": {
+            "type": "number",
+            "example": 3
+          },
+          "timeOffset": {
+            "type": "number",
+            "example": 0
+          },
+          "homeTrainStationID": {
+            "type": "number",
+            "example": 8000105
+          },
+          "workTrainStationID": {
+            "type": "number",
+            "example": 508709
+          },
+          "active": {
+            "type": "boolean",
+            "example": true
           }
         }
       },
@@ -508,6 +835,19 @@
           }
         }
       },
+      "UserChangePassword": {
+        "type": "object",
+        "properties": {
+          "newpassword": {
+            "type": "string",
+            "example": "changeme2"
+          },
+          "oldpassword": {
+            "type": "string",
+            "example": "changeme"
+          }
+        }
+      },
       "ICS": {
         "type": "object",
         "properties": {
@@ -541,6 +881,283 @@
           "uid": {
             "type": "string",
             "example": "7738001"
+          }
+        }
+      },
+      "RoutesHash": {
+        "type": "object",
+        "properties": {
+          "routeid": {
+            "type": "string",
+            "example": "6484f29ee03e0dbb29ddf380"
+          },
+          "hash": {
+            "type": "string",
+            "example": "a7c7638a5aebeafb5f220491e1dcc367c6625215"
+          }
+        }
+      },
+      "Route": {
+        "type": "object",
+        "properties": {
+          "routeid": {
+            "type": "string",
+            "example": "6484f29ee03e0dbb29ddf380"
+          },
+          "fromID": {
+            "type": "number",
+            "example": 8000105
+          },
+          "from": {
+            "type": "string",
+            "example": "Frankfurt(Main)Hbf"
+          },
+          "fromLocation": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "example": 50.106817
+              },
+              "longitude": {
+                "type": "number",
+                "example": 8.663003
+              }
+            }
+          },
+          "toID": {
+            "type": "number",
+            "example": 508709
+          },
+          "to": {
+            "type": "string",
+            "example": "Neuostheim Duale Hochschule, Mannheim"
+          },
+          "toLocation": {
+            "type": "object",
+            "properties": {
+              "latitude": {
+                "type": "number",
+                "example": 49.475325
+              },
+              "longitude": {
+                "type": "number",
+                "example": 8.534269
+              }
+            }
+          },
+          "routes": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "arrival": {
+                  "type": "string",
+                  "example": "2023-06-12T09:44:00+02:00"
+                },
+                "plannedArrival": {
+                  "type": "string",
+                  "example": "2023-06-12T09:44:00+02:00"
+                },
+                "arivalDelay": {
+                  "type": "number",
+                  "example": null
+                },
+                "route": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "index": {
+                        "type": "number",
+                        "example": 0
+                      },
+                      "walk": {
+                        "type": "boolean",
+                        "example": false
+                      },
+                      "types": {
+                        "type": "object",
+                        "properties": {
+                          "name": {
+                            "type": "string",
+                            "example": "EC 113"
+                          },
+                          "idNr": {
+                            "type": "string",
+                            "example": "ec-113"
+                          },
+                          "types": {
+                            "type": "string",
+                            "example": "train || national || EC"
+                          },
+                          "direction": {
+                            "type": "string",
+                            "example": "Klagenfurt Hbf"
+                          },
+                          "from": {
+                            "type": "string",
+                            "example": "Frankfurt(Main)Hbf"
+                          },
+                          "fromLocation": {
+                            "type": "object",
+                            "properties": {
+                              "latitude": {
+                                "type": "number",
+                                "example": 50.106817
+                              },
+                              "longitude": {
+                                "type": "number",
+                                "example": 8.663003
+                              }
+                            }
+                          },
+                          "to": {
+                            "type": "string",
+                            "example": "Heidelberg Hbf"
+                          },
+                          "toLocation": {
+                            "type": "object",
+                            "properties": {
+                              "latitude": {
+                                "type": "number",
+                                "example": 49.403582
+                              },
+                              "longitude": {
+                                "type": "number",
+                                "example": 8.67548
+                              }
+                            }
+                          },
+                          "departure": {
+                            "type": "string",
+                            "example": "2023-06-12T08:20:00+02:00"
+                          },
+                          "plannedDeparture": {
+                            "type": "string",
+                            "example": "2023-06-12T08:20:00+02:00"
+                          },
+                          "departureDelay": {
+                            "type": "number",
+                            "example": "null,"
+                          },
+                          "plannedArrival": {
+                            "type": "string",
+                            "example": "2023-06-12T09:11:00+02:00"
+                          },
+                          "arrival": {
+                            "type": "string",
+                            "example": "2023-06-12T09:11:00+02:00"
+                          },
+                          "arivalDelay": {
+                            "type": "number",
+                            "example": null
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                "price": {
+                  "type": "object",
+                  "properties": {
+                    "amount": {
+                      "type": "number",
+                      "example": 21.95
+                    },
+                    "currency": {
+                      "type": "string",
+                      "example": "EUR"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "wasUpated": {
+            "type": "boolean",
+            "example": false
+          },
+          "hash": {
+            "type": "string",
+            "example": "a7c7638a5aebeafb5f220491e1dcc367c6625215"
+          }
+        }
+      },
+      "Routes": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/Route"
+        }
+      },
+      "Stations": {
+        "type": "object",
+        "properties": {
+          "type_": {
+            "type": "string",
+            "example": "stop"
+          },
+          "id": {
+            "type": "string",
+            "example": "900000120001"
+          },
+          "name": {
+            "type": "string",
+            "example": "S+U Frankfurter Allee"
+          },
+          "location": {
+            "type": "object",
+            "properties": {
+              "type_": {
+                "type": "string",
+                "example": "location"
+              },
+              "latitude": {
+                "type": "number",
+                "example": 52.513616
+              },
+              "longitude": {
+                "type": "number",
+                "example": 13.475298
+              }
+            }
+          },
+          "products": {
+            "type": "object",
+            "properties": {
+              "suburban": {
+                "type": "boolean",
+                "example": true
+              },
+              "subway": {
+                "type": "boolean",
+                "example": true
+              },
+              "tram": {
+                "type": "boolean",
+                "example": true
+              },
+              "bus": {
+                "type": "boolean",
+                "example": true
+              },
+              "ferry": {
+                "type": "boolean",
+                "example": false
+              },
+              "express": {
+                "type": "boolean",
+                "example": false
+              },
+              "regional": {
+                "type": "boolean",
+                "example": false
+              }
+            }
+          },
+          "distance": {
+            "type": "number",
+            "example": 56
           }
         }
       },
@@ -591,36 +1208,51 @@
             "example": "changeme"
           }
         }
-      }
-    },
-    "requestBodies": {
-      "Auth_eLogin": {
-        "description": "UserProfile object",
-        "content": {
-          "application/json": {
-            "schema": {
-              "$ref": "#/components/schemas/UserProfile"
-            }
+      },
+      "Auth_Token": {
+        "type": "object",
+        "properties": {
+          "jwt_token": {
+            "type": "string"
+          }
+        }
+      },
+      "Auth_Tokens": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string"
           },
-          "application/xml": {
-            "schema": {
-              "$ref": "#/components/schemas/UserProfile"
-            }
+          "refreshToken": {
+            "type": "string"
+          }
+        }
+      },
+      "BasicResponseBody": {
+        "type": "object",
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "example": true
+          },
+          "data": {
+            "type": "string",
+            "example": "Specific description"
           }
         }
       }
     },
     "securitySchemes": {
-      "cookieAuth": {
-        "type": "apiKey",
-        "in": "cookie",
-        "name": "Token"
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },
   "security": [
     {
-      "cookieAuth": []
+      "bearerAuth": []
     }
   ]
 }

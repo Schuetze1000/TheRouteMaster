@@ -2,7 +2,7 @@ import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { Schema, model, Document } from "mongoose";
-import { UserStructure, ProfileStructure } from './api';
+import { UserStructure, ProfileStructure, ConfigTrainStructure } from './api';
 
 const UserSchema: Schema = new Schema({
 	username: {
@@ -68,7 +68,8 @@ export interface IUser extends Document {
 	getSignedRefreshToken(): string;
 	matchPassword(password: string): boolean | PromiseLike<boolean>;
 	mapUserStructure(): UserStructure;
-	updateProfile(profile:ProfileStructure):boolean;
+	updateProfile(profile: ProfileStructure):boolean;
+	updateConfigTrain(configTrain: ConfigTrainStructure):boolean;
 	resetPasswordToken: string | undefined;
 	resetPasswordExpire: string | undefined;
 	username: string;
@@ -173,6 +174,21 @@ UserSchema.methods.updateProfile = function(profile: ProfileStructure) {
 			country: profile.homeaddress.country
 		}	
 	};
+	return true;
+}
+
+UserSchema.methods.updateConfigTrain = function(configTrain: ConfigTrainStructure) {
+	if (configTrain.maxRoutes > 3) {
+		return false;
+	}
+	this.configTrain = {
+		maxRoutes: configTrain.maxRoutes,
+		timeOffset: configTrain.timeOffset,
+		homeTrainStationID: configTrain.homeTrainStationID,
+		workTrainStationID: configTrain.workTrainStationID,
+		active: configTrain.active,
+	};
+	return true;
 }
 
 const User = model<IUser>("User", UserSchema);

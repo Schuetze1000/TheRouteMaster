@@ -2,7 +2,9 @@ import { Response, Request } from "express";
 import { ErrorResponse } from "../utils/errorResponse";
 import User, { IUser } from "../models/user";
 import { verifyToken, verifyAndMatch } from "../middleware/auth";
-import { ProfileStructure, UserStructure } from "../models/api";
+import { ProfileStructure, UserStructure, ConfigTrainStructure } from "../models/api";
+const dbProfile = require("hafas-client/p/db/index.js");
+const createClient = require("hafas-client");
 
 exports.updateProfile = async (req: Request, res: Response, next: any) => {
 	const profile: ProfileStructure  = req.body.profile;
@@ -14,7 +16,48 @@ exports.updateProfile = async (req: Request, res: Response, next: any) => {
 		user.save();
 		res.status(200).json({
 			success: true,
-			data: "Profile and ICS_UID updated successful",
+			data: "Profile and ICS_UID updated successful!",
+		}).end();
+	} catch (error) {
+		if (error instanceof ErrorResponse) {
+			return next(new ErrorResponse(error.message, error.statusCode));
+		}
+		return next(new ErrorResponse(error.message, 418));
+	}
+};
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
+exports.updateConfigTrain = async (req: Request, res: Response, next: any) => {
+	const configTrain: ConfigTrainStructure  = req.body;
+	try {
+		if (configTrain.maxRoutes > 3) {
+			return next(new ErrorResponse("Please provide a valid config", 400));
+		}
+
+		const user: IUser | null = await verifyToken(req, res);
+		const client = createClient(dbProfile, "https://the-routemaster.schuetz-andreas.dev/")
+		const options = {
+			duration:  0,
+			results: 0,
+			subStops: false,
+			entrances: false, 
+			linesOfStops: false, 
+			remarks: false, 
+		}
+		
+		try {
+			await client.departures(configTrain.homeTrainStationID.toString(), options);
+			await client.departures(configTrain.workTrainStationID.toString(), options);
+		} catch (error) {
+			return next(new ErrorResponse("Please provide a valid config", 400));
+		}
+		
+		user.updateConfigTrain(configTrain);
+		user.save();
+		res.status(200).json({
+			success: true,
+			data: "Train config updated successful!",
 		}).end();
 	} catch (error) {
 		if (error instanceof ErrorResponse) {
@@ -149,3 +192,5 @@ exports.updateUsername = async (req: Request, res: Response, next: any) => {
 		return next(new ErrorResponse(error.message, 400));
 	}
 };
+
+// ------------------------------------------------------------------------------------------------------------------------------------------------ //
