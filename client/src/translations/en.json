@@ -1,11 +1,17 @@
 {
     "changeLanguage": "Change language",
-    "login": "Login",
+    "login": "Sign in",
     "back_nav": "Back",
     "changeMode": "Change mode",
     "dashboard_nav": "Dashboard",
     "use_nav": "How to use",
     "imprint_nav": "Imprint",
     "logout_nav": "Logout",
-    "settings_nav": "Settings"
+    "settings_nav": "Settings",
+    "registration": "Sign up",
+    "welcome": "Welcome to The Route Master",
+    "message": "Start making your day more efficient",
+    "404_message": "Oh, and by the way, the page you are looking for was not found.",
+    "404_btn": "Back to landing",
+    "login_txt": "Please login with your email"
 }

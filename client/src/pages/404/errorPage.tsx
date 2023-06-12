@@ -20,12 +20,12 @@ function ErrorPage() {
                         <div className="error-box">
                             <h1 className="font-bold text-8xl">Error 418</h1>
                             <h2 className="text-3xl">I’m a teapot</h2>
-                            <h3 className="text-5xl mt-12 mb-12">Oh, and by the way, the page you are looking for was not found.</h3>
+                            <h3 className="text-5xl mt-12 mb-12">{t("404_message")}</h3>
                             <button
 								onClick={() => navigate("/")}
 								type="submit"
 								className="standard-button">
-								Zurück zur Startseite
+								{t("404_btn")}
 							</button>
                         </div>
                     </div>

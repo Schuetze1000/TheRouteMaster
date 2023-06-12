@@ -7,8 +7,11 @@ import { useState, useEffect } from "react";
 import { useHref, useNavigate } from 'react-router-dom';
 import { setAuthTokens, isLoggedIn } from "axios-jwt";
 import { PopupFalseCred } from "../../components/popups/credentials_false";
+import { useTranslation } from "react-i18next";
 
 function Login() {
+
+    const { t } = useTranslation();
 
     const [passwordShown, setPasswordShown] = useState(false);
     const navigate = useNavigate();
@@ -129,7 +132,7 @@ function Login() {
 
                 <div className="flex justify-center flex-col m-auto h-screen">
                     <div className="login-box">
-                        <p className="text-center text-black text-3xl">Bitte melde dich mit deiner Email an</p>
+                        <p className="text-center text-black text-3xl">{t("login_txt")}</p>
                         <div className="relative mb-3">
                             <input
                                 className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}

@@ -7,5 +7,11 @@
     "use_nav": "How to use",
     "imprint_nav": "Impressum",
     "logout_nav": "Abmelden",
-    "settings_nav": "Einstellungen"
+    "settings_nav": "Einstellungen",
+    "registration": "Registrieren",
+    "welcome": "Willkommen bei The Route Master",
+    "message": "Beginne noch heute deinen Tag effizienter zu gestalten",
+    "404_message": "Übrigens, die von dir gesuchte Seite wurde nicht gefunden.",
+    "404_btn": "Zurück zur Startseite",
+    "login_txt": "Bitte melde dich mit deiner Email an"
 }

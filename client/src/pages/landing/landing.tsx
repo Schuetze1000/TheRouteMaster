@@ -37,7 +37,7 @@ function Landing() {
                 onClick={Click}
                 style={{visibility: isLoggedIn() ? "hidden" : "visible"}}
                 className="rounded-3xl hover:rounded-xl hover:border-neutral-400 hover:bg-neutral-600 hover:bg-opacity-70 active:border-neutral-600 active:bg-neutral-800 active:duration-100 transition-all duration-300 ease-linear cursor-pointer border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50  dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 shadow-lg">
-                Registrieren
+                {t('registration')}
             </button>
         );
     };
@@ -53,7 +53,7 @@ function Landing() {
                 onClick={Click}
                 style={{visibility: isLoggedIn() ? "visible" : "hidden"}}
                 className="rounded-3xl hover:rounded-xl hover:border-neutral-400 hover:bg-neutral-600 hover:bg-opacity-70 active:border-neutral-600 active:bg-neutral-800 active:duration-100 transition-all duration-300 ease-linear cursor-pointer border-2 border-neutral-50 px-7 pb-[8px] pt-[10px] text-sm font-medium uppercase leading-normal text-neutral-50  dark:hover:bg-neutral-100 dark:hover:bg-opacity-10 shadow-lg">
-                Zum Dashboard
+                Dashboard
             </button>
         );
     };
@@ -74,8 +74,8 @@ function Landing() {
                     style={{backgroundColor: "rgba(0, 0, 0, 0.6)"}}>
                     <div className="flex h-full items-center justify-center">
                         <div className="text-white">
-                            <h2 className="mb-4 text-4xl font-semibold">Willkommen bei The Route Master</h2>
-                            <h4 className="mb-6 text-xl font-semibold">Beginne noch heute deinen Tag effizienter zu gestalten</h4>
+                            <h2 className="mb-4 text-4xl font-semibold">{t('welcome')}</h2>
+                            <h4 className="mb-6 text-xl font-semibold">{t('message')}</h4>
                             <div className="space-x-5">
                                 <LoginButton />
                                 <RegistrationButton />

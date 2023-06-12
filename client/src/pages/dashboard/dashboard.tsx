@@ -6,7 +6,7 @@ import Weather from "../../components/weather";
 import { isLoggedIn } from "axios-jwt";
 
 function Dashboard() {
-
+    //! Username einbinden @Leonidas-maker
     useEffect(() => {
         if (!isLoggedIn()) {
             window.location.href = "/login";
