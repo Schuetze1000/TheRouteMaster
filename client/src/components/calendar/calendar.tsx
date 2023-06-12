@@ -8,7 +8,7 @@ import { Interface } from "readline";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../../hooks/jwtAuth";
 
-//! Use deutschebahnInterfaces as refernce for backend-api-response
+//! Use deutschebahnInterfaces as reference for backend-api-response
 
 
 function FullCalendarApp() {
@@ -76,12 +76,12 @@ function FullCalendarApp() {
 		id: "Test123"
 	 }]
 	*/
-	
+
 	useEffect(() => {
-		var routeEvent: IEvent;
+		/* var routeEvent: IEvent;
 		const navGetRoutes = {
 			method: "GET",
-			url: "/navigation/getroutes",
+			url: "/navigation/getallroutes",
 			withCredentials: true,
 		};
 		axiosInstance(navGetRoutes).then((chosenRoute) => {
@@ -95,23 +95,19 @@ function FullCalendarApp() {
 					id: chosenRoute.data[i].routeID,
 				}])) 
 			}
+		}) */
 
 
-		})
-
-	})
-
-	useEffect(() => {
-    var evntLst: IEvent[] = [
-      {
-        title: "",
-        start: "",
-        end: "",
-		color: "",
-		editable: true,
-		id: "",
-      },
-    ];
+		var evntLst: IEvent[] = [
+		{
+			title: "",
+			start: "",
+			end: "",
+			color: "",
+			editable: true,
+			id: "",
+		},
+		];
 		const optionsGetICS = {
 			method: "GET",
 			url: "/ics/getics",
@@ -146,9 +142,6 @@ function FullCalendarApp() {
 		    console.log({ evntLst });
 			}
 		});
-		
-
-
 	}, []);
 
 	function DateClick (info) {
