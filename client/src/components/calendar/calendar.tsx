@@ -78,24 +78,26 @@ function FullCalendarApp() {
 	*/
 
 	useEffect(() => {
-		/* var routeEvent: IEvent;
+		var routeEvent: IEvent;
+		var routeEvents;
 		const navGetRoutes = {
 			method: "GET",
 			url: "/navigation/getallroutes",
 			withCredentials: true,
 		};
-		axiosInstance(navGetRoutes).then((chosenRoute) => {
-			for (var i = 0; i < chosenRoute.data.length(); i++) {
+		axiosInstance(navGetRoutes).then((retRoutes) => {
+			routeEvents = retRoutes.data
+			for (var i = 0; i < routeEvents.length; i++) {
 				setEvent(iEvent?.concat([{
-					title: "Von " + chosenRoute.data[i].fromLocation + " nach " + chosenRoute.data.toLocation,
-					start: chosenRoute.data[i].routes.route.types.departure,
-					end: chosenRoute.data[i].routes.route.types.arrival,
+					title: "Von " + routeEvents[i].from + " nach " + routeEvents[i].to,
+					start: routeEvents[i].routes[0].route[0].types.departure,
+					end: routeEvents[i].routes[0].route[0].types.arrival,
 					color: "ABCDEF",
 					editable: false,
-					id: chosenRoute.data[i].routeID,
+					id: routeEvents[i].routeID,
 				}])) 
 			}
-		}) */
+		}) 
 
 
 		var evntLst: IEvent[] = [
