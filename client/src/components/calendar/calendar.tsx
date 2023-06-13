@@ -8,7 +8,7 @@ import { Interface } from "readline";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../../hooks/jwtAuth";
 
-//! Use deutschebahnInterfaces as refernce for backend-api-response
+//! Use deutschebahnInterfaces as reference for backend-api-response
 
 
 function FullCalendarApp() {
@@ -76,42 +76,40 @@ function FullCalendarApp() {
 		id: "Test123"
 	 }]
 	*/
-	
+
 	useEffect(() => {
 		var routeEvent: IEvent;
+		var routeEvents;
 		const navGetRoutes = {
 			method: "GET",
-			url: "/navigation/getroutes",
+			url: "/navigation/getallroutes",
 			withCredentials: true,
 		};
-		axiosInstance(navGetRoutes).then((chosenRoute) => {
-			for (var i = 0; i < chosenRoute.data.length(); i++) {
+		axiosInstance(navGetRoutes).then((retRoutes) => {
+			routeEvents = retRoutes.data
+			for (var i = 0; i < routeEvents.length; i++) {
 				setEvent(iEvent?.concat([{
-					title: "Von " + chosenRoute.data[i].fromLocation + " nach " + chosenRoute.data.toLocation,
-					start: chosenRoute.data[i].routes.route.types.departure,
-					end: chosenRoute.data[i].routes.route.types.arrival,
+					title: "Von " + routeEvents[i].from + " nach " + routeEvents[i].to,
+					start: routeEvents[i].routes[0].route[0].types.departure,
+					end: routeEvents[i].routes[0].route[0].types.arrival,
 					color: "ABCDEF",
 					editable: false,
-					id: chosenRoute.data[i].routeID,
+					id: routeEvents[i].routeID,
 				}])) 
 			}
+		}) 
 
 
-		})
-
-	})
-
-	useEffect(() => {
-    var evntLst: IEvent[] = [
-      {
-        title: "",
-        start: "",
-        end: "",
-		color: "",
-		editable: true,
-		id: "",
-      },
-    ];
+		var evntLst: IEvent[] = [
+		{
+			title: "",
+			start: "",
+			end: "",
+			color: "",
+			editable: true,
+			id: "",
+		},
+		];
 		const optionsGetICS = {
 			method: "GET",
 			url: "/ics/getics",
@@ -146,9 +144,6 @@ function FullCalendarApp() {
 		    console.log({ evntLst });
 			}
 		});
-		
-
-
 	}, []);
 
 	function DateClick (info) {
