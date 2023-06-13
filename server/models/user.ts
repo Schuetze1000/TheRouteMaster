@@ -2,7 +2,7 @@ import bycrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
 import { Schema, model, Document } from "mongoose";
-import { UserStructure, ProfileStructure, ConfigTrainStructure } from './api';
+import { UserStructure, ProfileStructure, ConfigTrainStructure } from "./api";
 
 const UserSchema: Schema = new Schema({
 	username: {
@@ -46,7 +46,10 @@ const UserSchema: Schema = new Schema({
 		homeTrainStationID: Number,
 		workTrainStationID: Number,
 		dbrouteids: [String],
-		sendInfos: Boolean,
+		sendInfos:{
+			type: Boolean,
+			default: false,
+		} ,
 		active: {
 			type: Boolean,
 			default: false,
@@ -55,6 +58,10 @@ const UserSchema: Schema = new Schema({
 
 	resetPasswordToken: String,
 	resetPasswordExpire: String,
+	sendMails: {
+		type: Boolean,
+		default: false,
+	},
 	ics_uid: Number,
 	active: {
 		type: Boolean,
@@ -68,8 +75,8 @@ export interface IUser extends Document {
 	getSignedRefreshToken(): string;
 	matchPassword(password: string): boolean | PromiseLike<boolean>;
 	mapUserStructure(): UserStructure;
-	updateProfile(profile: ProfileStructure):boolean;
-	updateConfigTrain(configTrain: ConfigTrainStructure):boolean;
+	updateProfile(profile: ProfileStructure): boolean;
+	updateConfigTrain(configTrain: ConfigTrainStructure): boolean;
 	resetPasswordToken: string | undefined;
 	resetPasswordExpire: string | undefined;
 	username: string;
@@ -90,15 +97,16 @@ export interface IUser extends Document {
 	};
 
 	configTrain: {
-		maxRoutes:Number;
+		maxRoutes: Number;
 		timeOffset: Number;
 		homeTrainStationID: Number;
 		workTrainStationID: Number;
 		dbrouteids: String[];
-		sendInfos: Boolean,
+		sendInfos: Boolean;
 		active: Boolean;
-	},
+	};
 	ics_uid: Number;
+	sendMails: Boolean;
 	active: boolean;
 }
 
@@ -115,13 +123,13 @@ UserSchema.pre<IUser>("save", async function (next: any) {
 			this.configTrain.sendInfos = false;
 		}
 	}
-	
+
 	if (!this.isModified("password")) {
 		return next();
 	}
 	const salt = bycrypt.genSaltSync(10);
 	this.password = bycrypt.hashSync(this.password, salt);
-	
+
 	next();
 });
 
@@ -150,17 +158,17 @@ UserSchema.methods.getSignedRefreshToken = function () {
 	return refreshToken;
 };
 
-UserSchema.methods.mapUserStructure = function() {
-	const userstructure : UserStructure = {
+UserSchema.methods.mapUserStructure = function () {
+	const userstructure: UserStructure = {
 		username: this.username,
 		email: this.email,
 		ics_uid: this.ics_uid,
-		profile: this.profile
+		profile: this.profile,
 	};
 	return userstructure;
 };
 
-UserSchema.methods.updateProfile = function(profile: ProfileStructure) {
+UserSchema.methods.updateProfile = function (profile: ProfileStructure) {
 	this.profile = {
 		firstname: profile.firstname,
 		surname: profile.surname,
@@ -171,13 +179,13 @@ UserSchema.methods.updateProfile = function(profile: ProfileStructure) {
 			zip: profile.homeaddress.zip,
 			city: profile.homeaddress.city,
 			state: profile.homeaddress.state,
-			country: profile.homeaddress.country
-		}	
+			country: profile.homeaddress.country,
+		},
 	};
 	return true;
-}
+};
 
-UserSchema.methods.updateConfigTrain = function(configTrain: ConfigTrainStructure) {
+UserSchema.methods.updateConfigTrain = function (configTrain: ConfigTrainStructure) {
 	if (configTrain.maxRoutes > 3) {
 		return false;
 	}
@@ -189,7 +197,7 @@ UserSchema.methods.updateConfigTrain = function(configTrain: ConfigTrainStructur
 		active: configTrain.active,
 	};
 	return true;
-}
+};
 
 const User = model<IUser>("User", UserSchema);
 export default User;

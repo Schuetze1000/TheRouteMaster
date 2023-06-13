@@ -307,7 +307,7 @@ export async function sendInfoMail() {
 			message += emailFooter();
 	
 			await sendEmail({
-				to: "currentUser.email",
+				to: currentUser.email,
 				text: message,
 				subject: header,
 			});

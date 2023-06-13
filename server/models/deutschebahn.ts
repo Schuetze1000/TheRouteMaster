@@ -7,6 +7,7 @@ const DeutscheBahnRoutesSchema: Schema = new Schema({
 		type: String,
 		required: [true, "Can't be blank"],
 		unique: true,
+		index: true,
 	},
 	fromID: {
 		type: Number,
