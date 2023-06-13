@@ -13,5 +13,13 @@
     "message": "Beginne noch heute deinen Tag effizienter zu gestalten",
     "404_message": "Übrigens, die von dir gesuchte Seite wurde nicht gefunden.",
     "404_btn": "Zurück zur Startseite",
-    "login_txt": "Bitte melde dich mit deiner Email an"
+    "login_txt": "Bitte melde dich mit deiner Email an",
+    "login_lbl": "Email Adresse/Benutzername",
+    "password_txt": "Passwort",
+    "forgot_password": "Password vergessen",
+    "login_btn": "Anmelden",
+    "github_login": "Oder melde dich mit deinem Github Account an",
+    "github_signin": "Mit Github anmelden",
+    "no_account": "Du hast noch keinen Account?",
+    "registration_btn": "Registrieren"
 }
