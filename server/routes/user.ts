@@ -12,6 +12,6 @@ router.route("/deleteaccount").delete(deleteAccount);
 router.route("/updatepassword").put(updatePassword);
 router.route("/updateemail").put(updateEmail);
 router.route("/updateusername").put(updateUsername);
-router.route("/getuseraddress").put(getUserAddress);
+router.route("/getuseraddress").get(getUserAddress);
 
 module.exports = router;
