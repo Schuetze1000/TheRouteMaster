@@ -104,7 +104,8 @@ function Settings() {
 			if (zipCity.match("/[0-9]+,[A-Za-z]+/gm")) {
 				ar_zipCity = getInputValue("zip_city").split(",");
 			} else {
-				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
+				console.error( "Missmatch!"); 
+				return;
 			}
 		}
 		if (streetNumber) {
@@ -112,14 +113,19 @@ function Settings() {
 				ar_streetNumber = getInputValue("street_number").split(",");
 				console.log(ar_streetNumber);
 			} else {
-				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
+				console.error( "Missmatch!"); 
+				return;
 			}
 		}
-		const address = `${streetNumber},${zipCity}`;
+		const address = `${ar_streetNumber[1]}+${ar_streetNumber[0]},${ar_zipCity[1]}+${ar_zipCity[0]}`;
 
-		axios.get(`https://nominatim.openstreetmap.org/search?addressdetails=1&polygon_geojson=1&format=json&q=${address}`).then((response) => {
-			console.log(response.data);
-		});
+		const test = {
+			method: "GET",
+			url: `https://nominatim.openstreetmap.org/search?addressdetails=1&polygon_geojson=1&format=json&q=${address}`,
+		};
+		axios(test).then((response) => {
+			console.log(response);
+		})
 	}
 
 	function togglePasswordVisiblity() {
@@ -177,7 +183,7 @@ function Settings() {
 					setStreet_Number(`${tmpuserinf.homeaddress.street}, ${tmpuserinf.homeaddress.number}`);
 				}
 
-
+				UpdateStations();
 				setLoading(false);
 			})
 			.catch((error) => {

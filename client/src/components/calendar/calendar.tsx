@@ -69,7 +69,7 @@ function FullCalendarApp() {
 			withCredentials: true,
 		};
 		axiosInstance(navGetRoutes).then((retRoutes) => {
-			routeEvents = retRoutes.data; //! Use deutschebahnInterfaces as reference
+			/*routeEvents = retRoutes.data; //! Use deutschebahnInterfaces as reference
 			for (var i = 0; i < routeEvents.length); i++) {
 				//! Look at the API return of routeEvents[i].routes[0] | Here is something important missing! @JStahl42
 				evntLst.push({
@@ -80,7 +80,7 @@ function FullCalendarApp() {
 					editable: true,
 					id: routeEvents[i].routeID,
 				}); //TODO Because the Event-Title is not readable -> make Events clickable for more info @JStahl42
-			}
+			}*/
 
 			const optionsGetICS = {
 				method: "GET",
