@@ -13,6 +13,8 @@ function ChangePassword() {
 
 	const [passwordShown, setPasswordShown] = useState(false);
 
+	const [identifierError, setIdentifierError] = useState(false);
+
 	const [pswSVGx, setPswSVGx] = useState<number>(23);
     const [pswSVGy, setPswSVGy] = useState<number>(23);
     const [pswSVGr, setPswSVGr] = useState<number>(0);
@@ -88,6 +90,10 @@ function ChangePassword() {
 		navigate("/settings");
 	}
 
+	function onChangeClick() {
+        setIdentifierError(true);
+    }
+
 	// ---------------------------------------------------------------------------------------------- //
 	// -------------------------------------- Return Functions -------------------------------------- //
 	// ---------------------------------------------------------------------------------------------- //
@@ -105,17 +111,18 @@ function ChangePassword() {
 
 							<div className="relative mb-3">
 								<input
-									className="peer input mt-2 mb-2 md:mt-2 dark:border-gray-500 pr-12 disabled:bg-slate-50 dark:disabled:bg-gray-600 \
-                                        disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:text-slate-700"
+									className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}
 									name="password"
-									id="old_password"
+									id="password"
 									type={passwordShown ? "text" : "password"}
-									placeholder="Altes Passwort"
+									placeholder="Passwort"
 									onChange={onChange}
 									required
 								/>
-								<label htmlFor="old_password" className="settings-input">
-									Altes Passwort
+
+								<label
+									htmlFor="password"
+									className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">Altes Passwort
 								</label>
 								<button className="absolute inset-y-0 right-0 bottom-5 top-5 flex items-center pr-3" onClick={togglePasswordVisiblity} type="button">
 									<svg
@@ -134,22 +141,23 @@ function ChangePassword() {
 										<line x1="1" y1="1" x2={pswSVGx} y2={pswSVGy} />
 										<circle cx="12" cy="12" r={pswSVGr} />
 									</svg>
-                            	</button>
-							</div>
+								</button>
+                        	</div>
 
 							<div className="relative mb-3">
 								<input
-									className="peer input mt-2 mb-2 md:mt-2 dark:border-gray-500 pr-12 disabled:bg-slate-50 dark:disabled:bg-gray-600 \
-                                        disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:text-slate-700"
+									className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}
 									name="password"
-									id="new_password"
+									id="password"
 									type={passwordShown ? "text" : "password"}
-									placeholder="Neues Passwort"
+									placeholder="Passwort"
 									onChange={onChange}
 									required
 								/>
-								<label htmlFor="new_password" className="settings-input"> 
-									Neues Passwort
+
+								<label
+									htmlFor="password"
+									className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">Neues Passwort
 								</label>
 								<button className="absolute inset-y-0 right-0 bottom-5 top-5 flex items-center pr-3" onClick={togglePasswordVisiblity} type="button">
 									<svg
@@ -168,22 +176,23 @@ function ChangePassword() {
 										<line x1="1" y1="1" x2={pswSVGx} y2={pswSVGy} />
 										<circle cx="12" cy="12" r={pswSVGr} />
 									</svg>
-                            	</button>
-							</div>
+								</button>
+                        	</div>
 
 							<div className="relative mb-3">
 								<input
-									className="peer input mt-2 mb-2 md:mt-2 dark:border-gray-500 pr-12 disabled:bg-slate-50 dark:disabled:bg-gray-600 \
-                                        disabled:text-slate-500 disabled:border-slate-200 disabled:shadow-none dark:disabled:border-gray-700 dark:disabled:text-slate-700"
+									className={`peer input ${identifierError ? "invalid:border-red-500" : ""}`}
 									name="password"
-									id="repeat_new_password"
+									id="password"
 									type={passwordShown ? "text" : "password"}
-									placeholder="Neues Passwort wiederholen"
+									placeholder="Passwort"
 									onChange={onChange}
 									required
 								/>
-								<label htmlFor="repeat_new_password" className="settings-input"> 
-									Neues Passwort wiederholen
+
+								<label
+									htmlFor="password"
+									className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">Wiederholen
 								</label>
 								<button className="absolute inset-y-0 right-0 bottom-5 top-5 flex items-center pr-3" onClick={togglePasswordVisiblity} type="button">
 									<svg
@@ -202,15 +211,15 @@ function ChangePassword() {
 										<line x1="1" y1="1" x2={pswSVGx} y2={pswSVGy} />
 										<circle cx="12" cy="12" r={pswSVGr} />
 									</svg>
-                            	</button>
-							</div>
+								</button>
+                        	</div>
 						</div>
 
 						<div className="flex justify-center space-x-10">
-							<button type="submit" className="button">
+							<button onClick={onChangeClick} type="submit" className="standard-button">
 								Ändern
 							</button>
-							<button onClick={onBtnAbortClick} type="reset" className="button bg-red-500 hover:bg-red-600">
+							<button onClick={onBtnAbortClick} type="reset" className="standard-button-red">
 								Abbrechen
 							</button>
 						</div>

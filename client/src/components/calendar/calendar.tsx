@@ -7,6 +7,7 @@ import { Calendar } from "fullcalendar";
 import { Interface } from "readline";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../../hooks/jwtAuth";
+
 import { IDBStruct, IDBRoutes, ITrain } from "./deutschebahnInterfaces";
 
 function FullCalendarApp() {
@@ -61,12 +62,14 @@ function FullCalendarApp() {
 			},
 		];
 		var routeEvents: IDBStruct[];
+
 		const navGetRoutes = {
 			method: "GET",
 			url: "/navigation/getallroutes",
 			withCredentials: true,
 		};
 		axiosInstance(navGetRoutes).then((retRoutes) => {
+
 			routeEvents = retRoutes.data
 			for (var j = 0; j < retRoutes.data.length; j++) {
 				
@@ -93,11 +96,7 @@ function FullCalendarApp() {
 							start = time.toISOString()
 							time = new Date(routeTrain.plannedArrival.toString())
 							time.setHours(time.getHours() - 2)
-							end = time.toISOString()
-							
-
-
-							
+							end = time.toISOString()						
 							evntLst.push({
 								title: title, 
 								start:  start,

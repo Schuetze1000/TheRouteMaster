@@ -14,13 +14,24 @@ function HowToUse() {
 					<div className="flex w-full h-auto items-center justify-center">
 						<div className="background-box">
 							<div className="relative mb-2 md:mb-10">
-                                <h1 className="font-bold text-3xl">Welche Funktionen es gibt</h1>
-                                <p>Hier sollten wir mit kleinen Bildern zeigen welche Funktionen es gibt (Mit Namen).</p>
+                                <h1 className="font-bold text-3xl">Wie funktioniert die Webseite?</h1>
+								<br/>
+                                <p>Liebe Nutzerin, lieber Nutzer,
+								<br/>
+								wir bei The Route Master sind ständig bemüht, Ihren Besuch auf unserer Webseite so angenehm und intuitiv wie möglich zu gestalten. Dennoch verstehen wir, dass Fragen oder Unklarheiten bezüglich unserer Webseitenfunktionen auftreten können.
+
+								Sollte dies der Fall sein, zögern Sie bitte nicht, uns zu kontaktieren. Unser engagiertes Service-Team steht Ihnen jederzeit zur Verfügung, um Ihre Fragen zu beantworten und Ihnen bei jeglichen Problemen zu helfen, die Sie möglicherweise auf unserer Webseite haben.
+
+								Sie können uns ganz einfach per E-Mail erreichen: Senden Sie Ihre Anfrage an <p className="font-bold">service@schuetz-andreas.dev</p>. Bitte geben Sie uns so viele Details wie möglich, damit wir Ihnen so effizient wie möglich helfen können.
+
+								Uns ist Ihr Wohlbefinden sehr wichtig und wir freuen uns darauf, Ihnen bei allen Ihren Anliegen zu helfen. Ihre Zufriedenheit ist unser höchstes Ziel.
+
+								Wir bedanken uns für Ihr Vertrauen und freuen uns auf Ihre Kontaktaufnahme!
+								<br/>
+								Mit freundlichen Grüßen,
+								<br/>
+								Ihr The Route Master Team</p>
                             </div>
-                            <div className="relative mb-2 md:mb-10">
-                                <h1 className="font-bold text-3xl">Wie man die Funktionen nutzt</h1>
-                                <p>Hier sollten wir auch wieder mit Bildern zeigen wie man die Funktionen benutzt (eventuell mit "Diashow") und kurz erläutern wieso diese Funktionen dem Nutzer helfen seinen tag effizienter zu gestalten.</p>
-							</div>
 						</div>
 					</div>
 				</div>

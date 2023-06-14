@@ -92,7 +92,7 @@ exports.getNeabyStations = async (req: Request, res: Response, next: any) => {
             return next(new ErrorResponse("Please provide a valid Query!", 400));
         }
 
-        await verifyToken(req, res, false);
+        await verifyToken(req, res);
         const client = createClient(dbProfile, "https://the-routemaster.schuetz-andreas.dev/")
 
         const stations = await client.nearby({

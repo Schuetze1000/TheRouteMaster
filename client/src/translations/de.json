@@ -26,5 +26,10 @@
     "username_lbl": "Benutzername",
     "email_lbl": "Email Adresse",
     "password_lbl": "Passwort",
-    "password_repeat_lbl": "Passwort wiederholen"
+    "password_repeat_lbl": "Passwort wiederholen",
+    "signup_btn": "Registrieren",
+    "github_signup": "Oder registriere dich mit deinem Github Account",
+    "github_signup_btn": "Mit Github registrieren",
+    "account_lbl": "Du hast bereits einen Account?",
+    "to_login_btn": "Zum Login"
 }

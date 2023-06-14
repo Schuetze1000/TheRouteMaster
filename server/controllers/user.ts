@@ -194,3 +194,15 @@ exports.updateUsername = async (req: Request, res: Response, next: any) => {
 };
 
 // ------------------------------------------------------------------------------------------------------------------------------------------------ //
+
+exports.getUserAddress = async (req: Request, res: Response, next: any) => {
+	try {
+		const user: IUser | null = await verifyToken(req, res);
+		res.status(200).json(user.profile.homeaddress).end();
+	} catch (error) {
+		if (error instanceof ErrorResponse) {
+			return next(new ErrorResponse(error.message, error.statusCode));
+		}
+		return next(new ErrorResponse(error.message, 400));
+	}
+};
