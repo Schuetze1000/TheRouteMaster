@@ -102,15 +102,16 @@ function Settings() {
 			withCredentials: true,
 		}
 
-		axiosInstance(options1).then((userAddress) => {
-			const data = userAddress.data;
+		axiosInstance(options1).then((userAddressResponse) => {
+			const data = userAddressResponse.data;
 			const address = `${data.number}+${data.street},${data.zip}+${data.city}`;
 			const options2 = {
 				method: "GET",
 				url: `https://nominatim.openstreetmap.org/search?addressdetails=1&polygon_geojson=1&format=json&q=${address}`,
 			};
-			axios(options2).then((response) => {
-				console.log(response);
+			axios(options2).then((locationResponse) => {
+				const latitude = locationResponse.data[0].lat;
+				const longitude = locationResponse.data[0].lon;
 			})
 		})
 		
