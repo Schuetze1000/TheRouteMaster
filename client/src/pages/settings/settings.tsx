@@ -96,30 +96,26 @@ function Settings() {
 	);
 
 	function UpdateStations() {
-		const streetNumber = getInputValue("street_number");
-		const zipCity = getInputValue("zip_city");
-		let ar_streetNumber = ["", ""];
-		let ar_zipCity = ["", ""];
-		if (zipCity) {
-			if (zipCity.match("/[0-9]+,[A-Za-z]+/gm")) {
-				ar_zipCity = getInputValue("zip_city").split(",");
-			} else {
-				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
-			}
+		const options1 = {
+			method: "GET",
+			url: "/user/getuseraddress",
+			withCredentials: true,
 		}
-		if (streetNumber) {
-			if (streetNumber.match("[A-Za-z. ]+,[0-9]+")) {
-				ar_streetNumber = getInputValue("street_number").split(",");
-				console.log(ar_streetNumber);
-			} else {
-				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
-			}
-		}
-		const address = `${streetNumber},${zipCity}`;
 
-		axios.get(`https://nominatim.openstreetmap.org/search?addressdetails=1&polygon_geojson=1&format=json&q=${address}`).then((response) => {
-			console.log(response.data);
-		});
+		axiosInstance(options1).then((userAddress) => {
+			const data = userAddress.data;
+			const address = `${data.number}+${data.street},${data.zip}+${data.city}`;
+			const options2 = {
+				method: "GET",
+				url: `https://nominatim.openstreetmap.org/search?addressdetails=1&polygon_geojson=1&format=json&q=${address}`,
+			};
+			axios(options2).then((response) => {
+				console.log(response);
+			})
+		})
+		
+
+		
 	}
 
 	function togglePasswordVisiblity() {
@@ -177,7 +173,7 @@ function Settings() {
 					setStreet_Number(`${tmpuserinf.homeaddress.street}, ${tmpuserinf.homeaddress.number}`);
 				}
 
-
+				UpdateStations();
 				setLoading(false);
 			})
 			.catch((error) => {

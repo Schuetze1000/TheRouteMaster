@@ -69,7 +69,22 @@ function FullCalendarApp() {
 			withCredentials: true,
 		};
 		axiosInstance(navGetRoutes).then((retRoutes) => {
+<<<<<<< HEAD
 			routeEvents = retRoutes.data; //! Use deutschebahnInterfaces as reference
+=======
+			/*routeEvents = retRoutes.data; //! Use deutschebahnInterfaces as reference
+			for (var i = 0; i < routeEvents.length); i++) {
+				//! Look at the API return of routeEvents[i].routes[0] | Here is something important missing! @JStahl42
+				evntLst.push({
+					title: "Von " + routeEvents[i].from + " nach " + routeEvents[i].to, 
+					start: routeEvents[i].routes[0].route[0].types.departure,
+					end: routeEvents[i].routes[0].route[0].types.arrival,
+					color: "purple",
+					editable: true,
+					id: routeEvents[i].routeID,
+				}); //TODO Because the Event-Title is not readable -> make Events clickable for more info @JStahl42
+			}*/
+>>>>>>> 90e4608ab982ac4fe5d818610d38575380b76c94
 
 			const optionsGetICS = {
 				method: "GET",
