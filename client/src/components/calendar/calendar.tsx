@@ -77,13 +77,10 @@ function FullCalendarApp() {
 					var title = "Von " + routeEvents[j].routes[0].route[i].types.from + " nach " + routeEvents[j].routes[0].route[i].types.to
 					var start
 					var end
-					console.log("Von " + routeEvents[j].routes[0].route[i].types.from + " nach " + routeEvents[j].routes[0].route[i].types.to)
-					console.log("j: " + j + " i: "+ i)
 					
 					if (routeEvents[j].routes[0].route[i].walk) {
 						const routeTrainBefore = routeEvents[j].routes[0].route[i-1].types
 						const routeTrainAfter = routeEvents[j].routes[0].route[i+1].types
-						title = "WALK"
 						if ("plannedArrival" in routeTrainBefore && "plannedDeparture" in routeTrainAfter)  {
 							start = routeTrainBefore.plannedArrival
 							end = routeTrainAfter.plannedDeparture
@@ -140,8 +137,6 @@ function FullCalendarApp() {
 						});
 					}
 					setEvent(evntLst);
-					console.log("DEBUG");
-					console.log({ evntLst });
 				}
 			});
 		});
