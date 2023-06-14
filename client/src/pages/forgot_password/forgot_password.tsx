@@ -12,32 +12,30 @@ function Forgot_password() {
     };
 
     const { onChange, onSubmit, values } = useForm(
-        loginUserCallback,
+        forgotPassword,
         initialState,
     );
-    
-    async function loginUserCallback() {
-        var token = ""
-        if (!captchaRef.getValue()) {
-            token = await captchaRef.executeAsync();
-        }
-        else {
-            await captchaRef.reset();
-            token = await captchaRef.executeAsync();
-        }
-        const identifier_input = (document.getElementById('identifier') as HTMLInputElement | null)?.value;
-        const password_input = (document.getElementById('password') as HTMLInputElement | null)?.value;
-        let options = {
-            method: 'POST',
-            url: "/auth/login",
+
+    function getInputValue(id: string): string {
+		try {
+			const value: string = (document.getElementById(id) as HTMLInputElement).value;
+			return value;
+		} catch {
+			return "";
+		}
+	}
+
+    async function forgotPassword() {
+        const email = getInputValue("identifier");
+
+        const forgot_password = {
+            method: "POST",
+            url: "/auth/forgotpassword",
             data: {
-                identifier: identifier_input,
-                password: password_input,
-                reToken: String(token)
+                email: email
             },
-            withCredentials: true
         };
-    };
+    }
 
     return (
         <body className="h-screen">
@@ -78,7 +76,8 @@ function Forgot_password() {
 
                         <button
                             type="submit"
-                            className="standard-button">
+                            className="standard-button"
+                            onClick={forgotPassword}>
                             Absenden
                         </button>
                     </div>

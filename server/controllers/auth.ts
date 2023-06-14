@@ -85,6 +85,9 @@ exports.forgotPassword = async (req: Request, res: Response, next: any) => {
 	const { email } = req.body;
 
 	try {
+		if (!email) {
+			next(new ErrorResponse("Please provide a valid email!", 400));
+		}
 		const user: IUser | null = await User.findOne({ user: email });
 		if (!user) {
 			return next(new ErrorResponse("Email could not be sent", 404));

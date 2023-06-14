@@ -28,7 +28,7 @@ const Input_Settings_Password = ({
 	);
 
 	function togglePasswordVisiblity() {
-		//! Bug fixen: Password Toggle wird immer angezeigz, auch an falscher Stell @Leonidas-maker
+		//! Bug fixen: Password Toggle muss Passwort anzeigen
 		setPasswordShown(passwordShown ? false : true);
 		if (pswSVGx == 23) {
 			setPswSVGx(1);
