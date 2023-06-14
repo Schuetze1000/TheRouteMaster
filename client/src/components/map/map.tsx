@@ -93,10 +93,8 @@ const Map = () => {
 			<link rel="stylesheet" href="Control.Geocoder.css" />
 
 			{/*  Nicht ganz sicher ob das hier noch gebraucht wird, lasse es erstmal drin für maybe später */}
-			<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
-    		integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="/>
-			<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
-     		integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="></script>
+			<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+			<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
 			<MapContainer style={{ height: "100%", width: "100%" }} center={coords} zoom={13}>
 			<SetViewOnClick coords={coords} />
