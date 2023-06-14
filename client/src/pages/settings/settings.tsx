@@ -10,6 +10,7 @@ import React from "react";
 import { axiosInstance } from "../../hooks/jwtAuth";
 import { PopupSave, PopupLoading, PopupPasswordRequired } from "../../components/popups/settings";
 import { PopupSaveFailed } from "../../components/popups/save_failed";
+import Input_Settings_Password from "../../components/inputs/in_settings_pas";
 
 //! Fixe Navbar Button zu Dashboard (Save Popup) @Leonidas-maker / @Schuetze1000
 
@@ -112,11 +113,23 @@ function Settings() {
 			axios(options2).then((locationResponse) => {
 				const latitude = locationResponse.data[0].lat;
 				const longitude = locationResponse.data[0].lon;
+				
+				const options3 = {
+					method: "GET",
+					url: "/navigation/getneabystations",
+					params: {
+						latitude: String(latitude),
+						longitude: String(longitude),
+						distance: 1000,
+					},
+					withCredentials: true,
+				}
+				axios(options3).then((nearbyStationsResponse) => {
+					console.log(nearbyStationsResponse.data);
+				});
 			})
 		})
-		
-
-		
+	
 	}
 
 	function togglePasswordVisiblity() {
@@ -476,7 +489,7 @@ function Settings() {
 								Click={onClickEmail}
 							/>
 
-							<Input_Settings
+							<Input_Settings_Password
 								name="password"
 								id="password"
 								type={passwordShown ? "text" : "password"}
@@ -484,22 +497,8 @@ function Settings() {
 								value={""}
 								isVisable={passwordNeeded}
 								isDisabled={false}
-								hasEditButton={false}
+								hasEditButton={true}
 							/>
-							<button className="absolute inset-y-0 right-0 bottom-5 top-5 flex items-center pr-3" onClick={togglePasswordVisiblity} type="button">
-								<svg
-									className="w-5 h-5 text-gray-500 dark:text-gray-400"
-									xmlns="http://www.w3.org/2000/svg"
-									fill="none"
-									viewBox="0 0 24 24"
-									stroke-width="1.5"
-									stroke="currentColor"
-								>
-									<path stroke-linecap="round" stroke-linejoin="round" d={pswSVG} />
-									<line x1="1" y1="1" x2={pswSVGx} y2={pswSVGy} />
-									<circle cx="12" cy="12" r={pswSVGr} />
-								</svg>
-							</button>
 
 							<Input_Settings
 								name="text"

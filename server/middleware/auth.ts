@@ -15,6 +15,9 @@ export const verifyToken = async (req: Request, res: Response, getUser = true, i
 	try {
 		let checked_token:string;
 		if (!isRefreshToken){
+			if (!req.headers.authorization) {
+				throw new ErrorResponse("Please provide a valid Token", 400);
+			}
 			const jwt_token  = (req.headers.authorization).replace("Bearer ","");
 			if (!jwt_token) {
 				throw new ErrorResponse("Please provide a valid Token", 400);
