@@ -113,6 +113,16 @@
             active:shadow-red-400 dark:shadow-red-500;
 	}
 
+	.standard-button-orange {
+		@apply inline-block rounded-3xl hover:rounded-xl active:bg-orange-700 active:text-white transition-all 
+            duration-300 cursor-pointer bg-orange-500 px-6 pb-2 pt-2.5 text-xs font-medium uppercase leading-normal 
+            text-black shadow-[0_4px_9px_-4px_#ff0000] ease-in-out 
+            hover:bg-orange-600 
+            focus:bg-orange-600 
+            focus:outline-none focus:ring-0
+            active:shadow-orange-400 dark:shadow-orange-500;
+	}
+
 	#map{
 		position: absolute;
 		top: 0;

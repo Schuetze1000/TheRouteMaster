@@ -523,8 +523,7 @@ function Settings() {
 							<button
 								onClick={() => navigate("/settings/changepassword")}
 								type="submit"
-								className="inline-flex justify-center rounded-md bg-orange-600 px-5 py-2 text-sm \
-								font-semibold text-white shadow-sm hover:bg-orange-500"
+								className="standard-button-orange"
 							>
 								Passwort ändern?
 							</button>
@@ -644,7 +643,7 @@ function Settings() {
 						<button onClick={onBtnSaveClick} type="submit" className="standard-button">
 							Speichern
 						</button>
-						<button onClick={() => onBtnBackClick(false)} type="submit" className="standard-button">
+						<button onClick={() => onBtnBackClick(false)} type="submit" className="standard-button-red">
 							Zurück
 						</button>
 					</div>

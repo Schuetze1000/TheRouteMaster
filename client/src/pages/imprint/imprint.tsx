@@ -28,22 +28,31 @@ function Imprint() {
 							<div className="relative mb-2 md:mb-10">
 								<h1 className="font-bold text-3xl">Informationen</h1>
 								<p>Informationen gemäß § 5 TMG:
-									Ihr Name / Ihre Namen
-									Ihre Anschrift
-									Postleitzahl Stadt
+									<br/>
+									Andreas Schütz
+									<br/>
+									Wheinheimer Straße 22
+									<br/>
+									68309, Mannheim
+									<br/>
 
 									Kontakt:
-
-									Telefon: Ihre Telefonnummer
-									E-Mail: Ihre E-Mail-Adresse
-
+									<br/>
+									E-Mail: service@schuetz-andreas.dev
+									<br/>
+									<br/>
 									Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV:
-
-									Ihr Name
-									Ihre Anschrift
-									Postleitzahl Stadt
+									<br/>
+									Andreas Schütz
+									<br/>
+									Wheinheimer Straße 22
+									<br/>
+									68309, Mannheim
+									<br/>
+									<br/>
 
 									Datenschutzerklärung
+									<br/>
 									Wir nehmen den Schutz Ihrer persönlichen Daten sehr ernst und behandeln Ihre personenbezogenen Daten vertraulich und entsprechend der gesetzlichen Datenschutzvorschriften sowie dieser Datenschutzerklärung.
 
 									Die Nutzung unserer Website ist in der Regel ohne Angabe personenbezogener Daten möglich. Soweit auf unseren Seiten personenbezogene Daten (beispielsweise Name, Anschrift oder E-Mail-Adressen) erhoben werden, erfolgt dies, soweit möglich, stets auf freiwilliger Basis. Diese Daten werden ohne Ihre ausdrückliche Zustimmung nicht an Dritte weitergegeben.
