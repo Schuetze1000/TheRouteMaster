@@ -6,6 +6,7 @@ import markerIconPng from "leaflet/dist/images/marker-icon.png"
 import {Icon} from 'leaflet'
 import L from 'leaflet';
 import 'leaflet-routing-machine';
+import "leaflet/dist/images/marker-shadow.png";
 
 function SetViewOnClick({ coords }: { coords: LatLngTuple }) {
   const map = useMap();
@@ -18,17 +19,16 @@ function RoutingMachine({ from, to }: { from: LatLngTuple, to: LatLngTuple }) {
 	const map = useMap();
   
 	useEffect(() => {
-		const startIcon = new L.Icon({
-            iconUrl: markerIconPng,
-            iconSize: [25, 41],
-            iconAnchor: [12, 41]
-        });
 
-        const endIcon = new L.Icon({
-            iconUrl: markerIconPng,
-            iconSize: [25, 41],
-            iconAnchor: [12, 41]
-        });
+		/*Create custom icons*/
+		/*var mapIcon = L.icon({
+			iconRetinaUrl: "client/public/images/marker-icon-2x.png",
+			iconUrl: "client/public/images/marker-icon.png",
+			shadowUrl: "client/public/images/marker-shadow.png",
+			iconSize: [25, 41],
+            iconAnchor: [12, 41],
+			shadowAnchor: [4, 62]
+		});*/
 
 		const routingControl = L.Routing.control({
 			waypoints: [
@@ -36,8 +36,7 @@ function RoutingMachine({ from, to }: { from: LatLngTuple, to: LatLngTuple }) {
 				L.latLng(to[0], to[1])
 			],
 			routeWhileDragging: true,
-			addWaypoints: false,
-            showAlternatives: false
+			
 			/* Customize Route
 			lineOptions: {
 				styles: [{ color: 'red', opacity: 1, weight: 5 }],
@@ -45,9 +44,6 @@ function RoutingMachine({ from, to }: { from: LatLngTuple, to: LatLngTuple }) {
 				missingRouteTolerance: 0,
 			  }, */
 	  }).addTo(map);
-
-	  L.marker([from[0], from[1]], {icon: startIcon}).addTo(map);
-    L.marker([to[0], to[1]], {icon: endIcon}).addTo(map);
   
 	  return () => {
 		map.removeControl(routingControl);

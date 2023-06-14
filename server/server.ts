@@ -44,7 +44,7 @@ setInterval(() => {
 
 setInterval(() => {
 	sendInfoMail();
-}, 150000);
+}, 2400000 );
 
 const swagger = fs.readFileSync('./data/swagger.json');
 const swagger_json = JSON.parse(swagger.toString());

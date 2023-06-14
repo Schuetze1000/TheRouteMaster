@@ -11,6 +11,7 @@ import { axiosInstance } from "../../hooks/jwtAuth";
 import { PopupSave, PopupLoading, PopupPasswordRequired } from "../../components/popups/settings";
 import { PopupSaveFailed } from "../../components/popups/save_failed";
 
+
 //! Fixe Navbar Button zu Dashboard (Save Popup) @Leonidas-maker / @Schuetze1000
 
 interface HomeaddressStructure {
@@ -58,6 +59,11 @@ function Settings() {
 	const [selectedICSValue, setSelectedICSValue] = useState("");
 	const [selectedUni, setSelectedUni] = useState(null);
 
+	
+	const [stationsNameList, setStationsNameList] = useState<[{ value: string; label: string }]>([{ value: "", label: "" }]);
+	const [selectedStations, setSelectedStations] = useState(null);
+	const [selectedStationsValue, setSelectedStationsValue] = useState("");
+
 	const [zip_city, setZip_City] = useState("");
 	const [street_number, setStreet_Number] = useState("");
 
@@ -74,6 +80,7 @@ function Settings() {
 	const [passwordNeeded, setPasswordNeeded] = useState(false);
 
 	const [profileChanged, setProfileChanged] = useState(false);
+	const [configTrainChanged, setConfigTrainChanged] = useState(false);
 	const [emailOrUsernameChanged, setEmailOrUsernameChanged] = useState(false);
 
 	const [savePopupVisible, setSavePopupVisible] = useState(false);
@@ -105,6 +112,9 @@ function Settings() {
     };
 
 	useEffect(() => {
+		
+		
+
 		setUniNameList([{ value: "01", label: "DHBW Mannheim" }]);
 		const optionsUser = {
 			method: "GET",
@@ -168,16 +178,6 @@ function Settings() {
 				}
 			});
 	}, []);
-
-	function handleChangeUni(value) {
-		setSelectedUni(value);
-	}
-
-	function handleChangeICS(value) {
-		setProfileChanged(true);
-		setSelectedICS(value);
-		setSelectedICSValue(value.value);
-	}
 
 	function getInputValue(id: string): string {
 		try {
@@ -286,6 +286,23 @@ function Settings() {
 			}
 		});
 	}
+
+	function handleChangeUni(value) {
+		setSelectedUni(value);
+	}
+
+	function handleChangeICS(value) {
+		setProfileChanged(true);
+		setSelectedICS(value);
+		setSelectedICSValue(value.value);
+	}
+
+	function handleChangeStations(value) {
+		setConfigTrainChanged(true);
+		setSelectedStations(value);
+		setSelectedStationsValue(value.value);
+	}
+
 
 	// ---------------------------------------------------------------------------------------------- //
 	// ------------------------------------ Input-Fields Handler ------------------------------------ //
@@ -589,11 +606,11 @@ function Settings() {
 								<h2>Standard Haltestelle in deiner nähe:</h2>
 								<Select
 									primaryColor={"blue"} // Not Working
-									placeholder={icsNameList.find((o) => o.value == userInf.ics_uid)?.label}
+									
 									isSearchable={true}
-									value={selectedICS}
-									onChange={handleChangeICS}
-									options={icsNameList}
+									value={selectedStations}
+									onChange={handleChangeStations}
+									options={stationsNameList}
 									loading={isLoading}
 									classNames={{
 										menuButton: () =>

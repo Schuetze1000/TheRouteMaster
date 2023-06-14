@@ -21,5 +21,10 @@
     "github_login": "Or log in with your Github account",
     "github_signin": "Sign in with Github",
     "no_account": "You don't have an account yet?",
-    "registration_btn": "Sign up"
+    "registration_btn": "Sign up",
+    "signup_lbl": "Sign up",
+    "username_lbl": "Username",
+    "email_lbl": "Email adress",
+    "password_lbl": "Password",
+    "password_repeat_lbl": "Repeat password"
 }
