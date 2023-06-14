@@ -18,12 +18,26 @@ function RoutingMachine({ from, to }: { from: LatLngTuple, to: LatLngTuple }) {
 	const map = useMap();
   
 	useEffect(() => {
+		const startIcon = new L.Icon({
+            iconUrl: markerIconPng,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41]
+        });
+
+        const endIcon = new L.Icon({
+            iconUrl: markerIconPng,
+            iconSize: [25, 41],
+            iconAnchor: [12, 41]
+        });
+
 		const routingControl = L.Routing.control({
 			waypoints: [
 				L.latLng(from[0], from[1]),
 				L.latLng(to[0], to[1])
 			],
 			routeWhileDragging: true,
+			addWaypoints: false,
+            showAlternatives: false
 			/* Customize Route
 			lineOptions: {
 				styles: [{ color: 'red', opacity: 1, weight: 5 }],
@@ -31,6 +45,9 @@ function RoutingMachine({ from, to }: { from: LatLngTuple, to: LatLngTuple }) {
 				missingRouteTolerance: 0,
 			  }, */
 	  }).addTo(map);
+
+	  L.marker([from[0], from[1]], {icon: startIcon}).addTo(map);
+    L.marker([to[0], to[1]], {icon: endIcon}).addTo(map);
   
 	  return () => {
 		map.removeControl(routingControl);
