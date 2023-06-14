@@ -4,7 +4,7 @@ import axios from "axios";
 import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState, useEffect } from "react";
-import { isLoggedIn } from "axios-jwt";
+import { isLoggedIn,setAuthTokens } from "axios-jwt";
 import { useNavigate } from "react-router";
 import { PopupShort } from "../../components/popups/password_short";
 import { PopupNotEqual } from "../../components/popups/password_not_same";
@@ -93,7 +93,15 @@ function Registration() {
                     },
                     withCredentials: true
                 };
-                await axios(options);
+                await axios(options).then((response) => {
+                    setAuthTokens({
+                        accessToken: response.data.token,
+                        refreshToken: response.data.refreshToken
+                      });
+                      navigate("/dashboard");
+                }).catch((error) => {
+                    console.error(error);
+                });;
             }
             else {
                 setShortPopupVisible(true);

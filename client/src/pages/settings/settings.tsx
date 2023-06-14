@@ -76,6 +76,8 @@ function Settings() {
 	const [inZipCityisDisabled, setInZipCityisDisabled] = useState(true);
 	const [inStreetNumberisDisabled, setInStreetNumberisDisabled] = useState(true);
 
+	const [isStationsLoading, setIsStationsLoading] = useState(true);
+
 	const [passwordNeeded, setPasswordNeeded] = useState(false);
 
 	const [profileChanged, setProfileChanged] = useState(false);
@@ -124,8 +126,18 @@ function Settings() {
 					},
 					withCredentials: true,
 				}
-				axios(options3).then((nearbyStationsResponse) => {
-					console.log(nearbyStationsResponse.data);
+				axiosInstance(options3).then((nearbyStationsResponse) => {
+					const neabyStations = nearbyStationsResponse.data;
+					let stationnames:[{ value: string; label: string }] = [{value:"", label:""}];
+					if (neabyStations.length > 0){
+						stationnames[0] = {value: neabyStations[0].id, label: neabyStations[0].name}
+					}
+					for (let x = 1; x < neabyStations.length; x++) {
+						const element = neabyStations[x];
+						stationnames.push({label:element.name, value:element.id});
+					}
+					setStationsNameList(stationnames);
+					setIsStationsLoading(false);
 				});
 			})
 		})
@@ -187,7 +199,9 @@ function Settings() {
 					setStreet_Number(`${tmpuserinf.homeaddress.street}, ${tmpuserinf.homeaddress.number}`);
 				}
 
-				UpdateStations();
+				if (tmpuserinf.homeaddress.number && tmpuserinf.homeaddress.zip) {
+					UpdateStations();
+				}
 				setLoading(false);
 			})
 			.catch((error) => {
@@ -224,6 +238,51 @@ function Settings() {
 			return "";
 		}
 	}
+
+	function saveStations() {
+		if (selectedStationsValue) {
+			const options1 = {	
+				method: "GET",
+				url: "/user/updateconfigtrain",
+				withCredentials: true,
+				data: {
+					maxRoutes: 3,
+					timeOffset: 0,
+					homeTrainStationID: selectedStationsValue,
+					workTrainStationID: 508709,
+					active: true
+				}
+			  
+		}
+			axiosInstance(options1).catch((error) => {
+				console.log(error);
+			});
+		}
+	}
+
+	async function deleteAccount() {
+		const password = getInputValue("password");
+		const email = getInputValue("email");
+		
+        const deleteAccount = {
+            method: "DELETE",
+            url: "/user/deleteaccount",
+            data: {
+                email: email,
+				password: password
+            },
+        };
+    }
+
+	async function deactivateAccount() {
+		const password = getInputValue("password");
+		const email = getInputValue("email");
+		
+        const deactivateAccount = {
+            method: "PUT",
+            url: "/user/deactivateaccount"
+        };
+    }
 
 	function saveEmailAndUsername() {
 		const password = getInputValue("password");
@@ -408,6 +467,10 @@ function Settings() {
 			if (emailOrUsernameChanged) {
 				saveEmailAndUsername();
 			}
+			
+			if (configTrainChanged) {
+				saveStations();
+			}
 
 			setInEmailisDisabled(true);
 			setInUsernameisDisabled(true);
@@ -416,6 +479,7 @@ function Settings() {
 
 			setEmailOrUsernameChanged(false);
 			setProfileChanged(false);
+			setConfigTrainChanged(false);
 		} catch (error) {
 			console.error(error);
 		}
@@ -621,7 +685,7 @@ function Settings() {
 									value={selectedStations}
 									onChange={handleChangeStations}
 									options={stationsNameList}
-									loading={isLoading}
+									loading={isStationsLoading}
 									classNames={{
 										menuButton: () =>
 											"flex bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 p-2 \
@@ -635,6 +699,31 @@ function Settings() {
 												dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
 									}}
 								/>
+							</div>
+
+							<div className="relative mb-2 md:mb-10">
+								<label className="relative inline-flex items-center cursor-pointer">
+								<input type="checkbox" value="" className="sr-only peer"/>
+								<div className="w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+								<span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Email Benachrichtung</span>
+								</label>
+							</div>
+							<div className="relative mb-2 md:mb-10 space-x-5 space-y-5">
+								<h2>Account löschen oder deaktivieren:</h2>
+								<button
+								onClick={deactivateAccount}
+								type="submit"
+								className="standard-button-orange"
+								>
+									Account deaktivieren
+								</button>
+								<button
+								onClick={deleteAccount}
+								type="submit"
+								className="standard-button-red"
+								>
+									Account löschen
+								</button>
 							</div>
 						</div>
 					</div>
