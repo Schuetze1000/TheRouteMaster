@@ -44,10 +44,9 @@ function FullCalendarApp() {
 		}
 	}
 
-
-	function randomIntFromInterval(min, max) { 
-		// min and max included 
-		return Math.floor(Math.random() * (max - min + 1) + min); 
+	function randomIntFromInterval(min, max) {
+		// min and max included
+		return Math.floor(Math.random() * (max - min + 1) + min);
 	}
 
 	useEffect(() => {
@@ -68,81 +67,75 @@ function FullCalendarApp() {
 			url: "/navigation/getallroutes",
 			withCredentials: true,
 		};
-		axiosInstance(navGetRoutes).then((retRoutes) => {
 
-			routeEvents = retRoutes.data
-			for (var j = 0; j < retRoutes.data.length; j++) {
-				
-				for (var i = 0; i < routeEvents[j].routes[0].route.length; i++) {
-					var title = "Von " + routeEvents[j].routes[0].route[i].types.from + " nach " + routeEvents[j].routes[0].route[i].types.to
-					var start
-					var end
-					console.log("Von " + routeEvents[j].routes[0].route[i].types.from + " nach " + routeEvents[j].routes[0].route[i].types.to)
-					console.log("j: " + j + " i: "+ i)
-					
-					if (routeEvents[j].routes[0].route[i].walk) {
-						const routeTrainBefore = routeEvents[j].routes[0].route[i-1].types
-						const routeTrainAfter = routeEvents[j].routes[0].route[i+1].types
-						title = "WALK"
-						if ("plannedArrival" in routeTrainBefore && "plannedDeparture" in routeTrainAfter)  {
-							start = routeTrainBefore.plannedArrival
-							end = routeTrainAfter.plannedDeparture
-						}
-					} else {
-						const routeTrain = routeEvents[j].routes[0].route[i].types
-						if ("plannedArrival" in routeTrain && "plannedDeparture" in routeTrain) {
-							var time = new Date(routeTrain.plannedDeparture.toString())
-							time.setHours(time.getHours() - 2)
-							start = time.toISOString()
-							time = new Date(routeTrain.plannedArrival.toString())
-							time.setHours(time.getHours() - 2)
-							end = time.toISOString()						
-							evntLst.push({
-								title: title, 
-								start:  start,
-								end: end,
-								color: "purple",
-								editable: true,
-								id: "",
-							
-							}); 
-						}
-					}
+		const optionsGetICS = {
+			method: "GET",
+			url: "/ics/getics",
+			withCredentials: true,
+		};
+		axiosInstance(optionsGetICS).then((resAvailableIcs) => {
+			if (resAvailableIcs.data.hash == currentHash) {
+				currentHash = resAvailableIcs.data.hash;
+			} else {
+				currentHash = resAvailableIcs.data.hash;
+				setKursName(resAvailableIcs.data.name);
+				ICSString = resAvailableIcs.data.data;
+				const rawEvents = ICSString.split("BEGIN:VEVENT");
 
-					
-				}	
-			}
-			
-			
-			const optionsGetICS = {
-				method: "GET",
-				url: "/ics/getics",
-				withCredentials: true,
-			};
-			axiosInstance(optionsGetICS).then((resAvailableIcs) => {
-				if (resAvailableIcs.data.hash == currentHash) {
-					currentHash = resAvailableIcs.data.hash;
-				} else {
-					currentHash = resAvailableIcs.data.hash;
-					setKursName(resAvailableIcs.data.name);
-					ICSString = resAvailableIcs.data.data;
-					const rawEvents = ICSString.split("BEGIN:VEVENT");
-
-					for (let i = 1; i < rawEvents.length; i++) {
-						var singularEvent = rawEvents[i].split("\n");
-						evntLst.push({
-							title: singularEvent[3].replace("SUMMARY:", "") + "     " + singularEvent[2].replace("LOCATION:", ""),
-							start: singularEvent[4].replace("DTSTART:", ""),
-							end: singularEvent[5].replace("DTEND:", ""),
-							color: "red", // How to change colors
-							editable: false,
-							id: "ICS_" + i.toString(),
-						});
-					}
-					setEvent(evntLst);
-					console.log("DEBUG");
-					console.log({ evntLst });
+				for (let i = 1; i < rawEvents.length; i++) {
+					var singularEvent = rawEvents[i].split("\n");
+					evntLst.push({
+						title: singularEvent[3].replace("SUMMARY:", "") + "     " + singularEvent[2].replace("LOCATION:", ""),
+						start: singularEvent[4].replace("DTSTART:", ""),
+						end: singularEvent[5].replace("DTEND:", ""),
+						color: "red", // How to change colors
+						editable: false,
+						id: "ICS_" + i.toString(),
+					});
 				}
+			}
+
+			axiosInstance(navGetRoutes).then((retRoutes) => {
+				routeEvents = retRoutes.data;
+				for (var j = 0; j < retRoutes.data.length; j++) {
+					for (var i = 0; i < routeEvents[j].routes[0].route.length; i++) {
+						var title = "Von " + routeEvents[j].routes[0].route[i].types.from + " nach " + routeEvents[j].routes[0].route[i].types.to;
+						var start;
+						var end;
+						console.log("Von " + routeEvents[j].routes[0].route[i].types.from + " nach " + routeEvents[j].routes[0].route[i].types.to);
+						console.log("j: " + j + " i: " + i);
+
+						if (routeEvents[j].routes[0].route[i].walk) {
+							const routeTrainBefore = routeEvents[j].routes[0].route[i - 1].types;
+							const routeTrainAfter = routeEvents[j].routes[0].route[i + 1].types;
+							title = "WALK";
+							if ("plannedArrival" in routeTrainBefore && "plannedDeparture" in routeTrainAfter) {
+								start = routeTrainBefore.plannedArrival;
+								end = routeTrainAfter.plannedDeparture;
+							}
+						} else {
+							const routeTrain = routeEvents[j].routes[0].route[i].types;
+							if ("plannedArrival" in routeTrain && "plannedDeparture" in routeTrain) {
+								var time = new Date(routeTrain.plannedDeparture.toString());
+								time.setHours(time.getHours() - 2);
+								start = time.toISOString();
+								time = new Date(routeTrain.plannedArrival.toString());
+								time.setHours(time.getHours() - 2);
+								end = time.toISOString();
+								evntLst.push({
+									title: title,
+									start: start,
+									end: end,
+									color: "purple",
+									editable: true,
+									id: "",
+								});
+							}
+						}
+					}
+				}
+
+				setEvent(evntLst);
 			});
 		});
 	}, []);
@@ -164,8 +157,6 @@ function FullCalendarApp() {
 		);
 	}
 
-	
-	
 	//! Make the calendar responsive. Mabye change on mobile the design to this https://fullcalendar.io/docs/list-view ? @JStahl42
 	return (
 		<div className="App">
@@ -185,7 +176,6 @@ function FullCalendarApp() {
 							window.location.replace("https://www.youtube.com/watch?v=l3Z7s1S1B8M?autoplay=1&t=10s&mute=1");
 						},
 					},
-
 				}}
 				headerToolbar={{
 					//Die Toolbar über dem eigentlichen Kalender enthält per Default Knöpfe und Funktionalitäten z.B. zum Umschalten auf Tages- oder Monatsansicht, oder zum Spulen der Wochen
