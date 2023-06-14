@@ -11,7 +11,6 @@ import { axiosInstance } from "../../hooks/jwtAuth";
 import { PopupSave, PopupLoading, PopupPasswordRequired } from "../../components/popups/settings";
 import { PopupSaveFailed } from "../../components/popups/save_failed";
 
-
 //! Fixe Navbar Button zu Dashboard (Save Popup) @Leonidas-maker / @Schuetze1000
 
 interface HomeaddressStructure {
@@ -59,7 +58,6 @@ function Settings() {
 	const [selectedICSValue, setSelectedICSValue] = useState("");
 	const [selectedUni, setSelectedUni] = useState(null);
 
-	
 	const [stationsNameList, setStationsNameList] = useState<[{ value: string; label: string }]>([{ value: "", label: "" }]);
 	const [selectedStations, setSelectedStations] = useState(null);
 	const [selectedStationsValue, setSelectedStationsValue] = useState("");
@@ -91,30 +89,58 @@ function Settings() {
 	const [passwordShown, setPasswordShown] = useState(false);
 
 	const [pswSVGx, setPswSVGx] = useState<number>(23);
-    const [pswSVGy, setPswSVGy] = useState<number>(23);
-    const [pswSVGr, setPswSVGr] = useState<number>(0);
-    const [pswSVG, setPswSVG] = useState<string>("M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24");
+	const [pswSVGy, setPswSVGy] = useState<number>(23);
+	const [pswSVGr, setPswSVGr] = useState<number>(0);
+	const [pswSVG, setPswSVG] = useState<string>(
+		"M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+	);
 
-	const togglePasswordVisiblity = () => {
+	function UpdateStations() {
+		const streetNumber = getInputValue("street_number");
+		const zipCity = getInputValue("zip_city");
+		let ar_streetNumber = ["", ""];
+		let ar_zipCity = ["", ""];
+		if (zipCity) {
+			if (zipCity.match("/[0-9]+,[A-Za-z]+/gm")) {
+				ar_zipCity = getInputValue("zip_city").split(",");
+			} else {
+				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
+			}
+		}
+		if (streetNumber) {
+			if (streetNumber.match("[A-Za-z. ]+,[0-9]+")) {
+				ar_streetNumber = getInputValue("street_number").split(",");
+				console.log(ar_streetNumber);
+			} else {
+				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
+			}
+		}
+		const address = `${streetNumber},${zipCity}`;
+
+		axios.get(`https://nominatim.openstreetmap.org/search?addressdetails=1&polygon_geojson=1&format=json&q=${address}`).then((response) => {
+			console.log(response.data);
+		});
+	}
+
+	function togglePasswordVisiblity() {
 		//! Bug fixen: Password Toggle wird immer angezeigz, auch an falscher Stell @Leonidas-maker
-        setPasswordShown(passwordShown ? false : true);
-        if (pswSVGx == 23) {
-            setPswSVGx(1);
-            setPswSVGy(1);
-            setPswSVGr(3);
-            setPswSVG("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z");
-        } else {
-            setPswSVGx(23);
-            setPswSVGy(23);
-            setPswSVGr(0);
-            setPswSVG("M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24");
-        }
-    };
+		setPasswordShown(passwordShown ? false : true);
+		if (pswSVGx == 23) {
+			setPswSVGx(1);
+			setPswSVGy(1);
+			setPswSVGr(3);
+			setPswSVG("M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z");
+		} else {
+			setPswSVGx(23);
+			setPswSVGy(23);
+			setPswSVGr(0);
+			setPswSVG(
+				"M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
+			);
+		}
+	};
 
 	useEffect(() => {
-		
-		
-
 		setUniNameList([{ value: "01", label: "DHBW Mannheim" }]);
 		const optionsUser = {
 			method: "GET",
@@ -150,6 +176,7 @@ function Settings() {
 				if (tmpuserinf.homeaddress.street && tmpuserinf.homeaddress.number) {
 					setStreet_Number(`${tmpuserinf.homeaddress.street}, ${tmpuserinf.homeaddress.number}`);
 				}
+
 
 				setLoading(false);
 			})
@@ -303,7 +330,6 @@ function Settings() {
 		setSelectedStationsValue(value.value);
 	}
 
-
 	// ---------------------------------------------------------------------------------------------- //
 	// ------------------------------------ Input-Fields Handler ------------------------------------ //
 	// ---------------------------------------------------------------------------------------------- //
@@ -401,8 +427,6 @@ function Settings() {
 	// ------------------------------------- Get nearby stations ------------------------------------ //
 	// ---------------------------------------------------------------------------------------------- //
 
-	
-
 	/* const userAgent = 'the-routemaster.schuetz-andreas.dev'
 	const client = createClient(dbProfile, userAgent)
 
@@ -413,8 +437,6 @@ function Settings() {
 	}, {distance: 400})
 	.then(console.log)
 	.catch(console.error) */
-
-	
 
 	// ---------------------------------------------------------------------------------------------- //
 	// -------------------------------------- Return Functions -------------------------------------- //
@@ -468,23 +490,19 @@ function Settings() {
 								hasEditButton={false}
 							/>
 							<button className="absolute inset-y-0 right-0 bottom-5 top-5 flex items-center pr-3" onClick={togglePasswordVisiblity} type="button">
-									<svg
-										className="w-5 h-5 text-gray-500 dark:text-gray-400"
-										xmlns="http://www.w3.org/2000/svg"
-										fill="none"
-										viewBox="0 0 24 24"
-										stroke-width="1.5"
-										stroke="currentColor"
-									>
-										<path
-											stroke-linecap="round"
-											stroke-linejoin="round"
-											d={pswSVG}
-										/>
-										<line x1="1" y1="1" x2={pswSVGx} y2={pswSVGy} />
-										<circle cx="12" cy="12" r={pswSVGr} />
-									</svg>
-                            	</button>
+								<svg
+									className="w-5 h-5 text-gray-500 dark:text-gray-400"
+									xmlns="http://www.w3.org/2000/svg"
+									fill="none"
+									viewBox="0 0 24 24"
+									stroke-width="1.5"
+									stroke="currentColor"
+								>
+									<path stroke-linecap="round" stroke-linejoin="round" d={pswSVG} />
+									<line x1="1" y1="1" x2={pswSVGx} y2={pswSVGy} />
+									<circle cx="12" cy="12" r={pswSVGr} />
+								</svg>
+							</button>
 
 							<Input_Settings
 								name="text"
@@ -513,8 +531,6 @@ function Settings() {
 							>
 								Passwort ändern?
 							</button>
-
-							
 
 							<h1 className="font-bold text-xl dark:text-white py-3">Standardeinstellungen</h1>
 							<h2 className="dark:text-white ">Wohnort ändern:</h2>
@@ -606,7 +622,6 @@ function Settings() {
 								<h2>Standard Haltestelle in deiner nähe:</h2>
 								<Select
 									primaryColor={"blue"} // Not Working
-									
 									isSearchable={true}
 									value={selectedStations}
 									onChange={handleChangeStations}
@@ -647,10 +662,7 @@ function Settings() {
 				}}
 				onDiscard={() => onBtnBackClick(true)}
 			/>
-			<PopupSaveFailed 
-				isVisable={savePopupFailedVisible} 
-				onClose={() => onClickPopFailedClose()} 
-			/>
+			<PopupSaveFailed isVisable={savePopupFailedVisible} onClose={() => onClickPopFailedClose()} />
 			<PopupPasswordRequired isVisable={passwortPopupVisible} onClose={() => onClickPopPasswordClose()} />
 			<PopupLoading isVisable={isLoading} />
 		</body>

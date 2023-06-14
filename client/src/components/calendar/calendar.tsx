@@ -7,6 +7,7 @@ import { Calendar } from "fullcalendar";
 import { Interface } from "readline";
 import { useState, useEffect } from "react";
 import { axiosInstance } from "../../hooks/jwtAuth";
+import { IDBStruct } from "./deutschebahnInterfaces";
 
 function FullCalendarApp() {
 	const plugins = [interactionPlugin];
@@ -35,13 +36,10 @@ function FullCalendarApp() {
 			setRightViewButtons("timeGridWeek prev,today,next");
 			setCurrentView("timeGridWeek");
 			setGridMonth(false);
-			console.log("Da Cringe");
 		} else {
 			setRightViewButtons("dayGridMonth prev,today,next");
 			setCurrentView("dayGridMonth");
 			setGridMonth(true);
-
-			console.log("Da other cringe");
 		}
 	}
 
@@ -63,7 +61,7 @@ function FullCalendarApp() {
 				id: "",
 			},
 		];
-		var routeEvents;
+		var routeEvents: IDBStruct;
 
 		const navGetRoutes = {
 			method: "GET",
@@ -72,14 +70,14 @@ function FullCalendarApp() {
 		};
 		axiosInstance(navGetRoutes).then((retRoutes) => {
 			routeEvents = retRoutes.data; //! Use deutschebahnInterfaces as reference
-			for (var i = 0; i < routeEvents.length; i++) {
+			for (var i = 0; i < routeEvents.length); i++) {
 				//! Look at the API return of routeEvents[i].routes[0] | Here is something important missing! @JStahl42
 				evntLst.push({
 					title: "Von " + routeEvents[i].from + " nach " + routeEvents[i].to, 
 					start: routeEvents[i].routes[0].route[0].types.departure,
 					end: routeEvents[i].routes[0].route[0].types.arrival,
 					color: "purple",
-					editable: false,
+					editable: true,
 					id: routeEvents[i].routeID,
 				}); //TODO Because the Event-Title is not readable -> make Events clickable for more info @JStahl42
 			}
