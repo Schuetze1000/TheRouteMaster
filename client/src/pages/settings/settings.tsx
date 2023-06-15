@@ -98,52 +98,6 @@ function Settings() {
 		"M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
 	);
 
-	function UpdateStations() {
-		const options1 = {
-			method: "GET",
-			url: "/user/getuseraddress",
-			withCredentials: true,
-		}
-
-		axiosInstance(options1).then((userAddressResponse) => {
-			const data = userAddressResponse.data;
-			const address = `${data.number}+${data.street},${data.zip}+${data.city}`;
-			const options2 = {
-				method: "GET",
-				url: `https://nominatim.openstreetmap.org/search?addressdetails=1&polygon_geojson=1&format=json&q=${address}`,
-			};
-			axios(options2).then((locationResponse) => {
-				const latitude = locationResponse.data[0].lat;
-				const longitude = locationResponse.data[0].lon;
-				
-				const options3 = {
-					method: "GET",
-					url: "/navigation/getneabystations",
-					params: {
-						latitude: String(latitude),
-						longitude: String(longitude),
-						distance: 1000,
-					},
-					withCredentials: true,
-				}
-				axiosInstance(options3).then((nearbyStationsResponse) => {
-					const neabyStations = nearbyStationsResponse.data;
-					let stationnames:[{ value: string; label: string }] = [{value:"", label:""}];
-					if (neabyStations.length > 0){
-						stationnames[0] = {value: neabyStations[0].id, label: neabyStations[0].name}
-					}
-					for (let x = 1; x < neabyStations.length; x++) {
-						const element = neabyStations[x];
-						stationnames.push({label:element.name, value:element.id});
-					}
-					setStationsNameList(stationnames);
-					setIsStationsLoading(false);
-				});
-			})
-		})
-	
-	}
-
 	function togglePasswordVisiblity() {
 		//! Bug fixen: Password Toggle wird immer angezeigz, auch an falscher Stell @Leonidas-maker
 		setPasswordShown(passwordShown ? false : true);
@@ -160,7 +114,7 @@ function Settings() {
 				"M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"
 			);
 		}
-	};
+	}
 
 	useEffect(() => {
 		setUniNameList([{ value: "01", label: "DHBW Mannheim" }]);
@@ -239,9 +193,58 @@ function Settings() {
 		}
 	}
 
+	function UpdateStations() {
+		const { zip, city, street, streetNumber } = getAddress();
+
+		if (!zip || !city || !street || !streetNumber) {
+			return;
+		}
+		const address = `${streetNumber}+${street},${zip}+${city}`;
+		const options2 = {
+			method: "GET",
+			url: `https://nominatim.openstreetmap.org/search?addressdetails=1&polygon_geojson=1&format=json&q=${address}`,
+		};
+		axios(options2).then((locationResponse) => {
+			try {
+				const latitude = locationResponse.data[0].lat;
+				const longitude = locationResponse.data[0].lon;
+
+				const options3 = {
+					method: "GET",
+					url: "/navigation/getneabystations",
+					params: {
+						latitude: String(latitude),
+						longitude: String(longitude),
+						distance: 1000, //TODO Change dynamic
+					},
+					withCredentials: true,
+				};
+				axiosInstance(options3).then((nearbyStationsResponse) => {
+					const neabyStations = nearbyStationsResponse.data;
+					let stationnames: [{ value: string; label: string }] = [{ value: "", label: "" }];
+					if (neabyStations.length > 0) {
+						stationnames[0] = { value: neabyStations[0].id, label: neabyStations[0].name };
+					}
+					for (let x = 1; x < neabyStations.length; x++) {
+						const element = neabyStations[x];
+						stationnames.push({ label: element.name, value: element.id });
+					}
+					setStationsNameList(stationnames);
+					setIsStationsLoading(false);
+				}).catch((error) => {
+					console.error(error);
+				})
+			} catch (error) {
+				console.error(error); //TODO Popup Address false
+			}
+		}).catch((error) => {
+			console.error(error);
+		});
+	}
+
 	function saveStations() {
 		if (selectedStationsValue) {
-			const options1 = {	
+			const options1 = {
 				method: "GET",
 				url: "/user/updateconfigtrain",
 				withCredentials: true,
@@ -250,10 +253,9 @@ function Settings() {
 					timeOffset: 0,
 					homeTrainStationID: selectedStationsValue,
 					workTrainStationID: 508709,
-					active: true
-				}
-			  
-		}
+					active: true,
+				},
+			};
 			axiosInstance(options1).catch((error) => {
 				console.log(error);
 			});
@@ -263,26 +265,26 @@ function Settings() {
 	async function deleteAccount() {
 		const password = getInputValue("password");
 		const email = getInputValue("email");
-		
-        const deleteAccount = {
-            method: "DELETE",
-            url: "/user/deleteaccount",
-            data: {
-                email: email,
-				password: password
-            },
-        };
-    }
+
+		const deleteAccount = {
+			method: "DELETE",
+			url: "/user/deleteaccount",
+			data: {
+				email: email,
+				password: password,
+			},
+		};
+	}
 
 	async function deactivateAccount() {
 		const password = getInputValue("password");
 		const email = getInputValue("email");
-		
-        const deactivateAccount = {
-            method: "PUT",
-            url: "/user/deactivateaccount"
-        };
-    }
+
+		const deactivateAccount = {
+			method: "PUT",
+			url: "/user/deactivateaccount",
+		};
+	}
 
 	function saveEmailAndUsername() {
 		const password = getInputValue("password");
@@ -332,31 +334,43 @@ function Settings() {
 				}
 			});
 	}
-	function saveProfileChanges() {
-		const streetNumber = getInputValue("street_number");
-		const zipCity = getInputValue("zip_city");
+
+
+	function getAddress() {
+		const state = getInputValue("state");
+		const country = getInputValue("country");
+		const street_Number = getInputValue("street_number");
+		const zipCity = getInputValue("zip_city"); //TODO Fix save Bug
 		let ar_streetNumber = ["", ""];
 		let ar_zipCity = ["", ""];
 		if (zipCity) {
-			if (zipCity.match("/[0-9]+,[A-Za-z]+/gm")) {
-				ar_zipCity = getInputValue("zip_city").split(",");
+			if (zipCity.match("[0-9 ]+,[A-Za-z ]+")) {
+				ar_zipCity = getInputValue("zip_city").replace(" ", "").split(",");
 			} else {
 				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
 			}
 		}
-		if (streetNumber) {
-			if (streetNumber.match("[A-Za-z. ]+,[0-9]+")) {
-				ar_streetNumber = getInputValue("street_number").split(",");
-				console.log(ar_streetNumber);
+		if (street_Number) {
+			if (street_Number.match("[A-Za-z. ]+,[0-9 ]+")) {
+				ar_streetNumber = getInputValue("street_number").replace(" ", "").split(",");
 			} else {
 				throw "Missmatch!"; //TODO Focus input. Change Color of input @Leonidas-maker / @Schuetze1000
 			}
 		}
+		const zip = ar_zipCity[0];
+		const city = ar_zipCity[1];
+		const street = ar_streetNumber[0];
+		const streetNumber = ar_streetNumber[1];
 
+		return {state, country, zip, city, street, streetNumber}
+	}
+
+	function saveProfileChanges() {
+		
+		const { state, country, zip, city, street, streetNumber } = getAddress();
 		const updateoption = {
 			method: "PUT",
 			url: "/user/updateprofile",
-			headers: { Authorization: "Bearer " + getAccessToken() },
 			withCredentials: true,
 			data: {
 				ics_uid: selectedICSValue,
@@ -365,12 +379,12 @@ function Settings() {
 					surname: getInputValue("surname"),
 					avatar: getInputValue("avatar"),
 					homeaddress: {
-						number: ar_streetNumber[1],
-						street: ar_streetNumber[0],
-						zip: ar_zipCity[0],
-						city: ar_zipCity[1],
-						state: getInputValue("state"),
-						country: getInputValue("country"),
+						number: streetNumber,
+						street: street,
+						zip: zip,
+						city: city,
+						state: state,
+						country: country,
 					},
 				},
 			},
@@ -467,7 +481,7 @@ function Settings() {
 			if (emailOrUsernameChanged) {
 				saveEmailAndUsername();
 			}
-			
+
 			if (configTrainChanged) {
 				saveStations();
 			}
@@ -583,11 +597,7 @@ function Settings() {
 								isDisabled={inSurnameisDisabled}
 								Click={onClickSurname}
 							/>
-							<button
-								onClick={() => navigate("/settings/changepassword")}
-								type="submit"
-								className="standard-button-orange"
-							>
+							<button onClick={() => navigate("/settings/changepassword")} type="submit" className="standard-button-orange">
 								Passwort ändern?
 							</button>
 
@@ -615,7 +625,7 @@ function Settings() {
 
 								<Input_Settings
 									name="zip_city"
-									id="city"
+									id="zip_city"
 									type="text"
 									placeholder="PLZ, Stadt"
 									value={zip_city}
@@ -703,25 +713,17 @@ function Settings() {
 
 							<div className="relative mb-2 md:mb-10">
 								<label className="relative inline-flex items-center cursor-pointer">
-								<input type="checkbox" value="" className="sr-only peer" checked/>
-								<div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
-								<span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Email Benachrichtigung</span>
+									<input type="checkbox" value="" className="sr-only peer" checked />
+									<div className="w-11 h-6 bg-gray-200 rounded-full peer peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 dark:bg-gray-700 peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+									<span className="ml-3 text-sm font-medium text-gray-900 dark:text-gray-300">Email Benachrichtigung</span>
 								</label>
 							</div>
 							<div className="relative mb-2 md:mb-10 space-x-5 space-y-5">
 								<h2>Account löschen oder deaktivieren:</h2>
-								<button
-								onClick={deactivateAccount}
-								type="submit"
-								className="standard-button-orange"
-								>
+								<button onClick={deactivateAccount} type="submit" className="standard-button-orange">
 									Account deaktivieren
 								</button>
-								<button
-								onClick={deleteAccount}
-								type="submit"
-								className="standard-button-red"
-								>
+								<button onClick={deleteAccount} type="submit" className="standard-button-red">
 									Account löschen
 								</button>
 							</div>
