@@ -13,6 +13,7 @@ import ErrorPage from './pages/404/errorPage';
 
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import React from 'react';
+import Android from './pages/android/android';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
         <Route path="/map" element={<Map />} />
         <Route path="/forgot-password" element={<Forgot_password />} />
         <Route path="*" element={<ErrorPage />} />
+        <Route path="/android" element={<Android />} />
       </Routes>
     </Router>
   );  
