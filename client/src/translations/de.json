@@ -31,5 +31,12 @@
     "github_signup": "Oder registriere dich mit deinem Github Account",
     "github_signup_btn": "Mit Github registrieren",
     "account_lbl": "Du hast bereits einen Account?",
-    "to_login_btn": "Zum Login"
+    "to_login_btn": "Zum Login",
+    "android_redirect": "Du wirst zum Android download weitergeleitet...",
+    "not_redirect": "Falls du nicht weitergeleitet wirst klicke hier:",
+    "android_download": "Zum Download",
+    "dashboard": "Dashboard",
+    "password_reset": "Gib deine Email Adresse ein um dein Passwort zurück zu setzen",
+    "email_reset": "Email Adresse",
+    "submit_reset": "Absenden"
 }

@@ -4,6 +4,7 @@ import Map from "../../components/map/map";
 import FullCalendarApp from "../../components/calendar/calendar";
 import Weather from "../../components/weather";
 import { isLoggedIn } from "axios-jwt";
+import { useTranslation } from "react-i18next";
 
 function Dashboard() {
     //! Username einbinden @Leonidas-maker
@@ -13,6 +14,8 @@ function Dashboard() {
         }
     }, []);
 
+    const { t } = useTranslation();
+
     return (
         <body className="h-screen">
         <Navbar_dashboard />
@@ -21,7 +24,7 @@ function Dashboard() {
                 className="absolute bottom-0 left-0 right-0 top-0 h-full w-full overflow-auto bg-fixed"
                 style={{ backgroundColor: "rgba(0, 0, 0, 0.8)" }}>
                 <div className="relative top-[2%]">
-                    <h1 className="text-white font-bold text-7xl tracking-wider">Dashboard</h1>
+                    <h1 className="text-white font-bold text-7xl tracking-wider">{t("dashboard")}</h1>
                 </div>
                 <div className="flex w-full h-auto items-center justify-center">
                     <div className="background-box">
