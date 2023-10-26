@@ -15,14 +15,23 @@ const resources = {
     }
 };
 
-const language = localStorage.getItem('language') || 'de';
+// Set standard language based on browser language
+// If language not available set to 'en'
+const getDefaultLanguage = () => {
+  const browserLang = navigator.language.split("-")[0];
+  return resources[browserLang] ? browserLang : 'en';
+}
+
+// Choose language from localStorage, if not in storage choose from browser language
+const language = localStorage.getItem('language') || getDefaultLanguage();
+
 i18n
-  .use(initReactI18next) 
+  .use(initReactI18next)
   .init({
     resources,
     lng: language,
     interpolation: {
-      escapeValue: false 
+      escapeValue: false
     }
   });
 
