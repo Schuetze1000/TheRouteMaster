@@ -38,5 +38,6 @@
     "dashboard": "Dashboard",
     "password_reset": "Enter your email address to reset your password",
     "email_reset": "Email address",
-    "submit_reset": "Submit"
+    "submit_reset": "Submit",
+    "works": "How does the website work?"
 }
