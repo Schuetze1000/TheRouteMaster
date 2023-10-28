@@ -1,6 +1,8 @@
 import Navbar_imprint from "../../components/navbars/Navbar_imprint";
 
 function Imprint() {
+	const { version } = require("../../../package.json");
+
 	return (
 		<body className="h-screen">
 			<Navbar_imprint />
@@ -83,6 +85,9 @@ function Imprint() {
 								<a href="https://www.flaticon.com/free-icon/bus_1023413" className="underline">Bus Icon</a>
 								<br />
 								<a href="https://beefree.io" className="underline">Info Mail erstellen</a>
+							</div>
+							<div className="absolute bottom-0 right-0 mb-5 mx-5">
+								<p>Version: {version}</p>
 							</div>
 						</div>
 					</div>
