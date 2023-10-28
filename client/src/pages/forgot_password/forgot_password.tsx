@@ -2,9 +2,12 @@ import { useForm } from "../../hooks/useForm";
 import Back_landing from "../../components/navbars/buttons/btn_BackLanding";
 import Navbar_credentials from "../../components/navbars/Navbar_credentials";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useTranslation } from "react-i18next";
 
 function Forgot_password() {
     let captchaRef;
+
+    const { t } = useTranslation();
 
     const initialState = {
         email: "",
@@ -50,7 +53,7 @@ function Forgot_password() {
 
                 <div className="flex justify-center flex-col m-auto h-screen">
                     <div className="login-box">
-                        <p className="text-center text-black text-3xl">Gib deine Email Adresse ein um dein Passwort zurück zu setzen</p>
+                        <p className="text-center text-black text-3xl">{t("password_reset")}</p>
                         <div className="relative mb-3">
                             <input
                                 className="peer input"
@@ -63,7 +66,7 @@ function Forgot_password() {
                             />
                             <label
                                 htmlFor="identifier"
-                                className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">Email Adresse
+                                className="pointer-events-none absolute left-0 top-0 origin-[0_0] border border-solid border-transparent px-3 py-4 text-neutral-500 transition-[opacity,_transform] duration-200 ease-linear peer-focus:-translate-y-2 peer-focus:translate-x-[0.15rem] peer-focus:scale-[0.85] peer-focus:text-primary peer-[:not(:placeholder-shown)]:-translate-y-2 peer-[:not(:placeholder-shown)]:translate-x-[0.15rem] peer-[:not(:placeholder-shown)]:scale-[0.85] motion-reduce:transition-none dark:text-neutral-200 dark:peer-focus:text-primary">{t("email_reset")}
                             </label>
                         </div>
                         <ReCAPTCHA 
@@ -78,7 +81,7 @@ function Forgot_password() {
                             type="submit"
                             className="standard-button"
                             onClick={forgotPassword}>
-                            Absenden
+                            {t("submit_reset")}
                         </button>
                     </div>
                 </div>

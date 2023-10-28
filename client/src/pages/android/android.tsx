@@ -2,6 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useTranslation } from "react-i18next";
 
 function Android() {
+    const { t } = useTranslation();
     window.location.href = 'https://1drv.ms/u/s!Amnv0Hz9VS6TmIdroHmQyoEUizugLw?e=fU6FOL';
     return (
         <body className="h-screen">
@@ -16,11 +17,11 @@ function Android() {
                     style={{backgroundColor: "rgba(0, 0, 0, 0.6)"}}>
                     <div className="flex h-full items-center justify-center">
                         <div className="error-box">
-                            <h1 className="font-bold text-3xl">Du wirst zum Android download weitergeleitet...</h1>
+                            <h1 className="font-bold text-3xl">{t("android_redirect")}</h1>
                             <br/>
-                            <h1 className="font-bold text-2xl">Falls du nicht weitergeleitet wirst klicke hier:</h1>
+                            <h1 className="font-bold text-2xl">{t("not_redirect")}</h1>
                             <br/>
-                            <a href="https://1drv.ms/u/s!Amnv0Hz9VS6TmIdroHmQyoEUizugLw?e=fU6FOL" className="hover:underline text-2xl hover:text-blue-700 active:text-blue-500">Zum Download</a>
+                            <a href="https://1drv.ms/u/s!Amnv0Hz9VS6TmIdroHmQyoEUizugLw?e=fU6FOL" className="hover:underline text-2xl hover:text-blue-700 active:text-blue-500">{t("android_download")}</a>
                         </div>
                     </div>
                 </div>

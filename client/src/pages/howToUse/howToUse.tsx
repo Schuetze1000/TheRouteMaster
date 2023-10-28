@@ -1,6 +1,10 @@
 import Navbar_use from "../../components/navbars/Navbar_use";
+import { useTranslation } from "react-i18next";
 
 function HowToUse() {
+
+	const { t } = useTranslation();
+
 	return (
 		<body className="h-screen">
 			<Navbar_use />
@@ -14,7 +18,7 @@ function HowToUse() {
 					<div className="flex w-full h-auto items-center justify-center">
 						<div className="background-box">
 							<div className="relative mb-2 md:mb-10">
-                                <h1 className="font-bold text-3xl">Wie funktioniert die Webseite?</h1>
+                                <h1 className="font-bold text-3xl">{t("works")}</h1>
 								<br/>
                                 <p>Liebe Nutzerin, lieber Nutzer,
 								<br/>

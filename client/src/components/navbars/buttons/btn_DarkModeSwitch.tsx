@@ -1,7 +1,7 @@
 import useColorMode from "../../../hooks/useColorMode";
 import { useTranslation } from "react-i18next";
 
-const DarkMode_switch = () => {
+const DarkModeSwitch = () => {
 
     return (
         <div>
@@ -26,4 +26,4 @@ const DarkMode: React.FC<{ text?: string }> = ({ text }) => {
     );
 };
 
-export default DarkMode_switch;
+export default DarkModeSwitch;
