@@ -1,6 +1,13 @@
-# TheRouteMaster
-Web-/App-Engineering Project of three Cyber Security Students of the Baden-Wuerttemberg Cooperative State University. This Project is based on the MERN-Stack.
+# 🚀 TheRouteMaster
+Web-/App-Engineering Project of three Cyber Security Students at the Baden-Wuerttemberg Cooperative State University. This project is based on the MERN-Stack.
 
-# Sonstiges
+# 💡 Sonstiges
 ![Screenshot 2023-05-15 100726](https://github.com/Schuetze1000/TheRouteMaster/assets/87863203/e179447b-f457-417b-b797-1d2e9d9042e3)
-The Hackerman attacked us :)
+The Hackerman attacked us! 😅👨‍💻
+
+
+# ❗🔄 Important:
+Some functionalities are now available in a different project called TheStudentMaster.
+This project is very likely to be replaced by TheStudentMaster soon. ⚙️✨
+
+🔗 Check out TheStudentMaster here: https://gitlab.com/themastercollection/thestudentmaster
